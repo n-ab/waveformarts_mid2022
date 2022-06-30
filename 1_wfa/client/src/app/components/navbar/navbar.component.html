@@ -1,0 +1,12 @@
+<div class="navbar" id="navbar">
+    <div class="nav-left">
+        <div class="title">Waveform Arts</div>
+    </div>
+    <div class="nav-right">
+        <div class="hamburger" *ngIf="!user" (click)="signIn()">
+            <div class="hamburger-line"></div>
+            <div class="hamburger-line"></div>
+            <div class="hamburger-line"></div>
+        </div>
+    </div>
+</div>
