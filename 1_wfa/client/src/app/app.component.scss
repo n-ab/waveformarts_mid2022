@@ -3,20 +3,24 @@
     src: url();
 }
 
-#navbar {
-    top: 0; width: 100%; height: 67px; z-index: 30; margin-bottom: 67px; position: absolute; overflow: auto;
+.big-ass-container {
+    position: relative;
+    max-width: 100vw;
+    max-height: 2000px;
 }
 
-#window {
-    // position: absolute;
-    z-index: -1;
+router-outlet {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.122);
+    // z-index: 10;
 }
 
-#router-outlet {
-    z-index: 1;
+img {
+    animation: moveBackground 1s ease;
+    z-index: -10;
 }
 
-.black-background {
-    background-color: black;
+@keyframes moveBackground {
+    0% {background-position-x: 3px;}
+    100% {background-position: 55px;}
 }
-

@@ -1,7 +1,18 @@
-.landing-mobile-view {
-    border: 1px solid black;
-    width: 320px;
-    height: 525px;
-    margin: auto;
+.wrapper {
+    position: absolute;
+    width: 100vw;
+}
+.header {
+    text-align: center;
+    color: white;
+    font-size: 150%;
+    letter-spacing: 2px;
+    font-weight: 100;
+    margin-top: 250px;
+    animation: appear 1s ease;
 }
 
+@keyframes appear {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
