@@ -1,3 +1,7 @@
+.navbar {
+    width: 100%;
+}
+
 .hamburger {
     animation: fadeIn .8s ease-in .6s forwards;
     opacity: 0;
@@ -36,4 +40,13 @@
     color: #00d0ff; 
     opacity: 0;
     animation: fadeIn 1.3s ease .7s forwards;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }

@@ -1,18 +1,81 @@
 .wrapper {
     position: absolute;
     width: 100vw;
+    
 }
 .header {
-    text-align: center;
-    color: white;
-    font-size: 150%;
-    letter-spacing: 2px;
-    font-weight: 100;
     margin-top: 250px;
-    animation: appear 1s ease;
+    text-align: center;
+    font-weight: 100;
+    font-size: 175%;
+    letter-spacing: 2px;
+    color: white;
+    animation: logoTransition 2s ease forwards;
 }
 
-@keyframes appear {
+.arts {
+    margin-left: 10px;
+}
+
+@keyframes logoTransition {
+    0%   {color: white;margin-left: 0px;}
+    95% {margin-left: 100px; color: rgba(255, 255, 255, 0);}
+    100% {display: none; color: rgba(255, 255, 255, 0); margin-bottom: 0px;}
+}
+
+.landing-content {
+    background-image: linear-gradient(0.31turn, #00d0ff, #0088ff);   
+    z-index: 11;
+    color: white;
+    margin-bottom: 100px;
+    font-weight: 100;
+    letter-spacing: 1px;
+    opacity: 0;
+    animation: fadeIn 1.2s ease .7s forwards;
+}
+
+@keyframes fadeIn {
     0% {opacity: 0;}
     100% {opacity: 1;}
+}
+
+.content-box {
+    background-image: linear-gradient(rgb(255 165 0 / 0%), rgb(16 0 255 / 42%));
+    box-shadow: 0px 30px 50px -25px #000000;
+    margin: 17px 10px 40px 10px;
+    border-radius: 13px;
+    padding: 0px 5px 1px 5px;
+
+}
+
+.content-title {
+    color: #e1fffd;
+    text-align: center;
+    padding: 1rem 1rem 0rem 1rem;
+    font-size: 192%;
+}
+
+.content-text {
+    color: #bffffc;
+    padding: 0 10px;
+    line-height: 1.6;
+    width: 80%;
+    margin: auto;
+}
+
+.landing-button-container {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 25px 0;
+}
+
+button {
+    border: none;
+    border-radius: 5px;
+    width: 100px;
+    color: #bffffc;
+    font-weight: 100;
+    letter-spacing: 1px;
+    height: 42px;
+    background-color: #ffffff1f;
 }
