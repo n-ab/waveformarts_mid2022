@@ -1,26 +1,26 @@
+@import '../../animations.scss';
+
 .wrapper {
     position: absolute;
     width: 100vw;
-    
 }
+
 .header {
-    margin-top: 250px;
+    margin-top: 150px;
     text-align: center;
     font-weight: 100;
     font-size: 175%;
     letter-spacing: 2px;
     color: white;
-    animation: logoTransition 2s ease forwards;
+    animation: logoTransition 1.3s ease forwards;
+}
+
+#landing-feature {
+    transition: all 1s ease;
 }
 
 .arts {
     margin-left: 10px;
-}
-
-@keyframes logoTransition {
-    0%   {color: white;margin-left: 0px;}
-    95% {margin-left: 100px; color: rgba(255, 255, 255, 0);}
-    100% {display: none; color: rgba(255, 255, 255, 0); margin-bottom: 0px;}
 }
 
 .landing-content {
@@ -34,18 +34,12 @@
     animation: fadeIn 1.2s ease .7s forwards;
 }
 
-@keyframes fadeIn {
-    0% {opacity: 0;}
-    100% {opacity: 1;}
-}
-
 .content-box {
     background-image: linear-gradient(rgb(255 165 0 / 0%), rgb(16 0 255 / 42%));
     box-shadow: 0px 30px 50px -25px #000000;
     margin: 17px 10px 40px 10px;
     border-radius: 13px;
     padding: 0px 5px 1px 5px;
-
 }
 
 .content-title {
@@ -78,4 +72,9 @@ button {
     letter-spacing: 1px;
     height: 42px;
     background-color: #ffffff1f;
+}
+
+.small-spacer {
+    height: 75px;
+    background-color: rgba(255, 255, 255, 0);
 }

@@ -1,0 +1,15 @@
+@keyframes logoTransition {
+    0%   {color: white;margin-left: 0px;}
+    95%  {margin-left: 100px; color: rgba(255, 255, 255, 0);}
+    100% {display: none; color: rgba(255, 255, 255, 0); margin-bottom: 0px;}
+}
+
+@keyframes fadeIn {
+    0%   {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+@keyframes moveBackground {
+    0%   { width: 1900px; }
+    100% { width: 2400px; }
+}
