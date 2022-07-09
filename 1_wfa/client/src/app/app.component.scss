@@ -33,10 +33,18 @@ router-outlet {
 // -- I M A G E   B A C K G R O U N D
 
 img {
-    width: 4500px;
+    // width: 4500px;
     z-index: -10;
-    animation: moveBackground 4s ease-out forwards;
+    // animation: moveBackground 4s ease-out forwards;
     margin-left: -121px;
     position: fixed;
     overflow: hidden;
+}
+
+.image-width-4500px {
+    animation: move-background-mobile 4s ease-out forwards;
+}
+
+.image-width-6000px {
+    animation: move-background-desktop 4s ease-out forwards;
 }

@@ -9,7 +9,12 @@
     100% {opacity: 1;}
 }
 
-@keyframes moveBackground {
+@keyframes move-background-mobile {
     0%   { width: 1900px; }
     100% { width: 2400px; }
+}
+
+@keyframes move-background-desktop {
+    0%   { width: 3000px; }
+    100% { width: 3800px; }
 }

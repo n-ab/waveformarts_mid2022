@@ -7,17 +7,22 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 })
 export class LandingComponent implements OnInit, AfterViewInit {
 
+  innerWidth!: any;
+
   constructor() { }
 
   ngOnInit(): void {
+    this.innerWidth = window.innerWidth;
+    console.log('this.innerWidth = ', this.innerWidth);
+    console.log('this.innerHeight', window.innerHeight);
+    
+    
   }
 
   ngAfterViewInit(): void {
       const landingFeature = document.getElementById('landing-feature');
-      setTimeout(() => {
-        landingFeature?.classList.remove('landing-feature-pre')
-        landingFeature?.classList.add('landing-feature-post');
-      }, 1500);
+      if (this.innerWidth > 400)  { landingFeature?.classList.add('margin-top-700'); }
+      if (this.innerWidth <= 400) { landingFeature?.classList.add('margin-top-300')}
   }
 
 }
