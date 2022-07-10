@@ -21,8 +21,8 @@ export class LandingComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
       const landingFeature = document.getElementById('landing-feature');
-      if (this.innerWidth > 400)  { landingFeature?.classList.add('margin-top-700'); }
-      if (this.innerWidth <= 400) { landingFeature?.classList.add('margin-top-300')}
+      if (this.innerWidth > 400)  { landingFeature?.classList.add('margin-top-175'); }
+      if (this.innerWidth <= 400) { landingFeature?.classList.add('margin-top-300'); }
   }
 
 }

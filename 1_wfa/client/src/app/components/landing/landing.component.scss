@@ -24,8 +24,18 @@
     color: white;
     font-size: 250%;
     font-weight: 100;
-    
 }
+
+.margin-top-175 {
+    margin-top: 175px;
+    height: 50px;
+}
+
+.margin-top-300 {
+    margin-top: 100px;
+    // height: 250px;
+}
+
 
 .landing-feature-items {
     display: flex;
@@ -33,20 +43,6 @@
     margin-top: 120px;
     font-size: 50%;
     user-select: none;
-}
-
-.landing-feature-item {
-
-}
-
-.margin-top-700 {
-    margin-top: 150px;
-    height: 50px;
-}
-
-.margin-top-300 {
-    margin-top: 100px;
-    height: 250px;
 }
 
 .arts {
