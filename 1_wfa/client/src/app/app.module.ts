@@ -26,6 +26,10 @@ import { MatRadioModule, MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/rad
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { WindowComponent } from './components/window/window.component';
+import { ContactComponent } from './components/contact/contact.component';
+import { BookComponent } from './components/book/book.component';
+import { RentalsComponent } from './components/rentals/rentals.component';
+import { HighlightsComponent } from './components/highlights/highlights.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +42,11 @@ import { WindowComponent } from './components/window/window.component';
     AccountComponent,
     ProjectAddComponent,
     ProjectManageComponent,
-    WindowComponent
+    WindowComponent,
+    ContactComponent,
+    BookComponent,
+    RentalsComponent,
+    HighlightsComponent
   ],
   imports: [
     BrowserModule,
