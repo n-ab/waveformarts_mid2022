@@ -60,7 +60,7 @@ import { HighlightsComponent } from './components/highlights/highlights.componen
     // angular material modules
     MatButtonModule, MatDialogModule, MatDialogModule, MatCheckboxModule, MatInputModule, MatFormFieldModule, MatDatepickerModule, MatPaginatorModule, MatRadioModule, MatExpansionModule, MatProgressSpinnerModule
   ],
-  providers: [MatNativeDateModule],
+  providers: [MatNativeDateModule, AudioContext],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
