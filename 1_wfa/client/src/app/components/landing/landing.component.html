@@ -27,8 +27,8 @@
                 <br><br>
                 <div class="get-rich">Get rich sound design for your narrative, commercial, or documentary.</div>
                 <div class="landing-button-container">
-                    <button mat-raised-button [routerLink]="['upload']">Upload</button>
-                    <button mat-raised-button [routerLink]="['contact']">Contact</button>
+                    <button mat-raised-button (click)="goToUpload()">Upload</button>
+                    <button mat-raised-button [routerLink]="['/contact']">Contact</button>
                 </div>
             </div>
         </div>

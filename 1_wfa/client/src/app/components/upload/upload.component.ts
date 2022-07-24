@@ -13,7 +13,7 @@ export class UploadComponent implements OnInit {
   uploadForm: FormGroup;
   audioPreview = '';
 
-  constructor(private router: Router, public audioContext: AudioContext, private fileService: FileService) {
+  constructor(private router: Router, private fileService: FileService) {
     this.uploadForm = new FormGroup({
       title: new FormControl('', Validators.required),
       tasks:  new FormControl('', null),
@@ -22,6 +22,8 @@ export class UploadComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('1...');
+    
   }
 
   soundSelected(event: Event): void {
@@ -42,8 +44,8 @@ export class UploadComponent implements OnInit {
       };
       if (file) {
         reader.readAsDataURL(file);
-        const source = this.audioContext.createBufferSource().context;
-        console.log('this.audioContext.createBufferSource().context: ', source);
+        // const source = this.audioContext.createBufferSource().context;
+        // console.log('this.audioContext.createBufferSource().context: ', source);
       }
     }
   }

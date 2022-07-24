@@ -30,6 +30,8 @@ import { ContactComponent } from './components/contact/contact.component';
 import { BookComponent } from './components/book/book.component';
 import { RentalsComponent } from './components/rentals/rentals.component';
 import { HighlightsComponent } from './components/highlights/highlights.component';
+import { HttpClientModule } from '@angular/common/http';
+import { WindowService } from './services/window.service';
 
 @NgModule({
   declarations: [
@@ -57,10 +59,11 @@ import { HighlightsComponent } from './components/highlights/highlights.componen
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     // angular material modules
     MatButtonModule, MatDialogModule, MatDialogModule, MatCheckboxModule, MatInputModule, MatFormFieldModule, MatDatepickerModule, MatPaginatorModule, MatRadioModule, MatExpansionModule, MatProgressSpinnerModule
   ],
-  providers: [MatNativeDateModule, AudioContext],
+  providers: [MatNativeDateModule, AudioContext, WindowService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

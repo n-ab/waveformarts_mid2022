@@ -39,12 +39,66 @@ img {
     margin-left: -121px;
     position: fixed;
     overflow: hidden;
+    transition: all 4s ease;
 }
 
-.image-width-4500px {
-    animation: move-background-mobile 4s ease-out forwards;
+#img {
+    transition: all 4s ease;
 }
 
-.image-width-6000px {
-    animation: move-background-desktop 4s ease-out forwards;
+// --- landing ----------------
+
+.mobile-landing {
+    animation: mobile-landing 4s ease-out forwards;
+}
+
+.desktop-landing {
+    animation: desktop-landing 4s ease-out forwards;
+}
+
+// --- upload ----------------
+
+.mobile-upload {
+    animation: mobile-upload 4s ease-out forwards;
+}
+
+.desktop-upload {
+    animation: mobile-upload 4s ease-out forwards;
+}
+
+// --- contact ----------------
+
+.mobile-contact {
+
+}
+
+.desktop-contact {
+    
+}
+// --- book ----------------
+
+.mobile-book {
+
+}
+
+.desktop-book {
+    
+}
+// --- account ----------------
+
+.mobile-account {
+
+}
+
+.desktop-account {
+    
+}
+// --- rentals ----------------
+
+.mobile-rentals {
+
+}
+
+.desktop-rentals {
+    
 }

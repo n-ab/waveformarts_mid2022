@@ -9,12 +9,31 @@
     100% {opacity: 1;}
 }
 
-@keyframes move-background-mobile {
+// --- landing ----------------
+
+@keyframes mobile-landing {
     0%   { width: 1900px; }
     100% { width: 2400px; }
 }
 
-@keyframes move-background-desktop {
+@keyframes desktop-landing {
     0%   { width: 3000px; }
     100% { width: 3800px; }
 }
+
+// --- upload ----------------
+
+@keyframes mobile-upload {
+    0%   { width: 2200px; }
+    100% { width: 3000px; }
+}
+
+@keyframes desktop-upload {
+    0%   { width: 2200px; }
+    100% { width: 3000px; }
+}
+
+// --- contact ----------------
+// --- book ----------------
+// --- account ----------------
+// --- rentals ----------------
