@@ -25,9 +25,6 @@ export class LandingComponent implements OnInit, AfterViewInit {
     const landingFeature = document.getElementById('landing-feature');
     if (this.innerWidth > 400)  { landingFeature?.classList.add('margin-top-175'); }
     if (this.innerWidth <= 400) { landingFeature?.classList.add('margin-top-300'); }
-    setTimeout(() => {
-      header?.classList.add('display-none');
-    }, 500);
   }
 
   goToUpload(): void {
