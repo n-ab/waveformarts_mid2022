@@ -1,9 +1,9 @@
 import express from 'express';
 import session from 'express-session';
-import { config } from './config';
+import { config } from '../config';
 import mongoose from 'mongoose';
 import passport from 'passport';
-import { UserModel } from './models/user';
+import { UserModel } from '../models/user';
 
 console.log('Welcome to Waveform Arts, running on port ' + config.PORT);
 
@@ -64,5 +64,5 @@ mongoose.connect(config.database)
 
 // --- r o u t i n g ------------------------------------------
 
-import { router } from './routers/routers';
+import { router } from '../routers/routers';
 app.use('/api', router);
