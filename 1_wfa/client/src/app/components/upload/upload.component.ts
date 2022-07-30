@@ -16,13 +16,13 @@ export class UploadComponent implements OnInit {
   constructor(private router: Router, private fileService: FileService) {
     this.uploadForm = new FormGroup({
       title: new FormControl('', Validators.required),
+      clientsEmail: new FormControl('', null),
       tasks:  new FormControl('', null),
       audioFile: new FormControl(null)
     })
   }
 
   ngOnInit(): void {
-    console.log('1...');
     
   }
 

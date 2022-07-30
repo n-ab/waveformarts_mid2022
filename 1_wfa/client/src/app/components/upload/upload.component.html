@@ -4,6 +4,7 @@
             <div class="form-title">Send Us A File</div>
             <input type="file" style="display: none;" #sound (change)="soundSelected($event)">
             <mat-form-field ><textarea class="text-area" matInput autofocus type="text" name="tasks" formControlName="tasks" placeholder="What needs to be done?"></textarea></mat-form-field>
+            <mat-form-field><input matInput type="text" name="clientsEmail" formControlName="clientsEmail" placeholder="What email can we send files to?"></mat-form-field>
             <button type="button" mat-raised-button class="upload-button" (click)="sound.click()">Add File</button>
             <div class="sound-uploaded-notifier" *ngIf="audioPreview && audioPreview !== ''">ready for upload</div>
         </form>

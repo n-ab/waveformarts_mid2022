@@ -1,8 +1,7 @@
-// .image-layer {
-//     z-index: -1;
-//     position: relative;
-// }
-
-// img {
-
-// }
+img {
+    z-index: -10;
+    margin-left: -121px;
+    position: fixed;
+    overflow: hidden;
+    transition: all 4s ease;
+}

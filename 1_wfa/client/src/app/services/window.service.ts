@@ -1,21 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WindowService {
-  routeSelected = '';
-  updateBackgroundImageWidth = new Observable<string>(data => {
-    data.next(this.routeSelected);
-  });
+  pixelWidth!: number;
+  bgImageWidth: BehaviorSubject<number> = new BehaviorSubject(this.pixelWidth);
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  adjustBackgroundImageWidth(route: string) {
-    console.log('this.routeSelected = ', route);
-    this.routeSelected = route;
+  adjustBackgroundImageWidth(pixels: number) {
+    this.pixelWidth = pixels;
+    console.log('setting pixel width of background image to: ', this.pixelWidth);
+    
+    this.bgImageWidth.next(this.pixelWidth);
   }
 }

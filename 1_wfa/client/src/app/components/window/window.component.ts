@@ -1,28 +1,30 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { WindowService } from 'src/app/services/window.service';
 
 @Component({
   selector: 'app-window',
   templateUrl: './window.component.html',
   styleUrls: ['./window.component.scss']
 })
-export class WindowComponent implements OnInit, AfterViewInit {
+export class WindowComponent implements OnInit {
+  @Input() width: number = 3000;
 
-  case!: 'landing' | 'account' | 'hide';
-  counter = 0;
-  images = ['../../../assets/img/account-landing.jpeg', '../../../assets/img/blackRipple.jpeg', '../../../assets/img/waveform-arts-landing.jpeg'];
-
-  constructor() {
-
+  constructor(private windowService: WindowService) {
   }
 
   ngOnInit(): void {
-    if (this.counter === 0) { this.case = 'landing' }
-
+    setTimeout(() => {
+      this.width = 4001;
+    }, 1);
+    this.updateWidth();
   }
 
-  ngAfterViewInit(): void {
-    const windowDiv = document.getElementById('window');
-    if (this.case = 'landing') { windowDiv?.classList.add('bg-image-1'); }
+  
+
+  updateWidth(): void {
+    this.windowService.bgImageWidth.subscribe(pixelWidth => {
+      this.width = pixelWidth;
+    })
   }
 
 }

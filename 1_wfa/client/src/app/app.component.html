@@ -1,6 +1,3 @@
 <app-navbar id="navbar"></app-navbar>
-<div class="big-ass-container">
-    <router-outlet></router-outlet>
-    <!-- img starts with mobile-landing, unless viewWidth is greater than 675px in which case desktop-landing replaces mobile-landing -->
-    <img id="img" [style.width.px]="width" src="../assets/img/waveform-arts-landing.jpeg" alt="">
-</div>
+<router-outlet></router-outlet>
+<app-window style="width: 6000px;"></app-window>

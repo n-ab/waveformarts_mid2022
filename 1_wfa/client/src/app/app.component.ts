@@ -7,17 +7,21 @@ import { WindowService } from './services/window.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements AfterViewInit{
-  title = 'client';
+  title = 'Waveform Arts';
   backgroundImageDiv!: HTMLElement | null;
   width!: number;
 
   constructor(private windowService: WindowService) {
-    this.width = 3000;
-    this.adjustBackgroundImagePosition('landing');
+    // this.width = 3000;
+    // this.adjustBackgroundImagePosition('landing');
   }
 
   ngAfterViewInit(): void {
-    this.backgroundImageDiv = document.getElementById('img');
+    // this.backgroundImageDiv = document.getElementById('img');
+    // this.windowService.updateBackgroundImageWidth.subscribe(shitFromService => {
+    //   console.log('SHIT FROM SERVICE: ', shitFromService);
+    //   this.adjustBackgroundImagePosition(shitFromService);
+    // })
 
     // NAVBAR 'blacken background on scroll' EFFECT
     window.addEventListener('scroll', () => {
@@ -38,31 +42,38 @@ export class AppComponent implements AfterViewInit{
   ngAfterViewChecked(): void {
       // start subscribing to the window service's observable here,
       // now that you know at this point the service has loaded.
-      this.windowService.updateBackgroundImageWidth.subscribe(shitFromService => {
-        console.log('SHIT FROM SERVICE: ', shitFromService);
-        this.adjustBackgroundImagePosition(shitFromService);
-      })
+      // this.windowService.updateBackgroundImageWidth.subscribe(shitFromService => {
+      //   console.log('SHIT FROM SERVICE: ', shitFromService);
+      //   this.adjustBackgroundImagePosition(shitFromService);
+      // })
   }
 
   adjustBackgroundImagePosition(pageName: string): void {
     
-    switch (pageName) {
-      case 'landing':
-        console.log('this.width', this.width);
-        
-        if    ( window.innerHeight > 625) { this.width = 3200; } 
-        else                              { this.width = 2400; }
-        break;
-      case 'upload':
-        this.width = 3000;
-        break;
-      case 'contact':
+    // switch (pageName) {
+    //   case 'landing':
+    //     if    ( window.innerHeight > 625) {
+    //       this.width = 3000; 
+    //       setTimeout(() => {
+    //         this.width = 3400;
+    //       }, 1000);
+    //       } 
+    //     else { this.width = 2200; 
+    //       setTimeout(() => {
+    //       this.width = 2700;
+    //     }, 1000); 
+    //     }
+    //     break;
+    //   case 'upload':
+    //     this.width = 4000;
+    //     break;
+    //   case 'contact':
 
-        break;
-      case 'book':
+    //     break;
+    //   case 'book':
 
-        break;
-    }
+    //     break;
+    // }
     return;
   }
 
