@@ -8,14 +8,19 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class WindowService {
   pixelWidth!: number;
+  marginLeft!: number;
   bgImageWidth: BehaviorSubject<number> = new BehaviorSubject(this.pixelWidth);
+  bgImageMarginLeft: BehaviorSubject<number> = new BehaviorSubject(this.marginLeft);
 
   constructor(private http: HttpClient, private router: Router) { }
 
   adjustBackgroundImageWidth(pixels: number) {
     this.pixelWidth = pixels;
-    console.log('setting pixel width of background image to: ', this.pixelWidth);
-    
     this.bgImageWidth.next(this.pixelWidth);
+  }
+
+  adjustBackgroundImageMarginLeft(pixels: number) {
+    this.marginLeft = pixels;
+    this.bgImageMarginLeft.next(this.marginLeft);
   }
 }

@@ -16,7 +16,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.innerWidth = window.innerWidth;
-    this.windowService.bgImageWidth.next(6000);
+    this.windowService.bgImageWidth.next(4000);
   }
 
   ngAfterViewInit(): void {
@@ -26,10 +26,29 @@ export class LandingComponent implements OnInit, AfterViewInit {
     if (this.innerWidth <= 400) { landingFeature?.classList.add('margin-top-300'); }
   }
 
-  goToUpload(): void {
-    console.log('goToUpload()');
-    this.router.navigateByUrl('upload');
+  goToContact(): void {
+    this.router.navigateByUrl('contact');
     this.windowService.adjustBackgroundImageWidth(2000);
+  }
+
+  goToBook(): void {
+    this.router.navigateByUrl('book');
+    this.windowService.adjustBackgroundImageWidth(2400);
+  }
+
+  goToRentals(): void {
+    this.router.navigateByUrl('rentals');
+    this.windowService.adjustBackgroundImageWidth(3200);
+  }
+
+  goToHighlights(): void {
+    this.router.navigateByUrl('highlights');
+    this.windowService.adjustBackgroundImageWidth(3200);
+  }
+
+  goToUpload(): void {
+    this.router.navigateByUrl('upload');
+    this.windowService.adjustBackgroundImageWidth(3200);
   }
 
 }

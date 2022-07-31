@@ -8,13 +8,14 @@ import { WindowService } from 'src/app/services/window.service';
 })
 export class WindowComponent implements OnInit {
   @Input() width: number = 3000;
+  @Input() marginLeft: number = 0;
 
   constructor(private windowService: WindowService) {
   }
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.width = 4001;
+      this.width = 4500;
     }, 1);
     this.updateWidth();
   }
