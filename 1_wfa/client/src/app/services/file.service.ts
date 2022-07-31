@@ -10,14 +10,14 @@ export class FileService {
   constructor(private http: HttpClient, private router: Router) { }
 
   uploadFile(data: any) {
+    console.log('uploadFile() data: ', data);
     const postData = new FormData();
     postData.append('title', data.title);
     postData.append('tasks', data.tasks);
     postData.append('audioFile', data.audioFile);
-    return this.http.post('/api/file/upload', postData).toPromise()
+    return this.http.post('/api/file/uploadFile', postData).toPromise()
       .then(file => {
         console.log('file saved as: ', file);
-        
       })
   }
 
