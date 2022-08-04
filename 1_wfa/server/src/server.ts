@@ -3,7 +3,7 @@ import session from 'express-session';
 import { config } from '../config';
 import mongoose from 'mongoose';
 import passport from 'passport';
-import { UserModel } from '../models/user';
+import { UserModel } from '../src/models/user';
 
 console.log('Welcome to Waveform Arts, running on port ' + config.PORT);
 
@@ -64,5 +64,5 @@ mongoose.connect(config.database)
 
 // --- r o u t i n g ------------------------------------------
 
-import { router } from '../routers/routers';
+import { router } from '../src/routers/routers';
 app.use('/api', router);

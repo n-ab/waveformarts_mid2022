@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 })
 export class FileService {
 
+  multipartForm = new HttpHeaders({ 'Content-Type': 'multipart/form-data' });
+
   constructor(private http: HttpClient, private router: Router) { }
 
   uploadFile(data: any) {

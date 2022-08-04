@@ -1,5 +1,5 @@
 import express from 'express';
-import * as fileController from '../src/controllers/fileController'
+import * as fileController from '../controllers/fileController';
 import multer from 'multer';
 
 export const app = express();

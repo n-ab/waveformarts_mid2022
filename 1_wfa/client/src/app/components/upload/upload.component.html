@@ -1,6 +1,6 @@
 <div class="wrapper">
     <div class="upload-container">
-        <form class="upload-form" [formGroup]="uploadForm" (ngSubmit)="upload()" enctype="multipart/form-data">
+        <form class="upload-form" [formGroup]="uploadForm" (ngSubmit)="upload()" >
             <div class="form-title">Send Us A File</div>
             <input type="file" style="display: none;" #sound (change)="soundSelected($event)">
             <mat-form-field ><textarea class="text-area" matInput autofocus type="text" name="tasks" formControlName="tasks" placeholder="What needs to be done?"></textarea></mat-form-field>
