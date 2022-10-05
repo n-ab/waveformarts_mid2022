@@ -16,11 +16,11 @@ export class LandingComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.innerWidth = window.innerWidth;
-    this.windowService.bgImageWidth.next(4000);
+    this.windowService.bgImageWidth.next(5100);
+    // this.windowService.bgImageMarginLeft.next(-900);
   }
 
   ngAfterViewInit(): void {
-    // 
     const landingFeature = document.getElementById('landing-feature');
     if (this.innerWidth > 400)  { landingFeature?.classList.add('margin-top-175'); }
     if (this.innerWidth <= 400) { landingFeature?.classList.add('margin-top-300'); }

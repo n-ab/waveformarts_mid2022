@@ -12,7 +12,7 @@ export class AccountComponent implements OnInit {
   constructor(private router: Router, private windowService: WindowService) { }
 
   ngOnInit(): void {
-    this.windowService.bgImageMarginLeft.next(5000);
+    this.windowService.bgImageMarginLeft.next(-50);
   }
 
 }

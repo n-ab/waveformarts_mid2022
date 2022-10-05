@@ -31,7 +31,7 @@
 }
 
 .landing-feature-title {
-    font-size: 100%;
+    font-size: 133%;
 }
 
 .margin-top-175 {
@@ -135,4 +135,22 @@ button {
 .get-rich {
     text-align: center;
     font-size: 200%;
+}
+
+
+// landing item transition effect
+// i.e. 'sound design' 'composition' 'dialog editing'
+.lfi1 {
+    opacity: 0;
+    animation: fadeIn 3s ease 1.2s forwards;
+}
+
+.lfi2 {
+    opacity: 0;
+    animation: fadeIn 3s ease 1.5s forwards;
+}
+
+.lfi3 {
+    opacity: 0;
+    animation: fadeIn 3s ease 1.8s forwards;
 }

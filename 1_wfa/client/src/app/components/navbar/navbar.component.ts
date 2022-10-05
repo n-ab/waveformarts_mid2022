@@ -40,8 +40,7 @@ export class NavbarComponent implements OnInit {
 
   account() {
     this.router.navigateByUrl('account');
-    // this.windowService.adjustBackgroundImageWidth(5500);
-    this.windowService.bgImageMarginLeft.next(50);
+    // this.windowService.bgImageMarginLeft.next(-600);
   }
 
   home() {

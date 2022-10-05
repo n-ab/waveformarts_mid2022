@@ -7,22 +7,19 @@ import { WindowService } from 'src/app/services/window.service';
   styleUrls: ['./window.component.scss']
 })
 export class WindowComponent implements OnInit {
-  @Input() width: number = 3000;
-  @Input() marginLeft: number = 0;
+  @Input() width: number = 6000;
+  @Input() marginLeft: number = 6000;
 
-  constructor(private windowService: WindowService) {
-  }
+  constructor(private windowService: WindowService) { }
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.width = 5900;
-      this.marginLeft = -50;
+      this.width = 5100;
+      this.marginLeft = -1400;
     }, 1);
     this.updateWidth();
     this.updateMarginLeft();
   }
-
-  
 
   updateWidth(): void {
     this.windowService.bgImageWidth.subscribe(pixelWidth => {
