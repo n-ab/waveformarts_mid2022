@@ -28,7 +28,8 @@ export class LandingComponent implements OnInit, AfterViewInit {
 
   goToContact(): void {
     this.router.navigateByUrl('contact');
-    this.windowService.adjustBackgroundImageWidth(2000);
+    // this.windowService.adjustBackgroundImageWidth(2200);
+    this.windowService.adjustBackgroundImageMarginLeft(200);
   }
 
   goToBook(): void {

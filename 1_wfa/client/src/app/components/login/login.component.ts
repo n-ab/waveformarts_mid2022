@@ -40,6 +40,8 @@ export class LoginComponent implements OnInit {
     if (userLoggedIn == 'Incorrect password SON.')  { this.error = true; this.errorMessage = 'Incorrect Password'; this.adjustSizeAfterError(); return;}
     if (userLoggedIn == 'USER DOESN\'T EXIST SON.') { this.error = true; this.errorMessage = 'User not found.'; this.adjustSizeAfterError(); return; }
     if (userLoggedIn == 'Missing credentials') { this.error = true; this.errorMessage = 'Incorrect Password'; this.adjustSizeAfterError(); return; }
+    console.log('user logged in successfully: ', userLoggedIn);
+    
     this.dialogRef.close(userLoggedIn);
   }
 
@@ -57,12 +59,12 @@ export class LoginComponent implements OnInit {
     this.showRegisterForm = true;
     this.error = false;
     this.errorMessage = '';
-    this.dialogRef.updateSize('90%', '502px');
+    this.dialogRef.updateSize('90%', '570px');
   }
 
   showLogin(): void {
     this.showRegisterForm = false;
-    this.dialogRef.updateSize('90%', '310px');
+    this.dialogRef.updateSize('90%', '353px');
   }
 
   adjustSizeAfterError(): void {

@@ -1,14 +1,24 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
+  // app_www_form_urlencoded = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+
   constructor(private http: HttpClient) { }
 
+  check() {
+    return this.http.get('/api/user/check').toPromise()
+      .then(user => user)
+      .catch(err => err);
+  }
+
   login(data: any) {
+    console.log('logging in: ', data);
+    
     return this.http.post('/api/user/login', data).toPromise()
       .then(user => user)
       .catch(err => err);

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AccountComponent } from './components/account/account.component';
 import { BookComponent } from './components/book/book.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { HighlightsComponent } from './components/highlights/highlights.component';
@@ -12,6 +13,7 @@ import { UploadComponent } from './components/upload/upload.component';
 const routes: Routes = [
   { path: '',           component: LandingComponent },
   { path: 'upload',     component: UploadComponent  },
+  { path: 'account',    component: AccountComponent },
   { path: 'contact',    component: ContactComponent },
   { path: 'book',       component: BookComponent    },
   { path: 'rentals',    component: RentalsComponent },

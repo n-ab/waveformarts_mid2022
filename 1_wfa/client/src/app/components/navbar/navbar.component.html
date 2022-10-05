@@ -1,6 +1,6 @@
 <div class="navbar" id="navbar">
     <div class="nav-left">
-        <div class="title">Waveform Arts</div>
+        <div class="title" (click)="home()">Waveform Arts</div>
     </div>
     <div class="nav-right">
         <div class="hamburger" *ngIf="!user" (click)="signIn()">
@@ -9,4 +9,5 @@
             <div class="hamburger-line"></div>
         </div>
     </div>
+    <div *ngIf="user" class="account" (click)="account()">account</div>
 </div>

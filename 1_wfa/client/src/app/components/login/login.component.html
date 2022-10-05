@@ -1,6 +1,6 @@
 <form action="add-user-form" *ngIf="showRegisterForm === false" [formGroup]="loginForm">
     <!-- <div class="add-user-title title">Login</div> -->
-    <mat-form-field><input matInput type="text" name="username" formControlName="username" placeholder="username"></mat-form-field>
+    <mat-form-field><input matInput autofocus type="text" name="username" formControlName="username" placeholder="username"></mat-form-field>
     <mat-form-field><input matInput type="password" name="password" formControlName="password" placeholder="password"></mat-form-field>
     <button mat-raised-button type="submit" class="login-button" (click)="login()">sign in</button>
     <hr *ngIf="!showRegisterForm && !error" class="hr-login">

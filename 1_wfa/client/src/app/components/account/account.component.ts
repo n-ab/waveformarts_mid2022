@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { WindowService } from 'src/app/services/window.service';
 
 @Component({
   selector: 'app-account',
@@ -7,9 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router, private windowService: WindowService) { }
 
   ngOnInit(): void {
+    this.windowService.bgImageMarginLeft.next(5000);
   }
 
 }

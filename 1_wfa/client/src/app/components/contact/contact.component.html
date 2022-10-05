@@ -1,1 +1,14 @@
-<p>contact works!</p>
+<div class="wrapper">
+    <div class="contact-container">
+        <div class="contact-title">
+            Contact
+        </div>
+        <form class="contact-form" [formGroup]="contactForm" (ngSubmit)="submit()">
+            <mat-form-field><input matInput autofocus type="text" name="name" formControlName="name" placeholder="Your Name"></mat-form-field>
+            <mat-form-field><input matInput type="text" name="email" formControlName="email" placeholder="Your Email"></mat-form-field>
+            <mat-form-field><input matInput type="text" name="company" formControlName="company" placeholder="Your Company"></mat-form-field>
+            <mat-form-field><input matInput type="text" name="projectTitle" formControlName="projectTitle" placeholder="Project Title"></mat-form-field>
+            <button type="button" mat-raised-button (click)="submit()">submit</button>
+        </form>
+    </div>
+</div>

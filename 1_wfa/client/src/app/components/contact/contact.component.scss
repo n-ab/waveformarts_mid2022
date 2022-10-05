@@ -1,0 +1,33 @@
+.wrapper {
+    position: absolute; 
+    width: 100vw;
+}
+
+.contact-container {
+    margin: auto;
+    margin-top: 10%;
+    width: 85%;
+}
+
+.contact-title {
+    color: white;
+    font-size: 300%;
+    font-weight: 100;
+    margin-bottom: 3rem;
+}
+
+form {
+    background-image: linear-gradient(0.31turn, #00d0ff, #0088ff);
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+mat-form-field {
+    display: block;
+    margin-bottom: 1rem;
+}
+
+button {
+    margin: auto;
+    display: block;
+}

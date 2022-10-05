@@ -15,9 +15,11 @@ export class WindowComponent implements OnInit {
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.width = 4500;
+      this.width = 5900;
+      this.marginLeft = -50;
     }, 1);
     this.updateWidth();
+    this.updateMarginLeft();
   }
 
   
@@ -25,6 +27,12 @@ export class WindowComponent implements OnInit {
   updateWidth(): void {
     this.windowService.bgImageWidth.subscribe(pixelWidth => {
       this.width = pixelWidth;
+    })
+  }
+
+  updateMarginLeft(): void {
+    this.windowService.bgImageMarginLeft.subscribe(pixelAmount => {
+      this.marginLeft = pixelAmount;
     })
   }
 
