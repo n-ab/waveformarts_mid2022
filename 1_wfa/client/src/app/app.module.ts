@@ -32,6 +32,7 @@ import { RentalsComponent } from './components/rentals/rentals.component';
 import { HighlightsComponent } from './components/highlights/highlights.component';
 import { HttpClientModule } from '@angular/common/http';
 import { WindowService } from './services/window.service';
+import { AdminComponent } from './components/admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { WindowService } from './services/window.service';
     ContactComponent,
     BookComponent,
     RentalsComponent,
-    HighlightsComponent
+    HighlightsComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

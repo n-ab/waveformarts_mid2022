@@ -1,0 +1,8 @@
+<div class="wrapper">
+    <form class="admin-form" [formGroup]="adminForm" (ngSubmit)="submit()">
+        <div class="title">Admin</div>
+        <mat-form-field><input matInput autofocus type="text" name="username" formControlName="username" placeholder="username"></mat-form-field>
+        <mat-form-field><input matInput autofocus type="password" name="password" formControlName="password" placeholder="password"></mat-form-field>
+        <button mat-raised-button class="submit-button" type="button" (click)="submit()">submit</button>
+    </form>
+</div>

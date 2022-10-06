@@ -16,6 +16,7 @@ export class FileService {
     const postData = new FormData();
     postData.append('title', data.title);
     postData.append('tasks', data.tasks);
+    postData.append('email', data.clientsEmail);
     postData.append('audioFile', data.audioFile);
     return this.http.post('/api/file/uploadFile', postData).toPromise()
       .then(file => {
