@@ -1,6 +1,7 @@
 <div class="navbar" id="navbar">
     <div class="nav-left">
         <div class="title" (click)="home()">Waveform Arts</div>
+        <div [routerLink]="['/admin']" style="height: 10px; width: 10px; border: 1px solid black;"></div>
     </div>
     <div class="nav-right">
         <div class="hamburger" *ngIf="!user" (click)="signIn()">

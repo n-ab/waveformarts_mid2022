@@ -10,18 +10,19 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { RentalsComponent } from './components/rentals/rentals.component';
 import { UploadComponent } from './components/upload/upload.component';
+import { RouteMetrics } from './route-guard';
 
 const routes: Routes = [
-  { path: '',           component: LandingComponent },
-  { path: 'upload',     component: UploadComponent  },
-  { path: 'account',    component: AccountComponent },
-  { path: 'admin',      component: AdminComponent   },
-  { path: 'contact',    component: ContactComponent },
-  { path: 'book',       component: BookComponent    },
-  { path: 'rentals',    component: RentalsComponent },
-  { path: 'highlights', component: HighlightsComponent },
-  { path: 'login',      component: LoginComponent   },
-  { path: 'register',   component: RegisterComponent}
+  { path: '',           component: LandingComponent, canActivate: [RouteMetrics] },
+  { path: 'upload',     component: UploadComponent, canActivate: [RouteMetrics]  },
+  { path: 'account',    component: AccountComponent, canActivate: [RouteMetrics] },
+  { path: 'admin',      component: AdminComponent, canActivate: [RouteMetrics]   },
+  { path: 'contact',    component: ContactComponent, canActivate: [RouteMetrics] },
+  { path: 'book',       component: BookComponent, canActivate: [RouteMetrics]    },
+  { path: 'rentals',    component: RentalsComponent, canActivate: [RouteMetrics] },
+  { path: 'highlights', component: HighlightsComponent, canActivate: [RouteMetrics] },
+  { path: 'login',      component: LoginComponent, canActivate: [RouteMetrics]   },
+  { path: 'register',   component: RegisterComponent, canActivate: [RouteMetrics]}
 ];
 
 @NgModule({

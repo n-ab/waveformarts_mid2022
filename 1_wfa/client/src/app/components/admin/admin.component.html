@@ -1,8 +1,65 @@
 <div class="wrapper">
-    <form class="admin-form" [formGroup]="adminForm" (ngSubmit)="submit()">
+    <form *ngIf="!adminLoggedIn" class="admin-form" [formGroup]="adminForm" (ngSubmit)="login()">
         <div class="title">Admin</div>
         <mat-form-field><input matInput autofocus type="text" name="username" formControlName="username" placeholder="username"></mat-form-field>
         <mat-form-field><input matInput autofocus type="password" name="password" formControlName="password" placeholder="password"></mat-form-field>
-        <button mat-raised-button class="submit-button" type="button" (click)="submit()">submit</button>
+        <button mat-raised-button class="submit-button" type="button" (click)="login()">submit</button>
     </form>
+    <div *ngIf="adminLoggedIn" class="admin-dashboard">
+        <div class="title">Admin</div>
+        <div class="dashboard-items">
+            <div class="dashboard-item" *ngIf="users">
+                <div class="dashboard-item-title">Clients</div>
+                <div class="dashboard-item-content" *ngFor="let user of users">
+                    <div class="client">
+                        <div class="client-name">{{ user.firstName }} {{ user.lastName }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="dashboard-item">
+                <div class="dashboard-item-title">Raw Stats</div>
+                <div class="dashboard-item-small-title">page count</div>
+                <div class="dashboard-item-content" *ngFor="let page of pages">
+                    <div class="page">
+                        <div class="page-title">{{ page.title }}</div>
+                        <div class="page-count">visited <span style="font-size: 110%; color: white;">{{ page.visits }}</span> times</div>
+                    </div>
+                </div>
+            </div>
+            <div class="dashboard-item">
+                <div class="dashboard-item-title">Toggle Availability</div>
+            </div>
+        </div>
+    </div>
+    <div class="dashboard-items" style="margin-top: 5rem;">
+        <div *ngIf="adminLoggedIn" class="dashboard-item" style="width: 75%;">
+            <div style="font-size: 150%; font-weight: 100; color: white; text-align: center; padding: 1rem;">Forms</div>
+            <form class="page-form" [formGroup]="addPageForm" (ngSubmit)="addPage()">
+                <div style="color: white; font-weight: 100; padding: 5px; color: white; font-size: 150%;">Add A Page To Collect Stats</div>
+                <mat-form-field><input matInput type="text" name="title" formControlName="title" placeholder="title"></mat-form-field>
+                <button mat-raised-button (ngSubmit)="addPage()">add page</button>
+            </form>
+            <form class="page-form" [formGroup]="addUserForm" (ngSubmit)="addUser()">
+                <div style="color: white; font-weight: 100; padding: 5px; color: white; font-size: 150%;">Manually Add or Edit a User</div>
+                <mat-form-field style="display: inline-block; margin-left: 3px"><input matInput type="text" name="firstName" formControlName="firstName" placeholder="firstName"></mat-form-field>
+                <mat-form-field style="display: inline-block; margin-left: 3px"><input matInput type="text" name="lastName" formControlName="lastName" placeholder="lastName"></mat-form-field>
+                <mat-form-field style="display: inline-block; margin-left: 3px"><input matInput type="text" name="nameAbbreviation" formControlName="nameAbbreviation" placeholder="nameAbbreviation"></mat-form-field>
+                <mat-form-field style="display: inline-block; margin-left: 3px"><input matInput type="text" name="password" formControlName="password" placeholder="password"></mat-form-field>
+                <mat-form-field style="display: inline-block; margin-left: 3px"><input matInput type="text" name="email" formControlName="email" placeholder="email"></mat-form-field>
+                <mat-form-field style="display: inline-block; margin-left: 3px"><input matInput type="text" name="username" formControlName="username" placeholder="username"></mat-form-field>
+                <mat-form-field style="display: inline-block; margin-left: 3px"><input matInput type="text" name="company" formControlName="company" placeholder="company"></mat-form-field>
+                <mat-form-field style="display: inline-block; margin-left: 3px"><input matInput type="text" name="project" formControlName="project" placeholder="project"></mat-form-field>
+                <mat-form-field style="display: inline-block; margin-left: 3px"><input matInput type="text" name="clientNumber" formControlName="clientNumber" placeholder="clientNumber"></mat-form-field>
+                <mat-form-field style="display: inline-block; margin-left: 3px"><input matInput type="text" name="status" formControlName="status" placeholder="status"></mat-form-field>
+                <mat-form-field style="display: inline-block; margin-left: 3px"><input matInput type="text" name="role" formControlName="role" placeholder="role"></mat-form-field>
+                <br>
+                <button mat-raised-button (ngSubmit)="addUser()">add page</button>
+            </form>
+        </div>
+    </div>
+    <!-- <form class="add-admin-form" [formGroup]="addAdminForm" (ngSubmit)="addAdmin()">
+        <mat-form-field><input matInput type="text" name="username" formControlName="username" placeholder="username"></mat-form-field>
+        <mat-form-field><input matInput type="password" name="password" formControlName="password" placeholder="password"></mat-form-field>
+        <button mat-raised-button class="add-admin-button" type="button" (click)="addAdmin()">Add Admin</button>
+    </form> -->
 </div>

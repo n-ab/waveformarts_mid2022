@@ -33,6 +33,7 @@ import { HighlightsComponent } from './components/highlights/highlights.componen
 import { HttpClientModule } from '@angular/common/http';
 import { WindowService } from './services/window.service';
 import { AdminComponent } from './components/admin/admin.component';
+import { AdminClientComponent } from './components/admin-client/admin-client.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { AdminComponent } from './components/admin/admin.component';
     BookComponent,
     RentalsComponent,
     HighlightsComponent,
-    AdminComponent
+    AdminComponent,
+    AdminClientComponent
   ],
   imports: [
     BrowserModule,
