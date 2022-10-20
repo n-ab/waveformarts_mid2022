@@ -7,7 +7,7 @@
 
 .account-container {
     margin: auto;
-    margin-top: 16%;
+    margin-top: 10%;
     width: 90%;
     max-width: 1000px;
     padding: 1rem;
@@ -18,10 +18,17 @@
     color: white;
     font-size: 200%;
     font-weight: 100;
-    margin-bottom: 100px;
+    margin-bottom: 3rem;
 }
 
 .account-choices {
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+}
+
+.account-choices-bottom {
+    margin-top: 1rem;
     text-align: center;
     display: flex;
     justify-content: space-around;
@@ -33,8 +40,7 @@
     opacity: 0;
     background-image: linear-gradient(0.31turn, #00d0ff, #0088ff);
     border-radius: 5px;
-    width: 25%;
-    height: 300px;
+    width: 38%;
     box-shadow: 0px 0px 25px -10px black;
 }
 
@@ -47,4 +53,38 @@
 }
 .ac3 {
     animation: fadeIn 2s ease .4s forwards;
+}
+
+.ac4 {
+    animation: fadeIn 2.3s ease .4s forwards;
+}
+
+.account-choice-title {
+    height: 25px;
+    font-size: 150%;
+}
+
+.account-choice-nav-out {
+    box-shadow: 0px 17px 14px -14px #00000024;
+    border-radius: 5px;
+    height: 45px;
+    transition: all .6s ease;
+}
+
+.account-choice-nav-out-title {
+    color: white;
+    font-weight: 100;
+    padding: 15px;
+    user-select: none;
+}
+
+.account-choice-nav-out:hover {
+    background-color: rgb(12 67 102);
+    color: black;
+    font-size: 105%;
+    // transition: all .3s ease;
+}
+
+.first-account-choice {
+    margin-top: 2rem;
 }

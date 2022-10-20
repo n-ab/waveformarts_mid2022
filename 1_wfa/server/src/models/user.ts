@@ -16,7 +16,9 @@ export interface UserObject extends mongoose.Document {
     discussions: object[],
     messages: object[],
     readMessages: string[],
-    starredSounds: string[]
+    starredSounds: string[], 
+    downloads: string[],
+    uploads: string[]
 }
 
 const schema = new mongoose.Schema({
@@ -34,7 +36,9 @@ const schema = new mongoose.Schema({
     discussions: [Object],
     messages: [Object],
     readMessages: [String],
-    starredSounds: [String]
+    starredSounds: [String],
+    downloads: [{ type: mongoose.Schema.Types.ObjectId, ref: 'File' }],
+    uploads: [{ type: mongoose.Schema.Types.ObjectId, ref: 'File' }],
 }, { timestamps: true });
 
 export const UserModel = mongoose.model<UserObject>('User', schema);

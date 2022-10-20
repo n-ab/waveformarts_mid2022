@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { MetricsService } from 'src/app/services/metrics.service';
 import { WindowService } from 'src/app/services/window.service';
 
 @Component({
@@ -10,13 +11,16 @@ import { WindowService } from 'src/app/services/window.service';
 export class LandingComponent implements OnInit, AfterViewInit {
 
   innerWidth!: any;
+  metricHeader = 'Landing';
+
   @Output() adjustBackgroundImageWidth: EventEmitter<any> = new EventEmitter();
 
-  constructor(private router: Router, private windowService: WindowService) { }
+  constructor(private router: Router, private windowService: WindowService, private metricsService: MetricsService) { }
 
   ngOnInit(): void {
     this.innerWidth = window.innerWidth;
-    this.windowService.bgImageWidth.next(5100);
+    this.windowService.bgImageWidth.next(4900);
+    this.metricsService.addPageMetrics(this.metricHeader, history.state.navigatedFrom);
     // this.windowService.bgImageMarginLeft.next(-900);
   }
 
@@ -27,28 +31,28 @@ export class LandingComponent implements OnInit, AfterViewInit {
   }
 
   goToContact(): void {
-    this.router.navigateByUrl('contact');
+    this.router.navigateByUrl('contact', {state: {navigatedFrom: 'Landing'}});
     // this.windowService.adjustBackgroundImageWidth(2200);
-    this.windowService.adjustBackgroundImageMarginLeft(200);
+    this.windowService.adjustBackgroundImageMarginLeft(-500);
   }
 
   goToBook(): void {
-    this.router.navigateByUrl('book');
+    this.router.navigateByUrl('book', {state: {navigatedFrom: 'Landing'}});
     this.windowService.adjustBackgroundImageWidth(2400);
   }
 
   goToRentals(): void {
-    this.router.navigateByUrl('rentals');
+    this.router.navigateByUrl('rentals', {state: {navigatedFrom: 'Landing'}});
     this.windowService.adjustBackgroundImageWidth(3200);
   }
 
   goToHighlights(): void {
-    this.router.navigateByUrl('highlights');
+    this.router.navigateByUrl('highlights', {state: {navigatedFrom: 'Landing'}});
     this.windowService.adjustBackgroundImageWidth(3200);
   }
 
   goToUpload(): void {
-    this.router.navigateByUrl('upload');
+    this.router.navigateByUrl('upload', {state: {navigatedFrom: 'Landing'}});
     this.windowService.adjustBackgroundImageWidth(3200);
   }
 

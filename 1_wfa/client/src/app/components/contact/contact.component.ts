@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MetricsService } from 'src/app/services/metrics.service';
 
 @Component({
   selector: 'app-contact',
@@ -9,8 +10,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class ContactComponent implements OnInit {
 
   contactForm!: FormGroup;
-
-  constructor() {
+  metricHeader = 'Contact';
+  constructor(private metricsService: MetricsService) {
     this.contactForm = new FormGroup({
       name: new FormControl('', null),
       email: new FormControl('', null),
@@ -20,6 +21,7 @@ export class ContactComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.metricsService.addPageMetrics(this.metricHeader, history.state.navigatedFrom);
   }
 
   submit() {

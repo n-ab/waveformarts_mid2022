@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MetricsService } from 'src/app/services/metrics.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -15,8 +16,9 @@ export class LoginComponent implements OnInit {
   registerForm: FormGroup;
   registerSuccess = false;
   showRegisterForm = false;
+  metricHeader = 'Login';
 
-  constructor(private userService: UserService, public dialogRef: MatDialogRef<LoginComponent>) {
+  constructor(private userService: UserService, public dialogRef: MatDialogRef<LoginComponent>, private metricsService: MetricsService) {
     this.loginForm = new FormGroup({
       username: new FormControl(null),
       password: new FormControl(null),
@@ -33,6 +35,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.metricsService.addPageMetrics(this.metricHeader, history.state.navigatedFrom);
   }
 
   async login() {

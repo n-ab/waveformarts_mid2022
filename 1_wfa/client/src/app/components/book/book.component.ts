@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MetricsService } from 'src/app/services/metrics.service';
 
 @Component({
   selector: 'app-book',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./book.component.scss']
 })
 export class BookComponent implements OnInit {
-
-  constructor() { }
+  metricHeader = 'Book';
+  constructor(private metricsService: MetricsService) { }
 
   ngOnInit(): void {
+    this.metricsService.addPageMetrics(this.metricHeader, history.state.navigatedFrom);
   }
 
 }

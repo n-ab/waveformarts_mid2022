@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { LoginComponent } from '../login/login.component';
 import { UserService } from 'src/app/services/user.service';
 import { WindowService } from 'src/app/services/window.service';
+import { MetricsService } from 'src/app/services/metrics.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,11 +14,13 @@ import { WindowService } from 'src/app/services/window.service';
 })
 export class NavbarComponent implements OnInit {
   user!: User;
+  metricHeader = 'Landing';
 
-  constructor(private router: Router, private dialog: MatDialog, private userService: UserService, private windowService: WindowService) { }
+  constructor(private router: Router, private dialog: MatDialog, private userService: UserService, private windowService: WindowService, private metricsService: MetricsService) { }
 
   ngOnInit(): void {
     this.userCheck();
+    this.metricsService.addPageMetrics(this.metricHeader, history.state.navigatedFrom);
   }
 
   userCheck(): void {
@@ -39,13 +42,17 @@ export class NavbarComponent implements OnInit {
   }
 
   account() {
-    this.router.navigateByUrl('account');
+    this.router.navigateByUrl('account', {state: {navigatedFrom: `${this.metricHeader}`}});
     // this.windowService.bgImageMarginLeft.next(-600);
   }
 
   home() {
     this.router.navigateByUrl('');
     // this.windowService.bgImageWidth.next(4000);
+  }
+
+  goToAdmin() {
+    this.router.navigateByUrl('admin', {state: {navigatedFrom: `${this.metricHeader}`}});
   }
 
 }

@@ -12,7 +12,7 @@ import { MetricsService } from 'src/app/services/metrics.service';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
-
+  metricHeader = 'Admin';
   adminForm!: FormGroup;
   addPageForm!: FormGroup;
   addUserForm!: FormGroup;
@@ -58,9 +58,11 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(history.state.navigatedFrom);
+    
     this.windowService.bgImageWidth.next(4300);
     this.windowService.bgImageMarginLeft.next(-2700);
-    this.metricsService.addPageCount('Admin');
+    this.metricsService.addPageMetrics(this.metricHeader, history.state.navigatedFrom);
   }
 
   login(): void {

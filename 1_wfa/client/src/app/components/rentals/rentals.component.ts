@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MetricsService } from 'src/app/services/metrics.service';
 
 @Component({
   selector: 'app-rentals',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RentalsComponent implements OnInit {
 
-  constructor() { }
+  metricHeader = 'Rentals';
+
+  constructor(private metricsService: MetricsService) { }
 
   ngOnInit(): void {
+    this.metricsService.addPageMetrics(this.metricHeader, history.state.navigatedFrom);
   }
 
 }

@@ -14,8 +14,8 @@ export class WindowComponent implements OnInit {
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.width = 5100;
-      this.marginLeft = -1400;
+      this.width = 3900;
+      this.marginLeft = -100;
     }, 1);
     this.updateWidth();
     this.updateMarginLeft();

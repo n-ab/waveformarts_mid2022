@@ -8,6 +8,12 @@ export class MetricsService {
 
   constructor(private http: HttpClient) { }
 
+  addPageMetrics(currentPage: string, navigatedFrom: string) {
+    return this.http.post('/api/metrics/addPageMetrics', {currentPage, navigatedFrom}).toPromise()
+      .then(resultsConfirmed => resultsConfirmed)
+      .catch(err => err);
+  }
+
   addPageCount(page: string) {
     console.log('adding page count for page: ', page);
     const data = new FormData();

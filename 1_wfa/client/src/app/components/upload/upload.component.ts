@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FileService } from 'src/app/services/file.service';
+import { MetricsService } from 'src/app/services/metrics.service';
 
 @Component({
   selector: 'app-upload',
@@ -12,8 +13,9 @@ export class UploadComponent implements OnInit {
 
   uploadForm: FormGroup;
   audioPreview = '';
+  metricsHeader = 'Upload';
 
-  constructor(private router: Router, private fileService: FileService) {
+  constructor(private router: Router, private fileService: FileService, private metricsService: MetricsService) {
     this.uploadForm = new FormGroup({
       title: new FormControl('', Validators.required),
       clientsEmail: new FormControl('', null),
@@ -23,7 +25,7 @@ export class UploadComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+    this.metricsService.addPageMetrics(this.metricsHeader, history.state.navigatedFrom);
   }
 
   soundSelected(event: Event): void {
