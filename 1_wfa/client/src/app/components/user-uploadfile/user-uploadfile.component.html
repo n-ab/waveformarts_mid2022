@@ -1,0 +1,6 @@
+<div class="title">Upload A File</div>
+<form class="upload-form" [formGroup]="uploadForm" (ngSubmit)="upload()">
+    <mat-form-field><input matInput type="text" name="title" formControlName="title" placeholder="name of file"></mat-form-field>
+    <input type="file" style="display: none;" #sound (change)="soundSelected($event)">
+    <button type="button" mat-raised-button class="upload-button" (click)="sound.click()">Add File</button>
+</form>

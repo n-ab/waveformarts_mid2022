@@ -44,6 +44,7 @@ import { UserMessagesComponent } from './components/user-messages/user-messages.
 import { UserQuestionComponent } from './components/user-question/user-question.component';
 import { FaqAccountComponent } from './components/faq-account/faq-account.component';
 import { ReportComponent } from './components/report/report.component';
+import { UserUploadfileComponent } from './components/user-uploadfile/user-uploadfile.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { ReportComponent } from './components/report/report.component';
     UserMessagesComponent,
     UserQuestionComponent,
     FaqAccountComponent,
-    ReportComponent
+    ReportComponent,
+    UserUploadfileComponent
   ],
   imports: [
     BrowserModule,
