@@ -1,0 +1,64 @@
+<div class="wrapper">
+    <div class="title">File Manager</div>
+
+           <!-- home -->
+
+    <div class="home" *ngIf="home">
+        <div class="home-items">
+            <div class="home-item hi1" (click)="selectionUploads()">
+                <div class="home-item-title">Uploads</div>
+                <div class="user-uploads" *ngIf="userUploads.length > 1">
+                    <div class="user-upload" *ngFor="let upload of userUploads">
+                        {{ upload | json }}
+                    </div>
+                </div>
+                <div class="none" *ngIf="!userUploads.length">No uploads </div>
+                <div class="upload-something">
+                    <button mat-raised-button style="width: 100%;">upload a file</button>
+                </div>
+            </div>
+            <div class="home-item hi2" (click)="selectionDownloads()">
+                <div class="home-item-title">Downloads</div>
+                <div class="user-downloads" *ngIf="userDownloads.length > 1">
+                    <div class="user-download" *ngFor="let download of userDownloads">
+                        {{ download | json }}
+                    </div>
+                </div>
+                <div class="none" *ngIf="!userDownloads.length">No downloads </div>
+            </div>
+        </div>
+    </div>
+
+           <!-- uploads -->
+
+    <div class="uploads" *ngIf="uploads">
+        <div class="home-item upload" (click)="selectionUploads()">
+            <div class="home-item-title">Uploads</div>
+            <div class="user-uploads" *ngIf="userUploads.length > 1">
+                <div class="user-upload" *ngFor="let upload of userUploads">
+                    {{ upload | json }}
+                </div>
+            </div>
+            <div class="none" *ngIf="!userUploads.length">No uploads </div>
+            <div class="upload-something">
+                <button mat-raised-button style="width: 100%;">upload a file</button>
+            </div>
+        </div>
+        <div class="spacer"></div>
+    </div>
+
+           <!-- downloads -->
+
+    <div class="downloads" *ngIf="downloads">
+        <div class="home-item download" (click)="selectionDownloads()">
+            <div class="home-item-title">Downloads</div>
+            <div class="user-downloads" *ngIf="userDownloads.length > 1">
+                <div class="user-download" *ngFor="let download of userDownloads">
+                    {{ download | json }}
+                </div>
+            </div>
+            <div class="none" *ngIf="!userDownloads.length">No downloads </div>
+        </div>
+    </div>
+
+</div>

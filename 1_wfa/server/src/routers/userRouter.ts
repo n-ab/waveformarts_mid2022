@@ -8,10 +8,10 @@ export const app = express();
 
 app.get('/check', (req: any, res) => {    
     if (!req.user) {
-        console.log('nobody has logged in. bruh.');
+        console.log('no login.');
         return res.status(200).json(false);
     }
-    console.log('bruh. a user was found. this user: ', req.user);
+    console.log('active session for: ', req.user.firstName);
     
     return res.status(200).json(req.user);
 })
@@ -28,4 +28,15 @@ app.post('/register', async (req: any, res) => {
     console.log('registering:', req.body);
     const user = await userController.register(req.body);
     return res.status(200).json();
+})
+
+app.get('/fetchFiles', async (req: any, res) => {
+    if (req.user) {
+        const files = await userController.fetchFiles(req.user);
+        console.log('returning files: ', files);
+        
+        return res.status(200).json({downloads: files?.downloads, uploads: files?.uploads});
+    } else {
+        return res.status(200).json('no one logged in.')
+    }
 })

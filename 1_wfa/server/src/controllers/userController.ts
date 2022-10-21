@@ -10,5 +10,10 @@ export function register(data: any) {
         user.username = data.email;
         user.save();
         return user;
-    })
+    });   
+}
+
+export async function fetchFiles(id: string) {
+    const user = await UserModel.findById(id).catch(err => console.log('error fetching files: ', err));   
+    return user;
 }

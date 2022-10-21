@@ -7,16 +7,16 @@ const passport = new Passport();
 const app = express();
 
 export function login(req: any, res: any, next: any) {
-    console.log('1 auth.ts - attempting to login: ', req.body);
+    // console.log('1 auth.ts - attempting to login: ', req.body);
     
     passport.authenticate('local', (err, user, info) => {
-        console.log('2 passport.authenticate: ', user + ' INFO \/b' + info);
+        // console.log('2 passport.authenticate: ', user + ' INFO \/b' + info);
         if (err) return next(err) && console.log('auth.login() failed - error = ', err);
         if (!user) {
             return res.status(401).json(info);
         }
         req.login(user, (err: any) => { 
-            console.log('req.login - user = ', user);
+            // console.log('req.login - user = ', user);
             
             res.json(user);
         })

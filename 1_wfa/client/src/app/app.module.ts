@@ -34,6 +34,16 @@ import { HttpClientModule } from '@angular/common/http';
 import { WindowService } from './services/window.service';
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminClientComponent } from './components/admin-client/admin-client.component';
+import { UserFilesComponent } from './components/user-files/user-files.component';
+import { StoreComponent } from './components/store/store.component';
+import { UserPasswordresetComponent } from './components/user-passwordreset/user-passwordreset.component';
+import { UserEmailresetComponent } from './components/user-emailreset/user-emailreset.component';
+import { UserPlanComponent } from './components/user-plan/user-plan.component';
+import { UserOrdersComponent } from './components/user-orders/user-orders.component';
+import { UserMessagesComponent } from './components/user-messages/user-messages.component';
+import { UserQuestionComponent } from './components/user-question/user-question.component';
+import { FaqAccountComponent } from './components/faq-account/faq-account.component';
+import { ReportComponent } from './components/report/report.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +62,17 @@ import { AdminClientComponent } from './components/admin-client/admin-client.com
     RentalsComponent,
     HighlightsComponent,
     AdminComponent,
-    AdminClientComponent
+    AdminClientComponent,
+    UserFilesComponent,
+    StoreComponent,
+    UserPasswordresetComponent,
+    UserEmailresetComponent,
+    UserPlanComponent,
+    UserOrdersComponent,
+    UserMessagesComponent,
+    UserQuestionComponent,
+    FaqAccountComponent,
+    ReportComponent
   ],
   imports: [
     BrowserModule,

@@ -30,4 +30,10 @@ export class UserService {
       .then(client => {console.log('client: ', client); return Object.values(client);})
       .catch(err => console.log('error registering: ', err));
   }
+
+  fetchFiles() {
+    return this.http.get('/api/user/fetchFiles').toPromise()
+      .then(files => files)
+      .catch(err => err)
+  }
 }
