@@ -19,6 +19,11 @@
     100% {width: 5%;}
 }
 
+@keyframes fileUploadSuccess {
+    0%   {opacity: 0; background-color: white;}
+    100% {opacity: 1; background-color: rgba(42, 236, 42, 0.445);}
+}
+
 // --- landing ----------------
 
 @keyframes mobile-landing {

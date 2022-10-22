@@ -16,12 +16,15 @@ export class UserUploadfileComponent implements OnInit {
 
   uploadForm!: FormGroup;
   user!: User;
+  file!: File;
+  fileUploaded = false;
 
   audioPreview = '';
 
   constructor(private userService: UserService, public dialogRef: MatDialogRef<UserUploadfileComponent>, private fileService: FileService) {
     this.uploadForm = new FormGroup({
       title: new FormControl(''),
+      project: new FormControl(''),
       audioFile: new FormControl(null),
     })
   }
@@ -53,6 +56,9 @@ export class UserUploadfileComponent implements OnInit {
       };
       if (file) {
         reader.readAsDataURL(file);
+        this.fileUploaded = true;
+        this.dialogRef.updateSize('85%', '400px');
+        this.file = file;
         // const source = this.audioContext.createBufferSource().context;
         // console.log('this.audioContext.createBufferSource().context: ', source);
       }

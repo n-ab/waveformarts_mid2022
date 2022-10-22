@@ -2,5 +2,9 @@
 <form class="upload-form" [formGroup]="uploadForm" (ngSubmit)="upload()">
     <mat-form-field><input matInput type="text" name="title" formControlName="title" placeholder="name of file"></mat-form-field>
     <input type="file" style="display: none;" #sound (change)="soundSelected($event)">
-    <button type="button" mat-raised-button class="upload-button" (click)="sound.click()">Add File</button>
+    <mat-form-field><input matInput type="text" name="project" formControlName="project" placeholder="intended project"></mat-form-field>
+    <button *ngIf="!fileUploaded" type="button" mat-raised-button class="upload-button" (click)="sound.click()">Add File</button>
+    <div *ngIf="fileUploaded" class="file-upload-success">file selected: <br> <span style="color: black; font-size: 95%; font-weight: 500;">{{ file.name }}</span></div>
+    <br>
+    <button *ngIf="fileUploaded" mat-raised-button class="submit" type="submit">upload</button>
 </form>

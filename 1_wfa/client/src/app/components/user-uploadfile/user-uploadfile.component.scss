@@ -2,4 +2,33 @@
     color: white; 
     font-size: 150%;
     font-weight: 100;
+    margin-bottom: 50px;
+}
+
+mat-form-field {
+    display: block;
+}
+
+.file-upload-success {
+    opacity: 0;
+    margin: auto;
+    display: block;
+    width: 40%;
+    padding: 1rem;
+    border-radius: 5px;
+    letter-spacing: 2px;
+    font-weight: 100;
+    text-align: center;
+    animation: fileUploadSuccess 1s ease forwards;
+}
+
+.submit {
+    letter-spacing: 1px;
+    font-weight: 100;
+    font-size: 110%;
+    background-color: rgba(0, 0, 0, 0.228);
+    text-align: center;
+    display: block;
+    margin: auto;
+    width: 297px;
 }

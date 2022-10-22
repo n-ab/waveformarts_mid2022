@@ -40,3 +40,8 @@ app.get('/fetchFiles', async (req: any, res) => {
         return res.status(200).json('no one logged in.')
     }
 })
+
+app.post('/changePassword', async (req: any, res) => {
+    const result = await userController.changePassword(req.body, req.user['_id']);
+    return res.status(200).json(result);
+})

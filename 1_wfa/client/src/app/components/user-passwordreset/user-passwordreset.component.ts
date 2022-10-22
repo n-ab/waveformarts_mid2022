@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
+import { User } from 'src/app/models';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-user-passwordreset',
@@ -7,9 +11,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserPasswordresetComponent implements OnInit {
 
-  constructor() { }
+  changePasswordForm!: FormGroup;
+  user!: User;
+
+  constructor(public dialogRef: MatDialogRef<UserPasswordresetComponent>, private userService: UserService) {
+    this.changePasswordForm = new FormGroup({
+      oldPassword: new FormControl(''),
+      newPassword: new FormControl(''),
+      confirmNewPassword: new FormControl('')
+    });
+  }
 
   ngOnInit(): void {
+    this.userService.check().then(user => this.user = user);
+  }
+
+  changePassword() {
+    this.userService.changePassword(this.changePasswordForm.getRawValue());
   }
 
 }

@@ -36,4 +36,10 @@ export class UserService {
       .then(files => files)
       .catch(err => err)
   }
+
+  changePassword(data: any) {
+    return this.http.post('/api/user/changePassword', data).toPromise()
+      .then(user => user)
+      .catch(err => err);
+  }
 }

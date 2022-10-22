@@ -17,3 +17,14 @@ export async function fetchFiles(id: string) {
     const user = await UserModel.findById(id).catch(err => console.log('error fetching files: ', err));   
     return user;
 }
+
+export async function changePassword(passwordData: any, userId: string) {
+    const user = await UserModel.findById(userId);
+    console.log('user found CHANGE PASSWORD: ', user);
+    if (user!.password !== passwordData['oldPassword']) return false;
+    if (user!.password == passwordData['oldPassword']) {
+        user!.password == passwordData['newPassword'];
+        user!.save();
+        return user!;
+    }
+}

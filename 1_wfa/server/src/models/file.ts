@@ -5,7 +5,8 @@ export interface FileObject extends mongoose.Document {
     title: string,
     tasks: string, 
     email: string,
-    filePath: string
+    filePath: string,
+    associatedProject: string,
 }
 
 const schema = new mongoose.Schema({
@@ -13,6 +14,7 @@ const schema = new mongoose.Schema({
     tasks: String,
     email: String,
     filePath: String,
+    associatedProject: { type: mongoose.Schema.Types.ObjectId, ref: 'Project'},
 }, {timestamps: true});
 
 export const FileModel = mongoose.model<FileObject>('File', schema);

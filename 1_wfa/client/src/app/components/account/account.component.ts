@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from 'src/app/models';
 import { MetricsService } from 'src/app/services/metrics.service';
 import { UserService } from 'src/app/services/user.service';
 import { WindowService } from 'src/app/services/window.service';
+import { MatDialog } from '@angular/material/dialog';
+import { UserPasswordresetComponent } from '../user-passwordreset/user-passwordreset.component';
 
 @Component({
   selector: 'app-account',
@@ -12,11 +15,19 @@ import { WindowService } from 'src/app/services/window.service';
 export class AccountComponent implements OnInit {
 
   metricHeader = 'Account';
+  user!: User;
 
-  constructor(private router: Router, private windowService: WindowService, private metricsService: MetricsService, private userService: UserService) { }
+  constructor(private router: Router, private windowService: WindowService, private metricsService: MetricsService, private userService: UserService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.userService.check().then(user => console.log('user: ', user));
+    this.userService.check()
+      .then (userFound => {
+        if (userFound) {
+          this.user = userFound;
+        } else {
+          this.router.navigateByUrl('');
+        }
+      })
     this.windowService.bgImageMarginLeft.next(-50);
     this.metricsService.addPageMetrics(this.metricHeader, history.state.navigatedFrom);
   }
@@ -40,7 +51,11 @@ export class AccountComponent implements OnInit {
   }
 
   goToResetPassword(): void {
-    this.router.navigateByUrl('account/password', {state: {visitedFrom: 'Account'}});
+    this.dialog.open(UserPasswordresetComponent, {
+      width: '60%',
+      maxWidth: '700px',
+      height: '345px'
+    });
   }
 
   goToChangeEmail(): void {

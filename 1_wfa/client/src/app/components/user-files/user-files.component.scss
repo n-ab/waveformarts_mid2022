@@ -25,14 +25,6 @@
     height: 35px;
 }
 
-.pre-width-adjustment {
-
-}
-
-.post-width-adjustment {
-
-}
-
 // home
 
 .home-items {
@@ -73,8 +65,22 @@
     justify-content: space-evenly;
 }
 
-.upload {
+#uploads {
+    margin-left: 3%;
+    transition: all 1s ease-in-out;
+}
+
+#downloads {
+    margin-left: 3%;
+    transition: all 1s ease-in-out;
+}
+
+.pre-expand {
     width: 45%;
+}
+
+.post-expand { 
+    width: 90%;
 }
 
 .spacer {
@@ -87,7 +93,11 @@
     height: 239px;
 }
 
-.none {
+.user-downloads {
+    height: 239px;
+}
+
+.no-uploads {
     color: white;
     font-size: 200%;
     font-weight: 100;
@@ -104,4 +114,12 @@
 
 .download {
     width: 45%;
+}
+
+.no-downloads {
+    color: white;
+    font-size: 200%;
+    font-weight: 100;
+    padding: 2rem;
+    height: 239px;
 }
