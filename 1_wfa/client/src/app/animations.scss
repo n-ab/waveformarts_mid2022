@@ -24,6 +24,11 @@
     100% {opacity: 1; background-color: rgba(42, 236, 42, 0.445);}
 }
 
+@keyframes contentReveal {
+    0%   {line-height: 1px; opacity: 0;}
+    100% {line-height: 50px; opacity: 1}
+}
+
 // --- landing ----------------
 
 @keyframes mobile-landing {

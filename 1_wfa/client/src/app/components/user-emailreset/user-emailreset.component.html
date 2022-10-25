@@ -1,1 +1,8 @@
-<p>user-emailreset works!</p>
+<div class="title">Reset Email</div>
+
+<form [formGroup]="changeEmailForm" (ngSubmit)="changeEmail()">
+    <mat-form-field><input matInput type="text" name="oldEmail" formControlName="oldEmail" placeholder="Old Email"></mat-form-field>
+    <mat-form-field><input matInput type="text" name="newEmail" formControlName="newEmail" placeholder="New Email"></mat-form-field>
+    <mat-form-field><input matInput type="text" name="confirmNewEmail" formControlName="confirmNewEmail" placeholder="Confirm Email"></mat-form-field>
+    <button mat-raised-button type="submit" class="submit">submit</button>
+</form>

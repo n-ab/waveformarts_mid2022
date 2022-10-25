@@ -6,6 +6,9 @@ import { UserService } from 'src/app/services/user.service';
 import { WindowService } from 'src/app/services/window.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UserPasswordresetComponent } from '../user-passwordreset/user-passwordreset.component';
+import { UserEmailresetComponent } from '../user-emailreset/user-emailreset.component';
+import { UserPlanComponent } from '../user-plan/user-plan.component';
+import { UserQuestionComponent } from '../user-question/user-question.component';
 
 @Component({
   selector: 'app-account',
@@ -59,11 +62,20 @@ export class AccountComponent implements OnInit {
   }
 
   goToChangeEmail(): void {
-    this.router.navigateByUrl('account/email', {state: {visitedFrom: 'Account'}});
+    // this.router.navigateByUrl('account/email', {state: {visitedFrom: 'Account'}});
+    this.dialog.open(UserEmailresetComponent, {
+      width: '60%',
+      maxWidth: '700px',
+      height: '345px'
+    });
   }
 
   goToCurrentPlan(): void {
-    this.router.navigateByUrl('account/currentplan', {state: {visitedFrom: 'Account'}});
+    this.dialog.open(UserPlanComponent, {
+      width: '95%',
+      maxWidth: '1000px',
+      height: '57%'
+    });
   }
 
   goToOrderHistory(): void {
@@ -87,7 +99,11 @@ export class AccountComponent implements OnInit {
   }
 
   goToAskQuestion(): void {
-    this.router.navigateByUrl('account/question', {state: {visitedFrom: 'Account'}});
+    this.dialog.open(UserQuestionComponent, {
+      width: '75%',
+      maxWidth: '1000px',
+      height: '439px'
+    });
   }
   
   goToFAQs(): void {

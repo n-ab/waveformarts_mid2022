@@ -17,8 +17,6 @@ export class UserService {
   }
 
   login(data: any) {
-    console.log('logging in: ', data);
-    
     return this.http.post('/api/user/login', data).toPromise()
       .then(user => user)
       .catch(err => err);
@@ -40,6 +38,24 @@ export class UserService {
   changePassword(data: any) {
     return this.http.post('/api/user/changePassword', data).toPromise()
       .then(user => user)
+      .catch(err => err);
+  }
+
+  changeEmail(data: any) {
+    return this.http.post('/api/user/changeEmail', data).toPromise()
+      .then(user => user)
+      .catch(err => err);
+  }
+
+  fetchPlan() {
+    return this.http.get(`/api/user/fetchPlan`).toPromise()
+      .then(plan => plan)
+      .catch(err => err);
+  }
+
+  askQuestion(question: any) {
+    return this.http.post('/api/user/askQuestion', question).toPromise()
+      .then(question => question)
       .catch(err => err);
   }
 }

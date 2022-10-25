@@ -4,6 +4,7 @@ import { PageObject } from '../../../server/src/models/page';
 import { MetricsObject } from '../../../server/src/models/metrics';
 import { NavigationObject } from '../../../server/src/models/navigation';
 import { FileObject } from '../../../server/src/models/file';
+import { PlanObject } from '../../../server/src/models/plan';
 
 export {
     UserObject as User,
@@ -12,4 +13,5 @@ export {
     MetricsObject as Metrics,
     NavigationObject as Navigation,
     FileObject as File,
+    PlanObject as Plan,
 }

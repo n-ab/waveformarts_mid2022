@@ -23,11 +23,17 @@ export class UserPasswordresetComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.check().then(user => this.user = user);
   }
 
   changePassword() {
-    this.userService.changePassword(this.changePasswordForm.getRawValue());
+    this.userService.check().then(user => this.user = user)
+      .then(() => {
+        console.log('user login confirmed. updating password...');
+        this.userService.changePassword(this.changePasswordForm.getRawValue())
+          .then(() => {
+            this.dialogRef.close();
+          })
+      })
   }
 
 }

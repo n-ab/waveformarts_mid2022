@@ -8,6 +8,7 @@ export interface UserObject extends mongoose.Document {
     lastName: string,
     nameAbbreviation: string,
     password: string,
+    tempPassword: string,
     email: string,
     username: string,
     company: string,
@@ -18,7 +19,9 @@ export interface UserObject extends mongoose.Document {
     readMessages: string[],
     starredSounds: string[], 
     downloads: string[],
-    uploads: string[]
+    uploads: string[],
+    plan: string,
+    questions: string[]
 }
 
 const schema = new mongoose.Schema({
@@ -28,6 +31,7 @@ const schema = new mongoose.Schema({
     lastName: String,
     nameAbbreviation: String,
     password: String,
+    tempPassword: String,
     email: String,
     username: String,
     company: String,
@@ -39,6 +43,8 @@ const schema = new mongoose.Schema({
     starredSounds: [String],
     downloads: [{ type: mongoose.Schema.Types.ObjectId, ref: 'File' }],
     uploads: [{ type: mongoose.Schema.Types.ObjectId, ref: 'File' }],
+    plan: { type: String, default: 'standard'},
+    questions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Question' }],
 }, { timestamps: true });
 
 export const UserModel = mongoose.model<UserObject>('User', schema);

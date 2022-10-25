@@ -29,7 +29,6 @@ export class UploadComponent implements OnInit {
   }
 
   soundSelected(event: Event): void {
-    
     const reee = document.getElementById('lil-container');
     reee?.classList.add()
     if ((event.target as HTMLInputElement).files![0] != null) {
@@ -56,7 +55,6 @@ export class UploadComponent implements OnInit {
     console.log('uploading file...');
     console.log(this.uploadForm);
     this.fileService.uploadFile(this.uploadForm.getRawValue());
-    
   }
 
 }
