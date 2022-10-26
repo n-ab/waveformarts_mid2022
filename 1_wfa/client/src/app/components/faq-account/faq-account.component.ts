@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { MetricsService } from 'src/app/services/metrics.service';
 
 @Component({
   selector: 'app-faq-account',
@@ -7,7 +10,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FaqAccountComponent implements OnInit {
 
-  constructor() { }
+  metricHeader = 'FAQs'
+
+  constructor(private router: Router, public dialogRef: MatDialogRef<FaqAccountComponent>) { }
 
   ngOnInit(): void {
   }

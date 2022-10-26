@@ -58,4 +58,16 @@ export class UserService {
       .then(question => question)
       .catch(err => err);
   }
+
+  reportIssue(issue: any) {
+    return this.http.post('/api/user/askQuestion', issue).toPromise()
+      .then(question => question)
+      .catch(err => err);
+  }
+
+  makeSuggestion(issue: any) {
+    return this.http.post('/api/user/makeSuggestion', issue).toPromise()
+      .then(suggestion => suggestion)
+      .catch(err => err);
+  }
 }

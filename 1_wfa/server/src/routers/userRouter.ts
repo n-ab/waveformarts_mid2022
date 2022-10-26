@@ -7,7 +7,18 @@ export const app = express();
 
 // --- M U L T E R ----------
 
-const storage = multer.diskStorage({
+const storageQuestion = multer.diskStorage({
+    destination: (req, file, callback) => {
+        callback(null, "src/images/questions");
+    },
+    filename: (req, file, callback) => {
+        console.log('req.body', req.body);
+        console.log('file', file);
+        callback(null, 'reee');
+    }
+})
+
+const storageReport = multer.diskStorage({
     destination: (req, file, callback) => {
         callback(null, "src/images/questions");
     },
@@ -75,8 +86,20 @@ app.get('/fetchPlan', async (req: any, res) => {
     return res.status(200).json(plan);
 })
 
-app.post('/askQuestion', multer({storage: storage}).single(''), async (req: any, res) => {
+app.post('/askQuestion', multer({storage: storageQuestion}).single('image'), async (req: any, res) => {
     const question = await userController.addQuestion(req.user, req.body);
     console.log('question asked: ', question);
     return res.status(200).json(question);
+})
+
+app.post('/reportIssue', multer({storage: storageReport}).single('image'), async (req: any, res) => {
+    const issue = await userController.reportIssue(req.user, req.body);
+    console.log('issue reported: ', issue);
+    return res.status(200).json(issue);
+})
+
+app.post('/makeSuggestion', async (req: any, res) => {
+    const suggestion = await userController.makeSuggestion(req.user, req.body);
+    console.log('suggestion saved: ', suggestion);
+    return res.status(200).json(suggestion);
 })

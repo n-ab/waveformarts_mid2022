@@ -1,5 +1,7 @@
 import { UserModel } from '../models/user';
 import { QuestionModel } from '../models/question';
+import { ReportModel } from '../models/report';
+import { SuggestionModel } from '../models/suggestion';
 
 export function register(data: any) {
     console.log('Registering new user with data: ');
@@ -55,4 +57,23 @@ export async function addQuestion(userId: string, questionContent: any) {
     user?.questions.push(question);
     await user?.save();
     return question;
+}
+
+export async function reportIssue(userId: string, issue: any) {
+    const user = await UserModel.findById(userId);
+    console.log('issue = ', issue);
+    const report = await ReportModel.create({issue: issue.complaint, additionalInfo: issue.additionalInfo, image: issue.imageFilePath, reportedBy: userId}).then(report => report._id).catch(err => console.log(err));
+    user?.reports.push(report);
+    await user?.save();
+    return report;
+}
+
+export async function makeSuggestion(userId: string, suggestion: any) {
+    const user = await UserModel.findById(userId);
+    console.log('suggestion = ', suggestion);
+    // const report = await ReportModel.create({issue: issue.complaint, additionalInfo: issue.additionalInfo, image: issue.imageFilePath, reportedBy: userId}).then(report => report._id).catch(err => console.log(err));
+    const suggestionMade = await SuggestionModel.create({suggestion: suggestion.suggestion, suggestedBy: userId}).then(suggestion => suggestion?._id).catch(err => console.log('error: ', err));
+    user?.reports.push(suggestionMade);
+    await user?.save();
+    return suggestionMade;
 }

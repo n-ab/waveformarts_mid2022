@@ -9,6 +9,9 @@ import { UserPasswordresetComponent } from '../user-passwordreset/user-passwordr
 import { UserEmailresetComponent } from '../user-emailreset/user-emailreset.component';
 import { UserPlanComponent } from '../user-plan/user-plan.component';
 import { UserQuestionComponent } from '../user-question/user-question.component';
+import { FaqAccountComponent } from '../faq-account/faq-account.component';
+import { ReportComponent } from '../report/report.component';
+import { SuggestComponent } from '../suggest/suggest.component';
 
 @Component({
   selector: 'app-account',
@@ -107,15 +110,27 @@ export class AccountComponent implements OnInit {
   }
   
   goToFAQs(): void {
-    this.router.navigateByUrl('account/faq', {state: {visitedFrom: 'Account'}});
+    this.dialog.open(FaqAccountComponent, {
+      width: '85%',
+      maxWidth: '1000px',
+      height: '490px'
+    });
   }
 
   goToSuggestFeature(): void {
-    this.router.navigateByUrl('account/faq', {state: {visitedFrom: 'Account'}});
+    this.dialog.open(SuggestComponent, {
+      width: '75%',
+      maxWidth: '1000px',
+      height: '439px'
+    });
   }
 
   goToReportProblem(): void {
-    this.router.navigateByUrl('report', {state: {visitedFrom: 'Account', problem: 'site'}});
+    this.dialog.open(ReportComponent, {
+      width: '75%',
+      maxWidth: '1000px',
+      height: '439px'
+    });
   }
 
   goToReportUser(): void {

@@ -21,7 +21,9 @@ export interface UserObject extends mongoose.Document {
     downloads: string[],
     uploads: string[],
     plan: string,
-    questions: string[]
+    questions: string[],
+    reports: string[],
+    suggestions: string[],
 }
 
 const schema = new mongoose.Schema({
@@ -45,6 +47,8 @@ const schema = new mongoose.Schema({
     uploads: [{ type: mongoose.Schema.Types.ObjectId, ref: 'File' }],
     plan: { type: String, default: 'standard'},
     questions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Question' }],
+    reports: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Report' }],
+    suggestions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Suggestion' }],
 }, { timestamps: true });
 
 export const UserModel = mongoose.model<UserObject>('User', schema);

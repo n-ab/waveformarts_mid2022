@@ -1,0 +1,27 @@
+.title {
+    color: white; 
+    font-size: 150%;
+    font-weight: 100;
+    padding: 1rem;
+    letter-spacing: 2px;
+}
+
+.faq {
+    background-color: #353535;
+    border-radius: 5px;
+    box-shadow: 0px 0px 20px -5px black;
+    padding: 1rem;
+    margin: 1rem;
+}
+
+.faq-question {
+    font-style: italic;
+    color: lightgrey;
+    margin-bottom: 12px;
+    font-size: 125%;
+}
+
+.faq-answer {
+    font-weight: 100;
+    font-size: 105%;
+}
