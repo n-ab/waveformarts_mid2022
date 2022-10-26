@@ -39,7 +39,7 @@ const schema = new mongoose.Schema({
     company: String,
     project: [String],
     clientNumber: Number,
-    discussions: [Object],
+    discussions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Discussion' }],
     messages: [Object],
     readMessages: [String],
     starredSounds: [String],

@@ -1,0 +1,32 @@
+@import '../../animations.scss';
+
+.wrapper {
+    position: absolute;
+    width: 100vw;
+}
+
+.title {
+    color: white;
+    font-size: 200%;
+    font-weight: 100;
+    margin: 100px 50px 50px 50px;
+}
+
+.back-button {
+    margin-left: 3rem;
+    background-color: rgba(52, 52, 52, 0.574);
+    font-weight: 100;
+    font-size: 55%;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.section-title {
+    color: white;
+    padding: 1rem 7rem;
+    font-size: 150%;
+    font-weight: 100;
+}
+
+.view-messages-table {
+    background-image: linear-gradient(0.31turn, #00d0ff, #0088ff);
+}

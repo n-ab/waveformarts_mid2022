@@ -86,19 +86,23 @@ export class AccountComponent implements OnInit {
   }
 
   goToYourMessages(): void {
-    this.router.navigateByUrl('account/messages', {state: {visitedFrom: 'Account', selection: 'home'}});
+    this.router.navigateByUrl('account/messages', {state: {visitedFrom: 'Account', selection: 'viewMessages'}});
   }
 
   goToComposeMessage(): void {
-    this.router.navigateByUrl('account/messages', {state: {visitedFrom: 'Account', selection: 'compose'}});
-  }
-  
-  goToStarredMessages(): void {
-    this.router.navigateByUrl('account/messages', {state: {visitedFrom: 'Account', selection: 'starred'}});
+    this.router.navigateByUrl('account/messages', {state: {visitedFrom: 'Account', selection: 'sendMessage'}});
   }
   
   goToSendFile(): void {
-    this.router.navigateByUrl('account/messages', {state: {visitedFrom: 'Account', selection: 'file'}});
+    this.router.navigateByUrl('account/messages', {state: {visitedFrom: 'Account', selection: 'sendFile'}});
+  }
+  
+  goToStarredMessages(): void {
+    this.router.navigateByUrl('account/messages', {state: {visitedFrom: 'Account', selection: 'viewStarredMessages'}});
+  }
+
+  goToCommunications(): void {
+    this.router.navigateByUrl('communications', {state: {selection: 'viewMessages'}})
   }
 
   goToAskQuestion(): void {

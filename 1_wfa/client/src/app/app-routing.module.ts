@@ -13,6 +13,7 @@ import { RentalsComponent } from './components/rentals/rentals.component';
 import { ReportComponent } from './components/report/report.component';
 import { StoreComponent } from './components/store/store.component';
 import { UploadComponent } from './components/upload/upload.component';
+import { UserCommunicationsComponent } from './components/user-communications/user-communications.component';
 import { UserEmailresetComponent } from './components/user-emailreset/user-emailreset.component';
 import { UserFilesComponent } from './components/user-files/user-files.component';
 import { UserMessagesComponent } from './components/user-messages/user-messages.component';
@@ -40,7 +41,7 @@ const routes: Routes = [
   { path: 'account/emailreset',     component: UserEmailresetComponent },
   { path: 'account/plan',           component: UserPlanComponent },
   { path: 'account/orders',         component: UserOrdersComponent },
-  { path: 'account/messages',       component: UserMessagesComponent },
+  { path: 'account/messages',       component: UserCommunicationsComponent },
   { path: 'account/question',       component: UserQuestionComponent },
   { path: 'account/faq',            component: FaqAccountComponent },
 ];

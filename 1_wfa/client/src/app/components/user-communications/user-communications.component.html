@@ -1,0 +1,40 @@
+<div class="wrapper">
+    <div class="title">Communications</div>
+
+    <!--       view messages      -->
+
+    <div class="view-messages" *ngIf="viewMessages">
+        <div class="section-title">Your Messages</div>
+        <table *ngIf="userMessages.length" class="view-messages-table">
+            <thead>
+                <th>Message</th>
+                <th>From</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let message of userMessages">
+                    <td>{{ message.content }}</td>
+                    <td>{{ message.sender }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!--       send message      -->
+
+    <div class="send-message" *ngIf="sendMessage">
+        <div class="section-title">Send Message</div>
+    </div>
+
+    <!--       send file      -->
+
+    <div class="send-message" *ngIf="sendFile">
+        <div class="section-title">Send File</div>
+    </div>
+
+    <!--       view starred      -->
+
+    <div class="send-message" *ngIf="viewStarredMessages">
+        <div class="section-title">Starred Messages</div>
+    </div>
+
+</div>
