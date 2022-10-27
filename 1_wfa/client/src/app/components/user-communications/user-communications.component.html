@@ -1,5 +1,12 @@
 <div class="wrapper">
-    <div class="title">Communications</div>
+    <div class="title">
+        Communications
+        <div class="navigation">
+            <div class="nav-selection" (click)="selectMessages()">Inbox <div class="alert-dot"></div> </div>
+            <div class="nav-selection compose" (click)="selectSendMessage()">Compose</div>
+            <div class="nav-selection pinned" (click)="selectStarredMessages()">Pinned</div>
+        </div>
+    </div>
 
     <!--       view messages      -->
 

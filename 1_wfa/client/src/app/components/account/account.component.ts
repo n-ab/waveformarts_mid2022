@@ -34,7 +34,8 @@ export class AccountComponent implements OnInit {
           this.router.navigateByUrl('');
         }
       })
-    this.windowService.bgImageMarginLeft.next(-50);
+    this.windowService.bgImageMarginLeft.next(-2600);
+    this.windowService.bgImageWidth.next(5000);
     this.metricsService.addPageMetrics(this.metricHeader, history.state.navigatedFrom);
   }
 

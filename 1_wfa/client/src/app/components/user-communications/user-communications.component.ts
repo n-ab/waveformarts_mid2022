@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Discussion, Message, User } from 'src/app/models';
 import { MetricsService } from 'src/app/services/metrics.service';
 import { UserService } from 'src/app/services/user.service';
+import { WindowService } from 'src/app/services/window.service';
 
 @Component({
   selector: 'app-user-communications',
@@ -23,9 +24,11 @@ export class UserCommunicationsComponent implements OnInit, AfterViewInit {
   userMessages: Message[] = [];
   userDiscussions: Discussion[] = [];
 
-  constructor(private router: Router, private metricsService: MetricsService, private userService: UserService) { }
+  constructor(private router: Router, private metricsService: MetricsService, private userService: UserService, private windowService: WindowService) { }
 
   ngOnInit(): void {
+    this.windowService.bgImageMarginLeft.next(-1050);
+    this.windowService.bgImageWidth.next(3200);
     console.log(history.state.selection);
     if (history.state.selection == 'viewMessages') this.selectMessages();
     if (history.state.selection == 'sendMessage') this.selectSendMessage();

@@ -19,7 +19,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.innerWidth = window.innerWidth;
-    this.windowService.bgImageWidth.next(4900);
+    this.windowService.bgImageWidth.next(5100);
     this.metricsService.addPageMetrics(this.metricHeader, history.state.navigatedFrom);
     // this.windowService.bgImageMarginLeft.next(-900);
   }
