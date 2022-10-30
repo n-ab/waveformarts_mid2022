@@ -103,3 +103,18 @@ app.post('/makeSuggestion', async (req: any, res) => {
     console.log('suggestion saved: ', suggestion);
     return res.status(200).json(suggestion);
 })
+
+app.get('/fetchMessages', async (req: any, res) => {
+    const messages = await userController.fetchMessages(req.user._id);
+    return res.status(200).json(messages);
+})
+
+app.post('/submitMessage', async (req: any, res) => {
+    // if there's an associated discussion...
+    const message = await userController.addMessageToDiscussion(req.body.content, req.body.discussionId, req.user._id);
+})
+
+app.get('/fetchPopulatedUserData', async (req: any, res) => {
+    const user = await userController.fetchPopulatedUserData(req.user._id);
+    return res.status(200).json(user);
+})

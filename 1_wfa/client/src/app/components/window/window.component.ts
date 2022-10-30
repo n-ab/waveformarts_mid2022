@@ -9,6 +9,7 @@ import { WindowService } from 'src/app/services/window.service';
 export class WindowComponent implements OnInit {
   @Input() width: number = 6000;
   @Input() marginLeft: number = 6000;
+  @Input() marginTop: number = 0;
 
   constructor(private windowService: WindowService) { }
 
@@ -30,6 +31,12 @@ export class WindowComponent implements OnInit {
   updateMarginLeft(): void {
     this.windowService.bgImageMarginLeft.subscribe(pixelAmount => {
       this.marginLeft = pixelAmount;
+    })
+  }
+
+  updateMarginTop(): void {
+    this.windowService.bgImageMarginTop.subscribe(pixelAmount => {
+      this.marginTop = pixelAmount;
     })
   }
 

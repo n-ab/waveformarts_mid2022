@@ -2,6 +2,8 @@ import { UserModel } from '../models/user';
 import { QuestionModel } from '../models/question';
 import { ReportModel } from '../models/report';
 import { SuggestionModel } from '../models/suggestion';
+import { MessageModel } from '../models/message';
+import { DiscussionModel } from '../models/discussion';
 
 export function register(data: any) {
     console.log('Registering new user with data: ');
@@ -76,4 +78,37 @@ export async function makeSuggestion(userId: string, suggestion: any) {
     user?.reports.push(suggestionMade);
     await user?.save();
     return suggestionMade;
+}
+
+export async function fetchMessages(userId: string) {
+    const user = await UserModel.findById(userId);
+    return user?.messagesSent;
+}
+
+export async function fetchProjects(userId: string) {
+    const user = await UserModel.findById(userId);
+    return user?.projects;
+}
+
+export async function addMessageToDiscussion(content: string, discussionId: string, userId: string) {
+    const message = await MessageModel.create({content: content, sender: userId});
+    const discussion = await DiscussionModel.findById(discussionId);
+    discussion?.messages.push(message._id);
+    discussion?.save();
+    addMessageIdToSender(message, userId);
+}
+
+export async function addMessageIdToSender(message: any, senderId: string) {
+    const sender = await UserModel.findById(senderId);
+    sender?.messagesSent.push(message);
+    await sender?.save();
+    return sender;
+}
+
+export async function fetchPopulatedUserData(userId: string) {
+    const user = await UserModel.findById(userId).populate('discussions').populate('messagesSent').populate('downloads').populate('uploads').populate('projects');
+    console.log('------------------------------');
+    console.log('USER SHOULD BE FULLY POPULATED -----', user);
+    console.log('------------------------------');
+    return user;
 }

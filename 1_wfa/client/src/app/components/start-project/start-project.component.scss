@@ -1,0 +1,36 @@
+@import '../../animations.scss';
+
+.wrapper {
+    position: absolute;
+    width: 100vw;
+}
+
+.title {
+    color: white;
+    font-size: 200%;
+    font-weight: 100;
+    margin: 100px 50px 50px 50px;
+}
+
+form {
+    background-color: rgba(255, 255, 255, 0.27);
+    padding: 1rem;
+    width: 90%;
+    max-width: 700px;
+    margin: auto;
+    border-radius: 5px;
+}
+
+mat-form-field {
+    margin-left: 4rem;
+    display: block;
+    width: 85%;
+    color: white;
+}
+
+.submit {
+    display: block;
+    height: 3rem;
+    margin: auto;
+    width: 50%;
+}

@@ -11,6 +11,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { RentalsComponent } from './components/rentals/rentals.component';
 import { ReportComponent } from './components/report/report.component';
+import { StartProjectComponent } from './components/start-project/start-project.component';
 import { StoreComponent } from './components/store/store.component';
 import { UploadComponent } from './components/upload/upload.component';
 import { UserCommunicationsComponent } from './components/user-communications/user-communications.component';
@@ -44,6 +45,7 @@ const routes: Routes = [
   { path: 'account/messages',       component: UserCommunicationsComponent },
   { path: 'account/question',       component: UserQuestionComponent },
   { path: 'account/faq',            component: FaqAccountComponent },
+  { path: 'start/project',          component: StartProjectComponent }
 ];
 
 @NgModule({

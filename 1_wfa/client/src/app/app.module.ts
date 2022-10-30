@@ -47,6 +47,7 @@ import { ReportComponent } from './components/report/report.component';
 import { UserUploadfileComponent } from './components/user-uploadfile/user-uploadfile.component';
 import { SuggestComponent } from './components/suggest/suggest.component';
 import { UserCommunicationsComponent } from './components/user-communications/user-communications.component';
+import { StartProjectComponent } from './components/start-project/start-project.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { UserCommunicationsComponent } from './components/user-communications/us
     ReportComponent,
     UserUploadfileComponent,
     SuggestComponent,
-    UserCommunicationsComponent
+    UserCommunicationsComponent,
+    StartProjectComponent
   ],
   imports: [
     BrowserModule,

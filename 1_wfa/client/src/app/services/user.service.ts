@@ -70,4 +70,28 @@ export class UserService {
       .then(suggestion => suggestion)
       .catch(err => err);
   }
+
+  fetchMessages() {
+    return this.http.get('/api/user/fetchMessages').toPromise()
+      .then(messages => messages)
+      .catch(err => err);
+  }
+
+  submitMessage(message: any) {
+    return this.http.post('/api/user/submitMessage', message).toPromise()
+      .then(message => message)
+      .catch(err => err);
+  }
+
+  fetchPopulatedUserData() {
+    return this.http.get('/api/user/fetchPopulatedUserData').toPromise()
+      .then(userData => userData)
+      .catch(err => err);
+  }
+
+  submitProject(project: any) {
+    return this.http.post('/api/project/createProject', project).toPromise()
+      .then(project => project)
+      .catch(err => err);
+  }
 }

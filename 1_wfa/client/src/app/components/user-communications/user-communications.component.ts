@@ -1,9 +1,12 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Discussion, Message, User } from 'src/app/models';
+import { Discussion, Message, Project, User } from 'src/app/models';
 import { MetricsService } from 'src/app/services/metrics.service';
 import { UserService } from 'src/app/services/user.service';
 import { WindowService } from 'src/app/services/window.service';
+import { StartProjectComponent } from '../start-project/start-project.component';
 
 @Component({
   selector: 'app-user-communications',
@@ -13,6 +16,7 @@ import { WindowService } from 'src/app/services/window.service';
 export class UserCommunicationsComponent implements OnInit, AfterViewInit {
 
   user!: User;
+  messages: Message[] = [];
 
   // display selections
   viewMessages = false;
@@ -23,10 +27,30 @@ export class UserCommunicationsComponent implements OnInit, AfterViewInit {
   // sets
   userMessages: Message[] = [];
   userDiscussions: Discussion[] = [];
+  userProjects: Project[] = [];
 
-  constructor(private router: Router, private metricsService: MetricsService, private userService: UserService, private windowService: WindowService) { }
+  // conditionals
+  userMessagesHaveBeenDownloaded = false;
+
+  // forms 
+  sendMessageForm!: FormGroup;
+  
+
+  constructor(private router: Router, private metricsService: MetricsService, private userService: UserService, private windowService: WindowService, public dialog: MatDialog) {
+    this.sendMessageForm = new FormGroup({
+      content: new FormControl(''),
+      taggedUsers: new FormControl([])
+    })
+  }
 
   ngOnInit(): void {
+    this.userService.check().then(user => {
+      if (!user) {
+        this.router.navigateByUrl('');
+      } else {
+        this.fetchPopulatedUserData();
+      }
+    });
     this.windowService.bgImageMarginLeft.next(-1050);
     this.windowService.bgImageWidth.next(3200);
     console.log(history.state.selection);
@@ -66,6 +90,40 @@ export class UserCommunicationsComponent implements OnInit, AfterViewInit {
     this.sendFile = false;
     this.viewMessages = false;
     this.sendMessage = false;
+  }
+
+  fetchPopulatedUserData(): void {
+    this.userService.fetchPopulatedUserData()
+      .then(messages => {
+        console.log('users messages = ', messages);
+        this.messages = messages;
+      });
+  }
+
+  setMessages(messages: any): void {
+    this.messages = messages;
+    console.log('this.messages = ', this.messages);
+    
+  }
+
+  sortPinnedMessages(messages: any): void {
+    
+  }
+
+  submitMessage(): void {
+    this.userService.submitMessage(this.sendMessageForm.getRawValue());
+  }
+
+  startNewProject(): void {
+    this.windowService.bgImageMarginTop.next(1000);
+    this.router.navigateByUrl('start/project');
+  }
+
+  joinProject(): void {
+    this.dialog.open(StartProjectComponent, {
+      width: '400px',
+      height: '400px'
+    });
   }
 
 }

@@ -1,0 +1,7 @@
+<div class="wrapper">
+    <div class="title">Start A Project</div>
+    <form [formGroup]="createProjectForm" (ngSubmit)="submitProject()">
+        <mat-form-field><input matInput type="text" name="title" formControlName="title" placeholder="title"></mat-form-field>
+        <button mat-raised-button type="submit" class="submit" (click)="submitProject()">start project</button>
+    </form>
+</div>

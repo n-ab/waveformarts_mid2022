@@ -25,6 +25,7 @@
     padding: 1rem 7rem;
     font-size: 150%;
     font-weight: 100;
+    animation: fadeIn 1s ease;
 }
 
 .view-messages-table {
@@ -65,4 +66,54 @@
 @keyframes revealDot {
     0%   { width: 0px; height: 0px;  background-color: rgba(187, 0, 0, 0);}
     100% { width: 10px;height: 10px; background-color: rgb(187, 0, 0);}
+}
+
+.submit-message-form {
+    width: 80%;
+    max-width: 700px;
+    background-color: rgba(255, 255, 255, 0.232);
+    margin: auto;
+}
+
+mat-form-field {
+    display: block;
+    width: 95%;
+    margin: auto;
+}
+
+textarea {
+    min-height: 200px;
+    margin-top: 1rem;
+}
+
+.no-project-disclaimer {
+    background-color: rgb(0 0 0 / 23%);
+    font-weight: 100;
+    font-size: 128%;
+    line-height: 40px;
+    width: 50%;
+    min-width: 400px;
+    color: white;
+    padding: 1rem;
+    margin: auto;
+    display: block;
+    border-radius: 7px;
+    animation: fadeIn 1s ease;
+}
+
+.no-project-disclaimer-options {
+    display: flex;
+    justify-content: center;
+    color: white;
+    animation: fadeIn 1s ease;
+}
+
+.no-project-disclaimer-option {
+    background-color: black;
+    font-weight: 100;
+    font-size: 125%;
+    padding: 2rem;
+    margin: 3rem;
+    border-radius: 5px;
+    user-select: none;
 }

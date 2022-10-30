@@ -11,7 +11,7 @@
     <!--       view messages      -->
 
     <div class="view-messages" *ngIf="viewMessages">
-        <div class="section-title">Your Messages</div>
+        <div class="section-title">Messages</div>
         <table *ngIf="userMessages.length" class="view-messages-table">
             <thead>
                 <th>Message</th>
@@ -30,6 +30,24 @@
 
     <div class="send-message" *ngIf="sendMessage">
         <div class="section-title">Send Message</div>
+        <form class="submit-message-form" *ngIf="userProjects.length" [formGroup]="sendMessageForm" (ngSubmit)="submitMessage()">
+            <br>
+            <mat-form-field class="text-area"><textarea matInput autofocus type="text" name="content" formControlName="content" placeholder="your message"></textarea></mat-form-field>
+            <mat-form-field><input matInput type="text" name="taggedUsers" formControlName="taggedUsers"></mat-form-field>
+            
+        </form>
+        <br><br>
+        <div class="no-project-disclaimer" *ngIf="!userProjects.length">
+            Messages may only be sent as a means of communication within a project,
+            <br>
+            and it looks like you haven't started any. 
+        </div>
+        <br><br>
+        <div class="no-project-disclaimer-options" *ngIf="!userProjects.length">
+            <div class="no-project-disclaimer-option" (click)="startNewProject()">Start One</div>
+            <!-- <div style="margin-top: 75px; font-size: 150%; font-weight: 100;">or</div> -->
+            <div class="no-project-disclaimer-option" (click)="joinProject()">Join One</div>
+        </div>
     </div>
 
     <!--       send file      -->
