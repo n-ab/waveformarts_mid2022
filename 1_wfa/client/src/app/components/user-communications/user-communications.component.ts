@@ -116,13 +116,20 @@ export class UserCommunicationsComponent implements OnInit, AfterViewInit {
 
   startNewProject(): void {
     this.windowService.bgImageMarginTop.next(1000);
-    this.router.navigateByUrl('start/project');
+    this.dialog.open(StartProjectComponent, {
+      width: '60%',
+      maxWidth: '700px',
+      height: '345px',
+      data: 'start'
+    })
   }
 
   joinProject(): void {
     this.dialog.open(StartProjectComponent, {
-      width: '400px',
-      height: '400px'
+      width: '60%',
+      maxWidth: '700px',
+      height: '345px',
+      data: 'join'
     });
   }
 

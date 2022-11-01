@@ -24,12 +24,15 @@ export async function addUserToProject(data: any) {
 }
 
 export async function addDiscussionToProject(data: any) {
-    console.log('1');
     const project = await ProjectModel.findById(data.projectId).then(project => project);
-    console.log('2');
     project?.discussions.push(data.discussionId);
-    console.log('3');
     await project?.save();
-    console.log('4');
     return project?.discussions;
+}
+
+export async function joinProject(projectId: string, userId: string) {
+    const project = await ProjectModel.findById(projectId).then(project => project);
+    project?.users.push(userId);
+    project?.save();
+    return project?.users;
 }

@@ -46,6 +46,11 @@
     font-size: 65%;
     text-align: center;
     user-select: none;
+    transition: color .3s ease-in-out;
+}
+
+.nav-selection:hover {
+    color: black;
 }
 
 .compose, .pinned {

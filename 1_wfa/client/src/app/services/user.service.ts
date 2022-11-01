@@ -22,6 +22,13 @@ export class UserService {
       .catch(err => err);
   }
 
+  logout() {
+    const logoutToken = '';
+    return this.http.post('/api/user/logout', logoutToken).toPromise()
+      .then(userLogoutConfirmed => userLogoutConfirmed)
+      .catch(err => err);
+  }
+
   register(data: any) {
     console.log('registering with data: ', data); 
     return this.http.post('/api/user/register', data).toPromise()
@@ -92,6 +99,12 @@ export class UserService {
   submitProject(project: any) {
     return this.http.post('/api/project/createProject', project).toPromise()
       .then(project => project)
+      .catch(err => err);
+  }
+
+  joinProject(projectNumber: string) {
+    return this.http.post('/api/project/joinProject', projectNumber).toPromise()
+      .then(projectUsers => projectUsers)
       .catch(err => err);
   }
 }

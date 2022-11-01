@@ -1,7 +1,13 @@
 <div class="wrapper">
-    <div class="title">Start A Project</div>
-    <form [formGroup]="createProjectForm" (ngSubmit)="submitProject()">
+    <div class="title" *ngIf="startingProject">Start A Project</div>
+    <form *ngIf="startingProject" [formGroup]="createProjectForm" (ngSubmit)="submitProject()">
         <mat-form-field><input matInput type="text" name="title" formControlName="title" placeholder="title"></mat-form-field>
         <button mat-raised-button type="submit" class="submit" (click)="submitProject()">start project</button>
+    </form>
+    <div class="title" *ngIf="startingProject">Join A Project</div>
+    <form *ngIf="!startingProject" [formGroup]="joinProjectForm" (ngSubmit)="joinProject()">
+        <mat-form-field><input matInput type="text" name="projectNumber" formControlName="projectNumber" placeholder="What is the project number?"></mat-form-field>
+        <mat-form-field><input matInput type="text" name="currentMemberName" formControlName="currentMemberName" placeholder="Name of someone currently on this project: "></mat-form-field>
+        <button mat-raised-button type="submit" class="submit" (click)="joinProject()">join project</button>
     </form>
 </div>

@@ -55,4 +55,10 @@ export class NavbarComponent implements OnInit {
     this.router.navigateByUrl('admin', {state: {navigatedFrom: `${this.metricHeader}`}});
   }
 
+  logout() {
+    this.userService.logout()
+      .then(() => { this.router.navigateByUrl('') })
+      .catch(err => console.log(err));
+  }
+
 }
