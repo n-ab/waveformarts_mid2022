@@ -27,16 +27,13 @@ export async function login(data: any) {
 
 export async function fetchAll() {
     AdminModel.find({})
-        .then(admins => {
-            console.log('ADMINS FOUND: ', admins);
-            return admins;
-        })
+        .then(admins => admins)
         .catch(err => err);
 }
 
 export async function compileAllMetrics() {
     const pages = await PageModel.find({});
-    const users = await UserModel.find({});
+    const users = await UserModel.find({}).populate('projects', 'title');
     const metrics = await MetricsModel.find({});
     const navigation = await NavigationModel.find({});
     return {pages, users, metrics, navigation}
@@ -83,11 +80,17 @@ export async function addPage(pageData: any) {
 }
 
 export function addUser(userData: any) {
-    console.log('adding a user with data: ', userData);
+    if (!userData['projects']) userData['projects'] = [];
+    userData['fullName'] = '';
+    console.log('ADDING USER WITH DATA: ', userData);
     return UserModel.findOneAndUpdate(userData, {$set: {newPage: userData}}, {new: true, upsert: true})
         .then(user => {
+            const fullName = user.firstName.concat(user.lastName);
+            user.fullName = fullName;
+            console.log('saving user: ', user);
+            user.clientNumber = Math.floor(Math.random() * 3000 + 33333 + (Math.random() * 3000 + 11));
             user.save();
             return user;
         })
-        .catch(err => err);
+        .catch(err => console.error('REEEEE: ', err));
 }

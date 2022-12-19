@@ -39,8 +39,6 @@ app.get('/checkAdminToken/:id', (req: any, res) => {
 app.get('/compileAllMetrics', async (req: any, res) => {
     console.log('fetching metrics...');
     const metrics = await adminController.compileAllMetrics();
-    console.log('metrics found: ', metrics);
-    
     return res.status(200).json(metrics);
 });
 
@@ -49,7 +47,8 @@ app.post('/addPage', async (req: any, res) => {
     return res.status(200).json(page);
 })
 
-app.post('/addUser', (req: any, res) => {
-    const user = adminController.addUser(req.body);
+app.post('/addUser', async (req: any, res) => {
+    const user = await adminController.addUser(req.body);
+    console.log('/addUser - user = ', user);
     return res.status(200).json(user);
 })

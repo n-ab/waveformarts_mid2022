@@ -1,5 +1,5 @@
 <div class="wrapper">
-    <div class="title" *ngIf="startingProject">Start A Project</div>
+    <div class="title" *ngIf="startingProject">Start Aa Project</div>
     <form *ngIf="startingProject" [formGroup]="createProjectForm" (ngSubmit)="submitProject()">
         <mat-form-field><input matInput type="text" name="title" formControlName="title" placeholder="title"></mat-form-field>
         <button mat-raised-button type="submit" class="submit" (click)="submitProject()">start project</button>

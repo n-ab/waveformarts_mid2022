@@ -4,8 +4,8 @@
     <mat-form-field><input matInput type="password" name="password" formControlName="password" placeholder="password"></mat-form-field>
     <button mat-raised-button type="submit" class="login-button" (click)="login()">sign in</button>
     <hr *ngIf="!showRegisterForm && !error" class="hr-login">
-    <div *ngIf="error" class="error">{{errorMessage}}</div>
     <button mat-raised-button type="button" class="register-button" (click)="showRegister()">register</button>
+    <div *ngIf="error" class="error">{{errorMessage}}</div>
 </form>
 <form action="register-form" *ngIf="showRegisterForm === true" [formGroup]="registerForm">
     <!-- <div class="add-user-title title">Login</div> -->

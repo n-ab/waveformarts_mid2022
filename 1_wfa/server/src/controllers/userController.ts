@@ -7,9 +7,13 @@ import { DiscussionModel } from '../models/discussion';
 
 export function register(data: any) {
     console.log('Registering new user with data: ');
+    data['fullName'] = '';
+    data['projects'] = [];
     console.log(data);
     return UserModel.findOneAndUpdate(data, {$set: {newUser: data}}, { new: true, upsert: true})
     .then(user => {
+        const fullName = user.firstName.concat(user.lastName);
+        user.fullName = fullName;
         console.log('SUCCESS - New user with email: ', user.email);
         user.role = 'user';
         user.username = data.email;

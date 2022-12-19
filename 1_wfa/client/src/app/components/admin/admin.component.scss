@@ -53,9 +53,9 @@ mat-form-field {
     border: 1px solid #00b9ff3d;
     box-shadow: 0px 0px 55px -10px black;
     border-radius: 5px;
-    width: 31%;
+    width: 95%;
     min-width: 110px;
-    max-width: 700px;
+    max-width: 1200px;
     background-color: rgb(0 0 0 / 34%);
 }
 
@@ -63,6 +63,7 @@ mat-form-field {
     text-align: center;
     color: white;
     font-size: 110%;
+    letter-spacing: 1px;
     padding: 1rem;
     font-weight: 100;
 }
@@ -73,6 +74,12 @@ mat-form-field {
     font-weight: 100;
     padding: 3px;
     color: white;
+}
+
+.dashboard-item-content {
+    display: inline-block;
+    width: 33%;
+    margin-left: 2px;
 }
 
 .client {
@@ -115,4 +122,29 @@ mat-form-field {
     font-weight: 100;
     display: inline;
     float: right;
+}
+
+.user-lookup-form {
+    padding: 1rem;
+}
+
+.user-found-left {
+    float: left;
+}
+
+.user-found-right {
+    float: right;
+}
+
+.user {
+    margin: 10px;
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.233);
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.user-email {
+    font-size: 70%;
+    color: rgb(154, 154, 154);
 }

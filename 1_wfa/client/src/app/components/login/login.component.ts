@@ -39,12 +39,11 @@ export class LoginComponent implements OnInit {
   }
 
   async login() {
-    const userLoggedIn = await this.userService.login(this.loginForm.getRawValue());
-    if (userLoggedIn == 'Incorrect password SON.')  { this.error = true; this.errorMessage = 'Incorrect Password'; this.adjustSizeAfterError(); return;}
-    if (userLoggedIn == 'USER DOESN\'T EXIST SON.') { this.error = true; this.errorMessage = 'User not found.'; this.adjustSizeAfterError(); return; }
-    if (userLoggedIn == 'Missing credentials') { this.error = true; this.errorMessage = 'Incorrect Password'; this.adjustSizeAfterError(); return; }
-    console.log('user logged in successfully: ', userLoggedIn);
-    
+    const userLoggedIn: object | string = await this.userService.login(this.loginForm.getRawValue());
+    console.log('login() - userLoggedIn = ', userLoggedIn);
+    if (userLoggedIn == 'Your password is incorrect.')  { this.error = true; this.errorMessage = 'Incorrect Password'; this.adjustSizeAfterError(); return;}
+    if (userLoggedIn == 'No trace of that user exists.') { this.error = true; this.errorMessage = 'User not found.'; this.adjustSizeAfterError(); return; }
+    if (userLoggedIn == 'Actually try to insert a username and password.') { this.error = true; this.errorMessage = 'Incorrect Password'; this.adjustSizeAfterError(); return; }
     this.dialogRef.close(userLoggedIn);
   }
 
@@ -71,7 +70,7 @@ export class LoginComponent implements OnInit {
   }
 
   adjustSizeAfterError(): void {
-    this.dialogRef.updateSize('96%', '350px');
+    this.dialogRef.updateSize('96%', '389px');
   }
 
 }

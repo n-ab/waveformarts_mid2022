@@ -71,4 +71,13 @@ export class AdminService {
       })
       .catch(err => err);
   }
+
+  searchBy(searchQuery: any) {
+    return this.http.get('/api/admin/searchUsers', {params: searchQuery}).toPromise()
+      .then(searchResults => {
+        console.log('search query returned: ', searchResults);
+        return searchResults;
+      })
+      .catch(err => err);
+  }
 }

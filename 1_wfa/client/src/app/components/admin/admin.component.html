@@ -8,17 +8,8 @@
     <div *ngIf="adminLoggedIn" class="admin-dashboard">
         <div class="title">Admin</div>
         <div class="dashboard-items">
-            <div class="dashboard-item" *ngIf="users">
-                <div class="dashboard-item-title">Clients</div>
-                <div class="dashboard-item-content" *ngFor="let user of users">
-                    <div class="client">
-                        <div class="client-name">{{ user.firstName }} {{ user.lastName }}</div>
-                    </div>
-                </div>
-            </div>
             <div class="dashboard-item">
-                <div class="dashboard-item-title">Raw Stats</div>
-                <div class="dashboard-item-small-title">page count</div>
+                <div class="dashboard-item-title">PAGE METRICS</div>
                 <div class="dashboard-item-content" *ngFor="let page of pages">
                     <div class="page">
                         <div class="page-title">{{ page.title }}</div>
@@ -26,10 +17,9 @@
                     </div>
                 </div>
             </div>
-            <div class="dashboard-item">
-                <div class="dashboard-item-title">Toggle Availability</div>
-            </div>
+            <br>
         </div>
+        <br>
     </div>
     <div class="dashboard-items" style="margin-top: 5rem;">
         <div *ngIf="adminLoggedIn" class="dashboard-item" style="width: 75%;">
@@ -48,18 +38,43 @@
                 <mat-form-field style="display: inline-block; margin-left: 3px"><input matInput type="text" name="email" formControlName="email" placeholder="email"></mat-form-field>
                 <mat-form-field style="display: inline-block; margin-left: 3px"><input matInput type="text" name="username" formControlName="username" placeholder="username"></mat-form-field>
                 <mat-form-field style="display: inline-block; margin-left: 3px"><input matInput type="text" name="company" formControlName="company" placeholder="company"></mat-form-field>
-                <mat-form-field style="display: inline-block; margin-left: 3px"><input matInput type="text" name="project" formControlName="project" placeholder="project"></mat-form-field>
+                <mat-form-field style="display: inline-block; margin-left: 3px"><input matInput type="text" name="projects" formControlName="projects" placeholder="project"></mat-form-field>
                 <mat-form-field style="display: inline-block; margin-left: 3px"><input matInput type="text" name="clientNumber" formControlName="clientNumber" placeholder="clientNumber"></mat-form-field>
                 <mat-form-field style="display: inline-block; margin-left: 3px"><input matInput type="text" name="status" formControlName="status" placeholder="status"></mat-form-field>
                 <mat-form-field style="display: inline-block; margin-left: 3px"><input matInput type="text" name="role" formControlName="role" placeholder="role"></mat-form-field>
                 <br>
-                <button mat-raised-button (ngSubmit)="addUser()">add page</button>
+                <button mat-raised-button (ngSubmit)="addUser()">create new user</button>
             </form>
         </div>
     </div>
-    <!-- <form class="add-admin-form" [formGroup]="addAdminForm" (ngSubmit)="addAdmin()">
-        <mat-form-field><input matInput type="text" name="username" formControlName="username" placeholder="username"></mat-form-field>
-        <mat-form-field><input matInput type="password" name="password" formControlName="password" placeholder="password"></mat-form-field>
-        <button mat-raised-button class="add-admin-button" type="button" (click)="addAdmin()">Add Admin</button>
-    </form> -->
+    <br><br>
+    <div *ngIf="adminLoggedIn" class="dashboard-items">
+        <div class="dashboard-item" style="width: 90%; max-width: 800px; padding: 2rem; color: white;">
+            <div style="font-weight: 100; padding: 5px; font-size: 150%;">User Lookup</div>
+            <form [formGroup]="userLookupForm" class="user-lookup-form">
+                <mat-form-field><input matInput id="name-search-input" type="text" name="lookUpByName" formControlName="lookUpByName" placeholder="search users..."></mat-form-field> {{ searchQueryArray }}
+            </form>
+            <div class="user-search-results-container" style="font-weight: 100; letter-spacing: 1px; font-size: 110%;" *ngIf="showFilteredUserList">
+                <div class="users-found" *ngFor="let user of newUserList">
+                    <div class="user-found user">
+                        <div class="user-found-left">{{ user.firstName }} {{user.lastName}}</div>
+                        <br>
+                        <div class="user-email">{{ user.email }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="entire-user-list" style="font-weight: 100; letter-spacing: 1px; font-size: 110%;" *ngIf="!showFilteredUserList">
+                <div class="userList">
+                    <div class="unfiltered-users">
+                        <div class="unfiltered-user user" *ngFor="let user of users">
+                            <div class="user-name">{{ user.firstName }} {{user.lastName}}</div>
+                            <br>
+                            <div class="user-email">{{ user.email }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br><br><br>
 </div>

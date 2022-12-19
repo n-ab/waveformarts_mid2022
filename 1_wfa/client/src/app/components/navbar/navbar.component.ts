@@ -21,6 +21,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.userCheck();
     this.metricsService.addPageMetrics(this.metricHeader, history.state.navigatedFrom);
+    
   }
 
   userCheck(): void {

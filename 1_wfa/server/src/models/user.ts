@@ -1,4 +1,5 @@
 import * as mongoose from 'mongoose';
+import { userInfo } from 'os';
 
 export interface UserObject extends mongoose.Document {
     _id: any,
@@ -7,6 +8,7 @@ export interface UserObject extends mongoose.Document {
     firstName: string,
     lastName: string,
     nameAbbreviation: string,
+    fullName: string,
     password: string,
     tempPassword: string,
     email: string,
@@ -32,6 +34,7 @@ const schema = new mongoose.Schema({
     firstName: String,
     lastName: String,
     nameAbbreviation: String,
+    fullName: String,
     password: String,
     tempPassword: String,
     email: String,
