@@ -20,10 +20,8 @@ export class ProjectManageComponent implements OnInit {
   ngOnInit(): void {
     if (!history.state.project) this.router.navigateByUrl('upload');
     this.metricsService.addPageMetrics(this.metricHeader, history.state.navigatedFrom);
-    console.log('$ history.state: ', history.state);
     this.projectService.getProjectData(history.state.project)
       .then(project => {
-        console.log('project returned: ', project);
         this.project = project;
       })
   }

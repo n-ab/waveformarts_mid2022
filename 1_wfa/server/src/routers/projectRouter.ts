@@ -33,9 +33,7 @@ app.post('/startProject', upload.array('files'), async (req: any, res) => {
 })
 
 app.get('/getProjectData/:id', async (req: any, res) => {
-    console.log('req.body = ', req.body);
-    console.log('req.params = ', req.params);
-    console.log('req.query = ', req.query);
+    if (req.params.id.length <= 0 || req.params.id == 'undefined') return res.status(500).json('A project id was not sent from client-side.');
     const project = await projectController.getProjectById(req.params.id);
     if (project) return res.status(200).json(project);
     return res.status(500).json('REEEEE');

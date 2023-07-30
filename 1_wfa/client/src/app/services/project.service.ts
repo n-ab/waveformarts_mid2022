@@ -24,7 +24,7 @@ export class ProjectService {
   getProjectData(projectId: string) {
     return this.http.get(`/api/project/getProjectData/${projectId}`).toPromise()
       .then(project => project)
-      .catch(e => e);
+      .catch(e => e.error);
   }
 
 }
