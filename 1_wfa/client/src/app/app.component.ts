@@ -1,4 +1,4 @@
-import { AfterViewInit, AfterViewChecked, Component, Input } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { WindowService } from './services/window.service';
 
 @Component({
@@ -17,26 +17,14 @@ export class AppComponent implements AfterViewInit{
   }
 
   ngAfterViewInit(): void {
-    // this.backgroundImageDiv = document.getElementById('img');
-    // this.windowService.updateBackgroundImageWidth.subscribe(shitFromService => {
-    //   console.log('SHIT FROM SERVICE: ', shitFromService);
-    //   this.adjustBackgroundImagePosition(shitFromService);
-    // })
-
+    setTimeout(() => {
+      document.getElementById('overlay')!.classList.add('display-none');
+    }, 1000);
     // NAVBAR 'blacken background on scroll' EFFECT
     window.addEventListener('scroll', () => {
       if (window.scrollY >= 30) { document.getElementById('navbar')!.classList.add('black-background') }
       if (window.scrollY <= 30) { document.getElementById('navbar')!.classList.remove('black-background') }
     });
-
-    // SITE BACKGROUND IMAGE 'initial width setting' EFFECT
-    // if (window.innerHeight > 625) { this.width = 3000; } else {
-    //   this.width = 1900;
-    // }
-
-    // setTimeout(() => {
-    //   this.adjustBackgroundImagePosition('landing');
-    // }, 500); 
   }
 
   ngAfterViewChecked(): void {

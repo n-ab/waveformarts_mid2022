@@ -5,7 +5,7 @@ import * as tokenController from '../controllers/tokenController';
 export const app = express();
 
 app.post('/login', async (req: any, res) => {
-    console.log(req.body);
+    console.log(req);
     const admin = await adminController.login(req.body);
     if (admin !== false) {
         console.log('LOGIN SUCCESS. returning admin: ', admin);

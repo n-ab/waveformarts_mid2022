@@ -3,20 +3,28 @@ import * as mongoose from 'mongoose';
 export interface ProjectObject extends mongoose.Document {
     _id: any, 
     title: string,
-    projectLead: string,
+    projectLeadName: string,
+    // beginning stage field ^
     users: string[],
-    files: string[],
+    filePaths: string[],
     discussions: string[],
     messages: string[],
+    companyProject: string,
+    email: string,
+    description: string,
 }
 
 const schema = new mongoose.Schema ({
     title: String,
-    projectLead: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    projectLeadName: String,
+    // beginning stage field ^
     users: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-    files: [{ type: mongoose.Schema.Types.ObjectId, ref: 'File' }],
+    filePaths: [String],
     discussions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Discussion' }],
     messages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Message' }],
+    companyProject: String,
+    email: String,
+    description: String,
 });
 
 export const ProjectModel = mongoose.model<ProjectObject>('Project', schema);

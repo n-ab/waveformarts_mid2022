@@ -22,21 +22,23 @@ import { UserOrdersComponent } from './components/user-orders/user-orders.compon
 import { UserPasswordresetComponent } from './components/user-passwordreset/user-passwordreset.component';
 import { UserPlanComponent } from './components/user-plan/user-plan.component';
 import { UserQuestionComponent } from './components/user-question/user-question.component';
+import { ProjectManageComponent } from './components/project-manage/project-manage.component';
 
 const routes: Routes = [
-  { path: '',           component: LandingComponent},
-  { path: 'upload',     component: UploadComponent},
-  { path: 'account',    component: AccountComponent},
-  { path: 'admin',      component: AdminComponent},
-  { path: 'contact',    component: ContactComponent},
-  { path: 'book',       component: BookComponent},
-  { path: 'rentals',    component: RentalsComponent},
-  { path: 'highlights', component: HighlightsComponent},
-  { path: 'login',      component: LoginComponent},
-  { path: 'register',   component: RegisterComponent},
+  { path: '',                       component: LandingComponent},
+  { path: 'upload',                 component: UploadComponent},
+  { path: 'account',                component: AccountComponent},
+  { path: 'admin',                  component: AdminComponent},
+  { path: 'contact',                component: ContactComponent},
+  { path: 'book',                   component: BookComponent},
+  { path: 'rentals',                component: RentalsComponent},
+  { path: 'highlights',             component: HighlightsComponent},
+  { path: 'login',                  component: LoginComponent},
+  { path: 'register',               component: RegisterComponent},
   // U S E R     A C C O U N T     R O U T E S
-  { path: 'store',      component: StoreComponent },
-  { path: 'report',     component: ReportComponent },
+  { path: 'store',                  component: StoreComponent },
+  { path: 'report',                 component: ReportComponent },
+  { path: 'project',                component: ProjectManageComponent},
   { path: 'account/files',          component: UserFilesComponent },
   { path: 'account/passwordreset',  component: UserPasswordresetComponent },
   { path: 'account/emailreset',     component: UserEmailresetComponent },

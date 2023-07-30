@@ -7,7 +7,7 @@ import { WindowService } from 'src/app/services/window.service';
   styleUrls: ['./window.component.scss']
 })
 export class WindowComponent implements OnInit {
-  @Input() width: number = 6000;
+  @Input() width: number = 3000;
   @Input() marginLeft: number = 6000;
   @Input() marginTop: number = 0;
 
@@ -15,9 +15,14 @@ export class WindowComponent implements OnInit {
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.width = 3900;
-      this.marginLeft = -100;
+      // LINE BELOW SETS THE DESTINATION WIDTH OF OPENING EFFECT
+      // consider this point 2
+      this.width = 3600;
+      this.marginLeft = -200;
     }, 1);
+    setInterval(() => {
+      // console.log('current width of bg image: ', this.width);
+    }, 1500)
     this.updateWidth();
     this.updateMarginLeft();
   }

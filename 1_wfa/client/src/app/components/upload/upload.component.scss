@@ -1,80 +1,275 @@
-.wrapper {
+@import '../../animations.scss';
+
+.upload-wrapper {
     position: absolute;
-    width: 100vw;
+    // background-color: rgba(211, 211, 211, 0.34);
+    width: 100%;
+    margin-top: 125px;
 }
 
-.upload-container {
-    margin: auto;
-    margin-top: 20%;
-    width: 85%;
-    max-width: 1000px;
-    background-image: linear-gradient(0.31turn, #00d0ff, #0088ff);
-    padding: 1rem;
-    border-radius: 5px;
-}
-
-.form-title {
+.upload-title {
+    margin-left: 10%;
     color: white;
-    font-size: 200%;
+    font-size: 300%;
     font-weight: 100;
-    margin-bottom: 1rem;
+    animation: fadeIn 1s ease;
 }
 
-.upload-button {
-    margin: auto;
-    display: block;
-    margin-bottom: 5px;
-    width: 50%;
-    background-color: #00000024;
+
+@media (min-width: 1131px) {
+    .upload-description {
+        margin-left: 10%;
+        margin-top: 15px;
+        line-height: 40px;
+        width: 65%;
+        color: white;
+        font-size: 125%;
+        font-weight: 100;
+        animation: fadeIn 1.3 ease;
+        padding: 1rem;
+        border-radius: 10px;
+        background: #00599b99;
+    }
+    .upload-form {
+        margin-top: 25px;
+        display: flex;
+        justify-content: space-around;
+        max-height: 335px;
+    }
+
+    .metadata {
+        background-image: linear-gradient(0.84turn, #26a2ff, #0088ff);
+        border-radius: 15px;
+        width: 25%;
+        padding: 30px;
+        color: white;
+        box-shadow: 0px 30px 50px -25px #000000;
+    }
+    
+    .files {
+        background-image: linear-gradient(0.31turn, #00d0ff, #0088ff);   
+        border-radius: 15px;
+        width: 25%;
+        padding: 30px;
+        color: white;
+        box-shadow: 0px 30px 50px -25px #000000;
+    }
+    
+    .upload {
+        background-image: linear-gradient(0.81turn, #00d0ff, #0088ff);   
+        border-radius: 15px;
+        width: 25%;
+        padding: 30px;
+        color: white;
+        font-size: 350%;
+        letter-spacing: 3px;
+        font-weight: 100;
+        transition: letter-spacing 1s ease, font-size 1s ease;
+        line-height: 60px;
+    }
+    .upload-button {
+        display: block;
+        margin: auto;
+        width: 80%;
+        font-weight: 100;
+        height: 100%;
+        width: 100%;
+    }
+    .hr-mobile {
+        display: none;
+    }
 }
 
-form {
-    // border-bottom: 1px solid white;
+@media (min-width: 701px) and (max-width: 1130px) {
+    .upload-title {
+        font-size: 245%;
+        margin-bottom: 20px;
+    }
+    .upload-description {
+        margin: auto;
+        line-height: 40px;
+        width: 85%;
+        color: white;
+        font-weight: 100;
+        animation: fadeIn 1.3 ease;
+        padding: 1rem;
+        border-radius: 10px;
+        background: #00599b99;
+        letter-spacing: 2px;
+    }
+    .upload-form {
+        margin-top: 13px;
+        margin-bottom: 10px;
+    }
+    .upload-button {
+        display: block;
+        margin: auto;
+        margin-top: 4px;
+        width: 100%;
+        height: 100%;
+        font-weight: 100;
+        animation: uploadButtonLetterSpacing 1s ease forwards;
+    }
+
+    .metadata {
+        background-image: linear-gradient(0.84turn, #26a2ff, #0088ff);
+        border-radius: 15px;
+        width: 37%;
+        padding: 30px;
+        float: left;
+        margin-left: 6%;
+        color: white;
+        box-shadow: 0px 30px 50px -25px #000000;
+    }
+    
+    .files {
+        background-image: linear-gradient(0.31turn, #00d0ff, #0088ff);   
+        border-radius: 15px;
+        width: 37%;
+        padding: 30px;
+        color: white;
+        box-shadow: 0px 30px 50px -25px #000000;
+        height: 282px;
+        vertical-align: top;
+        float: right;
+        margin-right: 6%;
+        margin-bottom: 12px;
+    }
+    
+    .upload {
+        background-image: linear-gradient(0.81turn, #00d0ff, #0088ff);   
+        border-radius: 15px;
+        width: 80%;
+        margin: auto;
+        display: block;
+        padding: 30px;
+        color: white;
+        font-size: 350%;
+        letter-spacing: 3px;
+        font-weight: 100;
+        transition: letter-spacing 1s ease, font-size 1s ease;
+        line-height: 60px;
+    }
+    .hr-mobile {
+        display: none;
+    }
 }
 
-div.mat-form-field-appearance-legacy div.mat-form-field-infix {
-    padding: 1em 1em !important;
-}
-
-.submit {
-    margin: auto;
-    display: block;
-    width: 50%;
-    background-color: #0000004f;
+@media (max-width: 700px) {
+    .upload-wrapper {
+        margin-top: 95px;
+    }
+    .upload-description {
+        margin: 30px 0px 40px 10%;
+        line-height: 40px;
+        width: 75%;
+        color: white;
+        font-weight: 100;
+        animation: fadeIn 1.3 ease;
+        padding: 1rem;
+        border-radius: 10px;
+        background: #00599b99;
+        letter-spacing: 2px;
+    }
+    .metadata {
+        background-image: linear-gradient(0.84turn, #26a2ff, #0088ff);
+        border-radius: 15px;
+        width: 80%;
+        margin: auto;
+        display: block;
+        padding: 30px;
+        color: white;
+        box-shadow: 0px 30px 50px -25px #000000;
+    }
+    .files {
+        background-image: linear-gradient(0.31turn, #00d0ff, #0088ff);   
+        border-radius: 15px;
+        width: 80%;
+        margin: auto;
+        display: block;
+        padding: 30px;
+        color: white;
+        box-shadow: 0px 30px 50px -25px #000000;
+        height: 282px;
+    }
+    .hr-mobile {
+        display: block;
+        border: none;
+        border-top: 1px solid black;
+        width: 35%;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+    .upload-button {
+        display: block;
+        margin: auto;
+        margin-top: 4px;
+        width: 100%;
+        height: 100%;
+        font-weight: 100;
+        animation: uploadButtonLetterSpacing 1s ease forwards;
+    }
+    .upload {
+        background-image: linear-gradient(0.81turn, #00d0ff, #0088ff);   
+        border-radius: 15px;
+        width: 80%;
+        margin: auto;
+        display: block;
+        padding: 30px;
+        color: white;
+        font-size: 350%;
+        letter-spacing: 3px;
+        font-weight: 100;
+        transition: letter-spacing 1s ease, font-size 1s ease;
+        line-height: 60px;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
 }
 
 mat-form-field {
-    width: 84vw;
-}
-
-textarea {
-    height: 150px;
-    padding: 5px;
-    box-shadow: 0px 0px 30px -10px rgb(0, 88, 146);
-}
-
-textarea::selection {
-    background-color: #fff;
-}
-
-// textarea has a class of 'text-area'
-.text-area {
-    padding: 5px;
-}
-
-.sound-uploaded-notifier {
     display: block;
-    color: white;
-    background-color: rgba(144, 238, 144, 0);
-    border-radius: 5px;
-    padding: 12px;
-    font-weight: 100;
-    animation: expandButton 1s ease forwards;
-    text-align: center;
-  }
+    margin: auto;
+}
 
-  @keyframes expandButton {
-    0%    { height: 0;      font-size: 0;    background-color: rgba(144, 238, 144, 0); color: rgba(59, 209, 255, 0);}
-    0%    { height: 75%;    font-size: 0;    background-color: rgb(59, 209, 255); color: rgb(59, 209, 255);}
-    100%  { height: 100%;   font-size: 100%; background-color: rgb(37 187 233); color: white;}
-  }
+// the three boxes in the upload form
+
+
+
+.box-header {
+    font-size: 150%;
+    font-weight: 100;
+}
+
+.description {
+    height: 75px;
+}
+
+.file-mini-container {
+    margin-top: 15px;
+    background: rgba(255, 255, 255, 0.254);
+    border-radius: 15px;
+    padding: 1rem;
+    height: 70%;
+}
+
+.file-list {
+    margin-top: 15px;
+    padding: 5px;
+    height: 70%;
+    max-height: 400px;
+    background: rgba(255, 255, 255, 0.156);
+    border-radius: 3px;
+    overflow-y: auto;
+}
+
+.invalid {
+    background: gray;
+    letter-spacing: 1px;
+    font-size: 250%;
+}
+
+.file {
+    animation: fadeIn 1s ease;
+    padding: 5px;
+}

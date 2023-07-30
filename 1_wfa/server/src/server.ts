@@ -1,6 +1,7 @@
 import express from 'express';
 import session from 'express-session';
 import { config } from '../config';
+// import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import passport from 'passport';
 import { UserModel } from '../src/models/user';
@@ -10,6 +11,10 @@ console.log('Welcome to Waveform Arts, running on port ' + config.PORT);
 //--- e x p r e s s     ------------------------------------------
 
 const app = express();
+
+// app.use(bodyParser.json({limit: '32MB'}));
+// app.use(bodyParser.urlencoded({limit: '32MB', extended: false}));
+// app.use('/audioFiles')
 
 app.use(express.json({limit:'32MB'}));
 app.use(express.urlencoded({limit:'32MB', extended:false}));
@@ -52,7 +57,6 @@ passport.deserializeUser((id, done) => {
 });
 
 // --- m o n g o o s e ----------------------------------------
-// mongoose.connect(config.database, {useNewUrlParser: true, useUnifiedTopology: true})
 mongoose.connect(config.database)
     .then(() => {
         console.log(`and using database: ${config.database}`);

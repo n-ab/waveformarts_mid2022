@@ -1,22 +1,43 @@
 import express from 'express';
 import * as projectController from '../controllers/projectController';
+import multer from 'multer';
+import fs from 'fs';
+import path from 'path';
+import { promisify } from 'util';
 
 export const app = express();
 
-app.post('/createProject', async (req: any, res) => {
-    const project = await projectController.createProject(req.body, req.user._id);
-    console.log('$$$ re re reee $$$');
+type CustomFile = Express.Multer.File & { fieldname?: string, originalname?: string, encoding?: string, mimetype?: string, destination?: string, filename?: string, path?: string, size?: number, }
+
+const storage = multer.diskStorage({ filename: (req: any, file, cb) => { cb(null, file.originalname); } })
+const upload = multer({ storage });
+
+app.post('/startProject', upload.array('files'), async (req: any, res) => {
+    fs.mkdir(`./audioFiles/${req.body.companyProject}`, {recursive: true}, (err) => { if (err) return res.status(500).json(err); });
+    const files = req.files as CustomFile[];
+    const filePaths: string[] = [];
+    const renameAsync = promisify(fs.rename);
+    try {
+        await Promise.all(files?.map(async (file) => {
+            const destinationPath = path.join('./audioFiles', req.body.companyProject, file.originalname);            
+            await renameAsync(file.path, destinationPath);
+            filePaths.push(destinationPath);
+        }));
+    } catch (error) {
+        console.error('failed to move file to project directory: ', error);
+        return res.status(500).json('reeee');
+    }
+    const projectId = await projectController.createNewProject(req.body, filePaths);
+    console.log('% projectId: ', projectId);
+    return res.status(200).json(projectId);
+})
+
+app.get('/getProjectData/:id', async (req: any, res) => {
+    console.log('req.body = ', req.body);
+    console.log('req.params = ', req.params);
+    console.log('req.query = ', req.query);
+    const project = await projectController.getProjectById(req.params.id);
+    if (project) return res.status(200).json(project);
+    return res.status(500).json('REEEEE');
     
-    return res.status(200).json(project);
-})
-
-app.post('/joinProject', async (req: any, res) => {
-    const newProjectUserList = await projectController.joinProject(req.body, req.user._id);
-    console.log('new project users list: ', newProjectUserList);
-    return res.status(200).json(newProjectUserList);
-})
-
-app.get('/getProjectById', async (req: any, res) => {
-    const project = await projectController.getProjectById(req.body);
-    return res.status(200).json(project);
 })

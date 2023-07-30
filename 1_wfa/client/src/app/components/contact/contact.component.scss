@@ -1,3 +1,5 @@
+@import '../../animations.scss';
+
 .wrapper {
     position: absolute; 
     width: 100vw;
@@ -6,14 +8,23 @@
 .contact-container {
     margin: auto;
     margin-top: 10%;
-    width: 85%;
+    width: 70%;
+    max-width: 600px;
 }
 
 .contact-title {
     color: white;
     font-size: 300%;
     font-weight: 100;
+    transition: margin-bottom 1s ease-in-out;
+}
+
+.contact-title-margin-bottom-1 {
     margin-bottom: 3rem;
+}
+
+.contact-title-margin-bottom-2 {
+    margin-bottom: 1rem;
 }
 
 form {
@@ -22,10 +33,39 @@ form {
     border-radius: 5px;
 }
 
+//------------------
+
+.form-row {
+    display: flex;
+    justify-content: space-evenly;
+
+}
+
 mat-form-field {
     display: block;
     margin-bottom: 1rem;
+    width: 45%;
 }
+
+.mff-1 {
+    opacity: 0;
+    animation: fadeIn .3s ease .2s forwards;
+}
+
+.mff-2 {
+    opacity: 0;
+    animation: fadeIn .3s ease .3s forwards;
+}
+.mff-3 {
+    opacity: 0;
+    animation: fadeIn .3s ease .4s forwards;
+}
+.mff-4 {
+    opacity: 0;
+    animation: fadeIn .3s ease .5s forwards;
+}
+
+//------------------
 
 button {
     margin: auto;
@@ -33,5 +73,53 @@ button {
 }
 
 textarea {
-    height: 300px;
+    height: 260px;
+}
+
+// ----------
+
+.form-section {
+
+}
+
+.form-section-message {
+    color: white;
+    font-size: 150%;
+    font-weight: 100;
+    text-align: center;
+    letter-spacing: 2px;
+    animation: fadeIn 1s ease;
+}
+
+.form-section-one {
+    
+}
+
+.form-section-two {
+
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.button-container > button {
+    width: 25%;
+}
+
+.form-section-2-data {
+    color: white;
+    font-weight: 100;
+    font-size: 90%;
+    opacity: 0;
+    letter-spacing: 0px;
+    animation: letterSpacingEffect 1s ease forwards;
+    box-shadow: 0px 12px 20px -12px #003f4e;
+    display: flex;
+    justify-content: space-around;
+}
+
+.form-section-2-data-item {
+    padding: 10px;
 }

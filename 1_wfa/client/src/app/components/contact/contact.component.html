@@ -1,15 +1,38 @@
 <div class="wrapper">
     <div class="contact-container">
-        <div class="contact-title">
+        <div class="contact-title contact-title-margin-bottom-1" id="contact-title">
             Contact
         </div>
         <form class="contact-form" [formGroup]="contactForm" (ngSubmit)="submit()">
-            <mat-form-field><input matInput autofocus type="text" name="name" formControlName="name" placeholder="Your Name"></mat-form-field>
-            <mat-form-field><input matInput type="text" name="email" formControlName="email" placeholder="Your Email"></mat-form-field>
-            <mat-form-field><input matInput type="text" name="company" formControlName="company" placeholder="Your Company"></mat-form-field>
-            <mat-form-field><input matInput type="text" name="projectTitle" formControlName="projectTitle" placeholder="Project Title"></mat-form-field>
-            <mat-form-field><textarea matInput name="message" formControlName="message" placeholder="what's going on?"></textarea></mat-form-field>
-            <button type="button" mat-raised-button (click)="submit()">submit</button>
+            <div class="form-section form-section-one" *ngIf="showSectionOne">
+                <div class="form-section-message">The Basics</div>
+                <div class="form-row">
+                    <mat-form-field class="mff-1"><input matInput [autofocus]="secOne" type="text" name="name" formControlName="name" placeholder="Your Name"></mat-form-field>
+                    <mat-form-field class="mff-2"><input matInput type="text" name="email" formControlName="email" placeholder="Your Email"></mat-form-field>
+                </div>
+                <div class="form-row">
+                    <mat-form-field class="mff-3"><input matInput type="text" name="company" formControlName="company" placeholder="Your Company"></mat-form-field>
+                    <mat-form-field class="mff-4"><input matInput type="text" name="projectTitle" formControlName="projectTitle" placeholder="Project Title"></mat-form-field>
+                </div>
+                <button mat-raised-button type="button" (click)="displaySectionTwo()" style="margin-top: 6px; width: 40%; height: 40px;">Next Section</button>
+            </div>
+            <div class="form-section form-section-one" *ngIf="showSectionTwo">
+                <div class="form-section-2-data">
+                    <div class="form-section-2-data-chunk-1 data-chunk">
+                        <div class="form-section-2-data-item" style="text-align: right">{{ name }}</div>
+                        <div class="form-section-2-data-item">{{ company }}</div>
+                    </div>
+                    <div class="form-section-2-data-chunk-2 data-chunk">
+                        <div class="form-section-2-data-item" style="text-align: right">{{ email }}</div>
+                        <div class="form-section-2-data-item">{{ projectTitle }}</div>
+                    </div>
+                </div>
+                <div class="form-section-message" style="margin-top: 25px; margin-bottom: 10px;">How Can We Help?</div>
+                <mat-form-field style="width: 100% !important;"><textarea matInput [autofocus]="secTwo" id="text-area" name="message" formControlName="message" placeholder="Please be as detailed as possible regarding your needs and goals..."></textarea></mat-form-field>
+            </div>
+            <div class="button-container">
+                <button type="button" mat-raised-button (click)="back()" *ngIf="showSectionTwo">back</button><button type="button" mat-raised-button (click)="submit()" *ngIf="showSectionTwo">submit</button>
+            </div>
         </form>
     </div>
 </div>

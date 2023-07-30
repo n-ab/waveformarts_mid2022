@@ -1,1 +1,11 @@
-<p>project-manage works!</p>
+<div class="project-wrapper">
+    <div class="project" *ngIf="project">
+        <div class="project-title">{{ project.title }}</div>
+        <div class="project-description">{{ project.description }}</div>
+    </div>
+
+</div>
+
+<div style="position: absolute; margin: 200px 0px 0px 25%; border: 1px solid #2679875c; box-shadow: 0px 0px 25px -8px black; text-align: center; letter-spacing: 2px; color: white; max-width: 50%; font-weight: 100; padding: 1rem;">
+{{ project | json }}
+</div>

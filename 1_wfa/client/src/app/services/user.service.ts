@@ -110,4 +110,10 @@ export class UserService {
       .then(projectUsers => projectUsers)
       .catch(err => err);
   }
+
+  contact(data: any) {
+    return this.http.post('/api/project/contact', data).toPromise()
+      .then(user => user)
+      .catch(err => err);
+  }
 }

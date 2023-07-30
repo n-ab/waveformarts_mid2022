@@ -11,17 +11,20 @@ export class FileService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  uploadFile(data: any) {
-    console.log('uploadFile() data: ', data);
-    const postData = new FormData();
-    postData.append('title', data.title);
-    postData.append('tasks', data.tasks);
-    postData.append('email', data.clientsEmail);
-    postData.append('audioFile', data.audioFile);
-    return this.http.post('/api/file/uploadFile', postData).toPromise()
-      .then(file => {
-        console.log('file saved as: ', file);
-      })
+  // STEP 1
+
+  prepareDestinationFolder(data: any) {
+    return this.http.post('/api/file/prepareDestinationFolder', data).toPromise()
+    .then(folderName => folderName)
+    .catch(err => err);
+  }
+
+  // STEP 2
+  
+  uploadFile(formData: FormData) {
+    return this.http.post('/api/file/uploadFile', formData).toPromise()
+      .then(finalResult => finalResult)
+      .catch(err => err);
   }
 
 }

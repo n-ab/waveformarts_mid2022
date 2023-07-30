@@ -11,10 +11,10 @@
     width: 100%;
     text-align: center;
     font-weight: 100;
-    font-size: 175%;
-    letter-spacing: 2px;
+    font-size: 375%;
+    letter-spacing: 20px;
     color: white;
-    animation: logoTransition 1.3s ease forwards;
+    animation: logoTransition 2.3s ease forwards;
 }
 
 .display-none {
@@ -24,7 +24,7 @@
 #landing-feature {
     text-align: center;
     opacity: 0;
-    animation: fadeIn 1.1s ease .8s forwards;
+    animation: fadeIn 1.1s ease 1.8s forwards;
     color: white;
     font-size: 150%;
     font-weight: 100;
@@ -69,7 +69,7 @@
     z-index: 11;
     border-radius: 13px;
     background-image: linear-gradient(0.31turn, #00d0ff, #0088ff);   
-    animation: fadeIn 1.2s ease .7s forwards;
+    animation: fadeIn 2s ease 3.8s forwards;
 }
 
 #first-content-box {
@@ -89,7 +89,7 @@
 .content-title {
     color: #e1fffd;
     text-align: center;
-    padding: 1rem 1rem 0rem 1rem;
+    padding: 2rem 1rem 0rem 1rem;
     font-size: 192%;
 }
 
@@ -99,6 +99,8 @@
     line-height: 1.6;
     width: 80%;
     margin: auto;
+    margin-top: 20px;
+    font-size: 125%;
 }
 
 .landing-button-container {
@@ -110,11 +112,11 @@
 button {
     border: none;
     border-radius: 5px;
-    width: 100px;
+    width: 25%;
     color: #bffffc;
     font-weight: 100;
     letter-spacing: 1px;
-    height: 42px;
+    height: 48px;
     background-color: #ffffff1f;
 }
 
@@ -142,15 +144,19 @@ button {
 // i.e. 'sound design' 'composition' 'dialog editing'
 .lfi1 {
     opacity: 0;
-    animation: fadeIn 3s ease 1.2s forwards;
+    animation: fadeIn 3s ease 2.2s forwards;
+    letter-spacing: 2px;
 }
 
 .lfi2 {
     opacity: 0;
-    animation: fadeIn 3s ease 1.5s forwards;
+    animation: fadeIn 3s ease 2.4s forwards;
+    letter-spacing: 2px;
+
 }
 
 .lfi3 {
     opacity: 0;
-    animation: fadeIn 3s ease 1.8s forwards;
+    animation: fadeIn 3s ease 2.6s forwards;
+    letter-spacing: 2px;
 }

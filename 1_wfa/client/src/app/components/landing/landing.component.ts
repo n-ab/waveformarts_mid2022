@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { MetricsService } from 'src/app/services/metrics.service';
+import { UserService } from 'src/app/services/user.service';
 import { WindowService } from 'src/app/services/window.service';
 
 @Component({
@@ -15,11 +16,13 @@ export class LandingComponent implements OnInit, AfterViewInit {
 
   @Output() adjustBackgroundImageWidth: EventEmitter<any> = new EventEmitter();
 
-  constructor(private router: Router, private windowService: WindowService, private metricsService: MetricsService) { }
+  constructor(private router: Router, private windowService: WindowService, private metricsService: MetricsService, private userService: UserService) { }
 
   ngOnInit(): void {
     this.innerWidth = window.innerWidth;
-    this.windowService.bgImageWidth.next(5100);
+    // LINE BELOW SETS THE STARTING WIDTH OF OPENING EFFECT
+    // consider this point 1
+    this.windowService.bgImageWidth.next(6000);
     this.metricsService.addPageMetrics(this.metricHeader, history.state.navigatedFrom);
     // this.windowService.bgImageMarginLeft.next(-900);
   }
@@ -53,7 +56,8 @@ export class LandingComponent implements OnInit, AfterViewInit {
 
   goToUpload(): void {
     this.router.navigateByUrl('upload', {state: {navigatedFrom: 'Landing'}});
-    this.windowService.adjustBackgroundImageWidth(3200);
+    this.windowService.bgImageWidth.next(4000);
+    this.windowService.bgImageMarginLeft.next(-400);
   }
 
 }
