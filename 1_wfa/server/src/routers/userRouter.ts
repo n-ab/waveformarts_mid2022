@@ -52,7 +52,7 @@ app.post('/logout', logout, (req: any, res) => {
 app.post('/register', async (req: any, res) => {
     console.log('registering:', req.body);
     const user = await userController.register(req.body);
-    return res.status(200).json();
+    return res.status(200).json(user.email);
 })
 
 app.get('/fetchFiles', async (req: any, res) => {
@@ -62,7 +62,7 @@ app.get('/fetchFiles', async (req: any, res) => {
         
         return res.status(200).json({downloads: files?.downloads, uploads: files?.uploads});
     } else {
-        return res.status(200).json('no one logged in.')
+        return res.status(200).json('no one logged in.');
     }
 })
 

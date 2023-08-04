@@ -18,14 +18,10 @@
             </div>
             <div class="form-section form-section-one" *ngIf="showSectionTwo">
                 <div class="form-section-2-data">
-                    <div class="form-section-2-data-chunk-1 data-chunk">
-                        <div class="form-section-2-data-item" style="text-align: right">{{ name }}</div>
-                        <div class="form-section-2-data-item">{{ company }}</div>
-                    </div>
-                    <div class="form-section-2-data-chunk-2 data-chunk">
-                        <div class="form-section-2-data-item" style="text-align: right">{{ email }}</div>
-                        <div class="form-section-2-data-item">{{ projectTitle }}</div>
-                    </div>
+                    <div class="form-section-2-data-item">{{ name }}</div>
+                    <div class="form-section-2-data-item">{{ email }}</div>
+                    <div class="form-section-2-data-item">{{ company }}</div>
+                    <div class="form-section-2-data-item">{{ projectTitle }}</div>
                 </div>
                 <div class="form-section-message" style="margin-top: 25px; margin-bottom: 10px;">How Can We Help?</div>
                 <mat-form-field style="width: 100% !important;"><textarea matInput [autofocus]="secTwo" id="text-area" name="message" formControlName="message" placeholder="Please be as detailed as possible regarding your needs and goals..."></textarea></mat-form-field>

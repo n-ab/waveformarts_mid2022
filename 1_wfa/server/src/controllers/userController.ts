@@ -6,20 +6,34 @@ import { MessageModel } from '../models/message';
 import { DiscussionModel } from '../models/discussion';
 
 export function register(data: any) {
-    console.log('Registering new user with data: ');
-    data['fullName'] = '';
-    data['projects'] = [];
-    console.log(data);
-    return UserModel.findOneAndUpdate(data, {$set: {newUser: data}}, { new: true, upsert: true})
+    console.log('Registering new user with data: ', data);
+    return UserModel.create({
+        status: true,
+        role: 'user',
+        firstName: data.firstName,
+        lastName: data.lastName,
+        nameAbbreviation: data.firstName[0].toUpperCase() + data.lastName.toLowerCase(),
+        fullName: data.firstName + ' ' + data.lastName,
+        email: data.email,
+        username: data.email,
+        company: '',
+        projects: [],
+        clientNumber: Math.floor(Math.random() * 899999 + 100000),
+        discussions: [],
+        messagesSent: [],
+        readMessages: [],
+        starredSounds: [],
+        downloads: [],
+        uploads: [],
+        plan: 'basic',
+        questions: [],
+        reports: [],
+        suggestions: [],
+    })
     .then(user => {
-        const fullName = user.firstName.concat(user.lastName);
-        user.fullName = fullName;
-        console.log('SUCCESS - New user with email: ', user.email);
-        user.role = 'user';
-        user.username = data.email;
-        user.save();
+        console.log('saved user with clientNumber: ', user.clientNumber);
         return user;
-    });   
+    })
 }
 
 export async function fetchFiles(id: string) {

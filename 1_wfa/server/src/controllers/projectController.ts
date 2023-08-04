@@ -1,18 +1,19 @@
 import { ProjectModel } from '../models/project';
 import { UserModel } from '../models/user';
+import * as bcrypt from 'bcryptjs';
 
 // NEW PROJECT PATH WITH NO KNOWN USER
 export async function createNewProject(data: any, filePaths: string[]) {
-    const project = await ProjectModel.create({ title: data.title, companyProject: data.companyProject, description: data.description, email: data.email, projectLead: data.email, filePaths: filePaths });
+    const project = await ProjectModel.create({ title: data.title, companyProject: data.companyProject, description: data.description, email: data.email, projectLead: data.email, filePaths: filePaths, number: Math.floor(Math.random() * 899999 + 100000) });
     const user =    await UserModel.create({    email: data.email, status: true, role: 'lead', nameAbbreviation: data.companyProject, company: data.companyProject, projects: project._id });
     project.users.push(user._id);
     await project.save();
     await user.save();
-    return project._id;    
+    return {projectId: project._id, projectNumber: project.number};
 }
 
 export async function getProjectById(data: any) {
-    console.log('getProjectById() - id: ', data);
+    console.log('getProjectById() - id: ', JSON.stringify(data));
     const project = await ProjectModel.findById(data).populate('users').then(project => project);
     return project;
 }
@@ -48,4 +49,38 @@ export async function joinProject(projectId: string, userId: string) {
     project?.users.push(userId);
     project?.save();
     return project?.users;
+}
+
+export async function contact(data: any) {
+    const contactInfo = await UserModel.create({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        company: data.company,
+        email: data.email,
+        password: ''
+    })
+    .then(user => {
+        var salt = bcrypt.genSaltSync(10);
+        var hash = bcrypt.hashSync(data.password, salt);
+        user.save();
+        // hash password shit here
+    })
+}
+
+export async function saveUnhashedPassword(password: any, userId: string) {
+    var salt = bcrypt.genSaltSync(10);
+    var hash = bcrypt.hashSync(password, salt);
+    const user = await UserModel.findById(userId);
+    user!.password = hash;
+    user?.save();
+}
+
+export async function checkAttemptedPassword(attemptedPassword: string, userId: string) {
+    var salt = bcrypt.genSaltSync(10);
+    var hash = bcrypt.hashSync(attemptedPassword, salt);
+    const user = await UserModel.findById(userId);
+    console.log('user!.password = ', user!.password);
+    console.log('attempted password = ', hash);
+    if (user!.password == hash) return true;
+    return false;
 }

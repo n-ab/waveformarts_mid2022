@@ -1,22 +1,67 @@
-<form action="add-user-form" *ngIf="showRegisterForm === false" [formGroup]="loginForm">
-    <!-- <div class="add-user-title title">Login</div> -->
-    <mat-form-field><input matInput autofocus type="text" name="username" formControlName="username" placeholder="username"></mat-form-field>
-    <mat-form-field><input matInput type="password" name="password" formControlName="password" placeholder="password"></mat-form-field>
-    <button mat-raised-button type="submit" class="login-button" (click)="login()">sign in</button>
-    <hr *ngIf="!showRegisterForm && !error" class="hr-login">
-    <button mat-raised-button type="button" class="register-button" (click)="showRegister()">register</button>
-    <div *ngIf="error" class="error">{{errorMessage}}</div>
-</form>
-<form action="register-form" *ngIf="showRegisterForm === true" [formGroup]="registerForm">
-    <!-- <div class="add-user-title title">Login</div> -->
-    <mat-form-field><input matInput type="text" name="email" formControlName="email" placeholder="email"></mat-form-field>
-    <mat-form-field><input matInput type="password" name="password" formControlName="password" placeholder="password"></mat-form-field>
-    <mat-form-field><input matInput type="text" name="firstName" formControlName="firstName" placeholder="First Name"></mat-form-field>
-    <mat-form-field><input matInput type="text" name="lastName" formControlName="lastName" placeholder="Last Name"></mat-form-field>
-    <mat-form-field><input matInput type="text" name="company" formControlName="company" placeholder="Company"></mat-form-field>
-    <button mat-raised-button type="button" class="login-button" (click)="register()" *ngIf="!registerSuccess">register</button>
-    <button mat-raised-button disabled type="button" class="login-button register-success" *ngIf="registerSuccess">success</button>
-    
-    <hr *ngIf="showRegisterForm" class="hr-register">
-    <button mat-raised-button type="button" class="register-button" (click)="showLogin()">log in</button>
-</form>
+<div class="options" *ngIf="showMenuOptions">
+    <div class="option" *ngIf="showLogin" (click)="selectedLogin()">Log In</div>
+    <div class="option" (click)="selectedRegister()">Register</div>
+    <div id="spacer"></div>
+    <div class="option" (click)="selectedContact()">Contact</div>
+</div>
+
+<!-- /////////////////////////////// -->
+
+<div class="login" *ngIf="showLoginOptions">
+    <div class="login-with-username-password option" (click)="selectedLoginWithUsername()">Log In With Username / Password</div>
+    <div id="spacer"></div>
+    <div class="login-with-project-name option" (click)="selectedLoginWithProjectName()">Log In With Project Name / Number</div>
+</div>
+
+<div class="login" *ngIf="showLoginWithUsernamePasswordForm">
+    <form [formGroup]="loginWithUsernamePassword">
+        <mat-form-field class="dialog-form-input"><input matInput type="text" name="username" formControlName="username" placeholder="username"></mat-form-field>
+        <mat-form-field class="dialog-form-input"><input matInput type="text" name="password" formControlName="password" placeholder="password"></mat-form-field>
+        <button class="submit-button" mat-raised-button >sign in</button>
+    </form>
+</div>
+<div class="login" *ngIf="showLoginWithProjectIdForm">
+    <form [formGroup]="loginWithProjectNameForm">
+        <mat-form-field class="dialog-form-input"><input matInput type="text" name="projectName" formControlName="projectName" placeholder="project name"></mat-form-field>
+        <mat-form-field class="dialog-form-input"><input matInput type="text" name="projectNumber" formControlName="projectNumber" placeholder="project number"></mat-form-field>
+        <button class="submit-button" mat-raised-button>sign in</button>
+    </form>
+</div>
+
+<div class="login" *ngIf="showRegisterForm">
+    <form [formGroup]="registerForm">
+        <mat-form-field class="dialog-form-input"><input matInput type="text" name="firstName" formControlName="firstName" placeholder="First Name"></mat-form-field>
+        <mat-form-field class="dialog-form-input"><input matInput type="text" name="lastName" formControlName="lastName" placeholder="Last Name"></mat-form-field>
+        <mat-form-field class="dialog-form-input"><input matInput type="text" name="company" formControlName="company" placeholder="Company Name (optional)"></mat-form-field>
+        <mat-form-field class="dialog-form-input"><input matInput type="text" name="email" formControlName="email" placeholder="Email"></mat-form-field>
+        <mat-form-field class="dialog-form-input"><input matInput type="text" name="password" formControlName="password" placeholder="Password"></mat-form-field>
+        <button class="submit-button register-button" mat-raised-button (click)="register()">register</button>
+    </form>
+</div>
+
+<!-- /////////////////////////////// -->
+
+<!-- <div id="form-container" *ngIf="showForms">
+    <form action="add-user-form" *ngIf="showRegisterForm === false" [formGroup]="loginForm">
+        <div class="add-user-title title">Login</div>
+        <mat-form-field><input matInput autofocus type="text" name="username" formControlName="username" placeholder="username"></mat-form-field>
+        <mat-form-field><input matInput type="password" name="password" formControlName="password" placeholder="password"></mat-form-field>
+        <button mat-raised-button type="submit" class="login-button" (click)="login()">sign in</button>
+        <hr *ngIf="!showRegisterForm && !error" class="hr-login">
+        <button mat-raised-button type="button" class="register-button" (click)="showRegister()">register</button>
+        <div *ngIf="error" class="error">{{errorMessage}}</div>
+    </form> -->
+    <!-- <form action="register-form" *ngIf="showRegisterForm === true" [formGroup]="registerForm">
+        <div class="add-user-title title">Login</div>
+        <mat-form-field><input matInput type="text" name="email" formControlName="email" placeholder="email"></mat-form-field>
+        <mat-form-field><input matInput type="password" name="password" formControlName="password" placeholder="password"></mat-form-field>
+        <mat-form-field><input matInput type="text" name="firstName" formControlName="firstName" placeholder="First Name"></mat-form-field>
+        <mat-form-field><input matInput type="text" name="lastName" formControlName="lastName" placeholder="Last Name"></mat-form-field>
+        <mat-form-field><input matInput type="text" name="company" formControlName="company" placeholder="Company"></mat-form-field>
+        <button mat-raised-button type="button" class="login-button" (click)="register()" *ngIf="!registerSuccess">register</button>
+        <button mat-raised-button disabled type="button" class="login-button register-success" *ngIf="registerSuccess">success</button>
+        
+        <hr *ngIf="showRegisterForm" class="hr-register">
+        <button mat-raised-button type="button" class="register-button" (click)="showLogin()">log in</button>
+    </form> -->
+<!-- </div> -->

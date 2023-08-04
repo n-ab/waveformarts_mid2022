@@ -92,3 +92,7 @@ export class UploadComponent implements OnInit, AfterViewInit {
 
 
 }
+
+// copy and paste the following test project description
+
+// Hello, \r\n\r\nWhat we need is basic dialog editing on a 60 to 70 minute long piece. There was a loud hum from one of the mics but our sound guy didn't record ISOs so we have the hum throughout all of our audio. It was a panel between three speakers and a host, all on lav with handheld mics for the speakers. Let us know how much time and cost would be required for you to work on this. \r\n\r\nThanks, \r\n\r\nNick

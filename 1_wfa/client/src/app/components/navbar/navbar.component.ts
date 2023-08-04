@@ -34,9 +34,9 @@ export class NavbarComponent implements OnInit {
   signIn(): void {
      const dialogRef = this.dialog.open(LoginComponent, {
       width: '400px',
-      height: '353px',
+      height: '280px',
       autoFocus: true,
-      panelClass: 'mat-dialog-container'
+      panelClass: 'mat-dialog-height-transition'
      }).afterClosed().subscribe(userSignedIn => {
       this.user = userSignedIn;
      })

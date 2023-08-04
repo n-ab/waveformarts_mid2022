@@ -4,7 +4,7 @@ export interface ProjectObject extends mongoose.Document {
     _id: any, 
     title: string,
     projectLeadName: string,
-    // beginning stage field ^
+    number: string,
     users: string[],
     filePaths: string[],
     discussions: string[],
@@ -16,15 +16,14 @@ export interface ProjectObject extends mongoose.Document {
 
 const schema = new mongoose.Schema ({
     title: String,
-    projectLeadName: String,
-    // beginning stage field ^
-    users: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-    filePaths: [String],
-    discussions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Discussion' }],
-    messages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Message' }],
-    companyProject: String,
     email: String,
+    filePaths: [String],
     description: String,
+    companyProject: String,
+    projectLeadName: String,
+    users: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    messages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Message' }],
+    discussions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Discussion' }],
 });
 
 export const ProjectModel = mongoose.model<ProjectObject>('Project', schema);

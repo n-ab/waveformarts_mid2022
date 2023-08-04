@@ -39,3 +39,8 @@ app.get('/getProjectData/:id', async (req: any, res) => {
     return res.status(500).json('REEEEE');
     
 })
+
+app.post('/contact', async (req: any, res) => {
+    const contactInfo = await projectController.contact(req.body);
+    return res.status(200).json(contactInfo);
+})
