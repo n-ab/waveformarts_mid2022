@@ -4,14 +4,17 @@ import { ReportModel } from '../models/report';
 import { SuggestionModel } from '../models/suggestion';
 import { MessageModel } from '../models/message';
 import { DiscussionModel } from '../models/discussion';
+import * as bcrypt from 'bcryptjs';
 
-export function register(data: any) {
+export async function register(data: any) {
     console.log('Registering new user with data: ', data);
+    const encryptedPassword = await encryptPassword(data.password);
     return UserModel.create({
         status: true,
         role: 'user',
         firstName: data.firstName,
         lastName: data.lastName,
+        password: encryptedPassword,
         nameAbbreviation: data.firstName[0].toUpperCase() + data.lastName.toLowerCase(),
         fullName: data.firstName + ' ' + data.lastName,
         email: data.email,
@@ -34,6 +37,22 @@ export function register(data: any) {
         console.log('saved user with clientNumber: ', user.clientNumber);
         return user;
     })
+}
+
+export async function encryptPassword(password: string) {
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(password, salt);
+    return hash;
+}
+
+export async function checkAttemptedPassword(attemptedPassword: string, userId: string) {
+    var salt = bcrypt.genSaltSync(10);
+    var hash = bcrypt.hashSync(attemptedPassword, salt);
+    const user = await UserModel.findById(userId);
+    console.log('user!.password = ', user!.password);
+    console.log('attempted password = ', hash);
+    if (user!.password == hash) return true;
+    return false;
 }
 
 export async function fetchFiles(id: string) {

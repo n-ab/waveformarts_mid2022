@@ -7,9 +7,9 @@ const passport = new Passport();
 const app = express();
 
 export function login(req: any, res: any, next: any) {
-    console.log('logging in... ', req.body);
+    console.log('AUTH - login(), req.body: ', req.body);
     passport.authenticate('local', (err, user, info) => {
-        console.log('2 passport.authenticate: ', user + ' INFO \/b' + info);
+        console.log('1 passport.authenticate: ', user + ' INFO: ' + JSON.stringify(info));
         if (err) return next(err) && console.log('auth.login() failed - error = ', err);
         if (!user) { return res.status(200).json(info); }
         req.login(user, (err: any) => { res.json(user); })

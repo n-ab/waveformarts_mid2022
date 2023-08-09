@@ -13,28 +13,29 @@
     <div class="login-with-project-name option" (click)="selectedLoginWithProjectName()">Log In With Project Name / Number</div>
 </div>
 
-<div class="login" *ngIf="showLoginWithUsernamePasswordForm">
-    <form [formGroup]="loginWithUsernamePassword">
+<div class="login" *ngIf="showLoginWithUsernamePassword">
+    <form [formGroup]="loginWithUsernamePasswordForm">
         <mat-form-field class="dialog-form-input"><input matInput type="text" name="username" formControlName="username" placeholder="username"></mat-form-field>
-        <mat-form-field class="dialog-form-input"><input matInput type="text" name="password" formControlName="password" placeholder="password"></mat-form-field>
-        <button class="submit-button" mat-raised-button >sign in</button>
+        <mat-form-field class="dialog-form-input"><input matInput type="password" name="password" formControlName="password" placeholder="password"></mat-form-field>
+        <div *ngIf="error" class="error">{{ errorMessage }}</div>
+        <button class="submit-button" mat-raised-button (click)="login()">sign in</button>
     </form>
 </div>
-<div class="login" *ngIf="showLoginWithProjectIdForm">
+<div class="login" *ngIf="showLoginWithProjectId">
     <form [formGroup]="loginWithProjectNameForm">
         <mat-form-field class="dialog-form-input"><input matInput type="text" name="projectName" formControlName="projectName" placeholder="project name"></mat-form-field>
         <mat-form-field class="dialog-form-input"><input matInput type="text" name="projectNumber" formControlName="projectNumber" placeholder="project number"></mat-form-field>
-        <button class="submit-button" mat-raised-button>sign in</button>
+        <button class="submit-button" mat-raised-button (click)="login()">sign in</button>
     </form>
 </div>
 
-<div class="login" *ngIf="showRegisterForm">
+<div class="login" *ngIf="showRegister">
     <form [formGroup]="registerForm">
         <mat-form-field class="dialog-form-input"><input matInput type="text" name="firstName" formControlName="firstName" placeholder="First Name"></mat-form-field>
         <mat-form-field class="dialog-form-input"><input matInput type="text" name="lastName" formControlName="lastName" placeholder="Last Name"></mat-form-field>
         <mat-form-field class="dialog-form-input"><input matInput type="text" name="company" formControlName="company" placeholder="Company Name (optional)"></mat-form-field>
         <mat-form-field class="dialog-form-input"><input matInput type="text" name="email" formControlName="email" placeholder="Email"></mat-form-field>
-        <mat-form-field class="dialog-form-input"><input matInput type="text" name="password" formControlName="password" placeholder="Password"></mat-form-field>
+        <mat-form-field class="dialog-form-input"><input matInput type="password" name="password" formControlName="password" placeholder="Password"></mat-form-field>
         <button class="submit-button register-button" mat-raised-button (click)="register()">register</button>
     </form>
 </div>

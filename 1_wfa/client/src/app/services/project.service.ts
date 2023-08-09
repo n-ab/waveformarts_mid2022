@@ -27,4 +27,10 @@ export class ProjectService {
       .catch(e => e.error);
   }
 
+  logInToProject(data: any) {
+    return this.http.post('/api/project/loginToProject', data).toPromise()
+      .then(project => project)
+      .catch(err => err);
+  }
+
 }

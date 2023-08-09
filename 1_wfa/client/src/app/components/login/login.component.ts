@@ -4,6 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models';
 import { MetricsService } from 'src/app/services/metrics.service';
+import { ProjectService } from 'src/app/services/project.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -14,14 +15,14 @@ import { UserService } from 'src/app/services/user.service';
 export class LoginComponent implements OnInit, AfterViewInit {
 
   metricHeader = 'Login';
-  returnedUser!: any;
+  newRegisteredUser!: object | void;
 
   // error handling ------------------
   error = false;
   errorMessage = ' ';
 
   // forms ----------------------------
-  loginWithUsernamePassword: FormGroup;
+  loginWithUsernamePasswordForm: FormGroup;
   loginWithProjectNameForm: FormGroup;
   registerForm: FormGroup;
 
@@ -30,12 +31,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
   showLoginOptions = false;
 
   // show forms ---------------------
-  showLoginWithUsernamePasswordForm = false;
-  showLoginWithProjectIdForm = false;
-  showRegisterForm = false;
+  showLoginWithUsernamePassword = false;
+  showLoginWithProjectId = false;
+  showRegister = false;
 
-  constructor(private userService: UserService, public dialogRef: MatDialogRef<LoginComponent>, private metricsService: MetricsService, private router: Router) {
-    this.loginWithUsernamePassword = new FormGroup({
+  constructor(private userService: UserService, public dialogRef: MatDialogRef<LoginComponent>, private metricsService: MetricsService, private router: Router, private projectService: ProjectService) {
+    this.loginWithUsernamePasswordForm = new FormGroup({
       username: new FormControl(null),
       password: new FormControl(null),
     });
@@ -65,7 +66,21 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   async login() {
-    // const userLoggedIn: object | string = await this.userService.login(this.loginForm.getRawValue());
+    console.log('this.showLoginWithProjectId = ', this.showLoginWithProjectId);
+    console.log('this.showLoginWithUsernamePassword', this.showLoginWithUsernamePassword);
+    if (this.showLoginWithProjectId == true) {
+      console.log('PROJECT NAME / NUMBER SIGN IN ');
+      const project = await this.projectService.logInToProject(this.loginWithProjectNameForm.getRawValue());
+      console.log('signed into project: ', project);
+      return project;
+    };
+    if (this.showLoginWithUsernamePassword == true) {
+      console.log('USERNAME / PASSWORD SIGN IN ');
+      const user = await this.userService.login(this.loginWithUsernamePasswordForm.getRawValue());
+      if (user == 'Your password is incorrect.' || 'No trace of that user exists.') { this.error = true; this.errorMessage = user; this.dialogRef.updateSize('450px', '300px');}
+      console.log('user signed in: ', user);
+      return user;
+    }
     // console.log('login() - userLoggedIn = ', userLoggedIn);
     // if (userLoggedIn == 'Your password is incorrect.')  { this.error = true; this.errorMessage = 'Incorrect Password'; this.adjustSizeAfterError(); return;}
     // if (userLoggedIn == 'No trace of that user exists.') { this.error = true; this.errorMessage = 'User not found.'; this.adjustSizeAfterError(); return; }
@@ -75,8 +90,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   async register() {
     const userRegistered = await this.userService.register(this.registerForm.getRawValue());
-    console.log('userRegistered = ', userRegistered);
-    this.returnedUser = userRegistered;
+    console.log('typeof userRegistered = ', typeof userRegistered);
+    this.newRegisteredUser = userRegistered;
+    this.showRegister = false;
+    this.dialogRef.updateSize('450px', '215px').addPanelClass('mat-dialog-height-transition');
+    this.showLoginWithUsernamePassword = true;
+    this.showLoginWithProjectId = false;
+    this.loginWithUsernamePasswordForm.patchValue({username: this.newRegisteredUser});
   }
 
   // ----------- Menu Selections ---------------
@@ -89,18 +109,18 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   async selectedLoginWithUsername() {
     this.showLoginOptions = false;
-    this.showLoginWithUsernamePasswordForm = true;
+    this.showLoginWithUsernamePassword = true;
   }
 
   async selectedLoginWithProjectName() {
     this.showLoginOptions = false;
-    this.showLoginWithProjectIdForm = true;
+    this.showLoginWithProjectId = true;
   }
 
   async selectedRegister() {
     this.showMenuOptions = false;
     this.dialogRef.updateSize('450px', '425px');
-    this.showRegisterForm = true;
+    this.showRegister = true;
   }
 
   async selectedContact() {
@@ -109,16 +129,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   // ---------------------------------------------
-
-  showRegister(): void {
-    this.showRegisterForm = true;
-    this.error = false;
-    this.errorMessage = '';
-    this.dialogRef.updateSize('90%', '570px');
-  }
-
+  
   showLogin(): void {
-    this.showRegisterForm = false;
+    this.showRegister = false;
     this.dialogRef.updateSize('90%', '353px');
   }
 
