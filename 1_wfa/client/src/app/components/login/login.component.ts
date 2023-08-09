@@ -6,6 +6,7 @@ import { User } from 'src/app/models';
 import { MetricsService } from 'src/app/services/metrics.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { UserService } from 'src/app/services/user.service';
+import * as bcrypt from 'bcryptjs';
 
 @Component({
   selector: 'app-login',
@@ -66,31 +67,23 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   async login() {
-    console.log('this.showLoginWithProjectId = ', this.showLoginWithProjectId);
-    console.log('this.showLoginWithUsernamePassword', this.showLoginWithUsernamePassword);
     if (this.showLoginWithProjectId == true) {
-      console.log('PROJECT NAME / NUMBER SIGN IN ');
       const project = await this.projectService.logInToProject(this.loginWithProjectNameForm.getRawValue());
-      console.log('signed into project: ', project);
       return project;
     };
     if (this.showLoginWithUsernamePassword == true) {
-      console.log('USERNAME / PASSWORD SIGN IN ');
       const user = await this.userService.login(this.loginWithUsernamePasswordForm.getRawValue());
-      if (user == 'Your password is incorrect.' || 'No trace of that user exists.') { this.error = true; this.errorMessage = user; this.dialogRef.updateSize('450px', '300px');}
-      console.log('user signed in: ', user);
+      console.log('user: ', user);
+      console.log('user.error: ', user.error);
+      console.log('user.error.message: ', user.error.message);
+      if (user.error.message == 'Your password is incorrect.' || 'No trace of that user exists.') { this.error = true; this.errorMessage = user.error.message; this.dialogRef.updateSize('450px', '300px');}
+      console.log('user: ', user);
       return user;
     }
-    // console.log('login() - userLoggedIn = ', userLoggedIn);
-    // if (userLoggedIn == 'Your password is incorrect.')  { this.error = true; this.errorMessage = 'Incorrect Password'; this.adjustSizeAfterError(); return;}
-    // if (userLoggedIn == 'No trace of that user exists.') { this.error = true; this.errorMessage = 'User not found.'; this.adjustSizeAfterError(); return; }
-    // if (userLoggedIn == 'Actually try to insert a username and password.') { this.error = true; this.errorMessage = 'Incorrect Password'; this.adjustSizeAfterError(); return; }
-    // this.dialogRef.close(userLoggedIn);
   }
 
   async register() {
     const userRegistered = await this.userService.register(this.registerForm.getRawValue());
-    console.log('typeof userRegistered = ', typeof userRegistered);
     this.newRegisteredUser = userRegistered;
     this.showRegister = false;
     this.dialogRef.updateSize('450px', '215px').addPanelClass('mat-dialog-height-transition');

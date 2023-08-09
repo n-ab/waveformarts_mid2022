@@ -17,7 +17,7 @@
     <form [formGroup]="loginWithUsernamePasswordForm">
         <mat-form-field class="dialog-form-input"><input matInput type="text" name="username" formControlName="username" placeholder="username"></mat-form-field>
         <mat-form-field class="dialog-form-input"><input matInput type="password" name="password" formControlName="password" placeholder="password"></mat-form-field>
-        <div *ngIf="error" class="error">{{ errorMessage }}</div>
+        <div *ngIf="error" class="error">{{ errorMessage | json }}</div>
         <button class="submit-button" mat-raised-button (click)="login()">sign in</button>
     </form>
 </div>

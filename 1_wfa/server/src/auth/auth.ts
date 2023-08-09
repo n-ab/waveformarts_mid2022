@@ -2,17 +2,24 @@ import { Passport } from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { UserModel } from '../models/user';
 import express from 'express';
+import * as bcrypt from 'bcryptjs';
 
 const passport = new Passport();
 const app = express();
 
 export function login(req: any, res: any, next: any) {
-    console.log('AUTH - login(), req.body: ', req.body);
     passport.authenticate('local', (err, user, info) => {
-        console.log('1 passport.authenticate: ', user + ' INFO: ' + JSON.stringify(info));
-        if (err) return next(err) && console.log('auth.login() failed - error = ', err);
-        if (!user) { return res.status(200).json(info); }
-        req.login(user, (err: any) => { res.json(user); })
+        console.log('user: ', user);
+        if (err) { return next(err); }
+        if (!user) { return res.status(401).json({message: 'No trace of that user exists.'}); }
+        req.login(user, (err: any) => {
+            if (err) {
+                console.error('req.login failed: ', err);
+                return next(err);
+            }
+            // Respond with a successful JSON object
+            res.status(200).json({ message: 'Login successful', user: user });
+        });
     })(req, res, next);
 }
 
@@ -41,11 +48,18 @@ passport.deserializeUser((id, done) => {
 
 passport.use(new LocalStrategy(
     function(username, password, done) {
+        console.log('4');
         UserModel.findOne({username: username}, function(err: any, user: any) {
             if (err)                        { return done(err) }
             if (!user)                      { return done(null, false, { message: 'No trace of that user exists.' }); }
-            if (user.password !== password) { return done(null, false, { message: 'Your password is incorrect.'}); }
-            return done(null, user);
+            bcrypt.compare(password, user.password, (err, isMatch) => {
+                if (err) { return done(err); }
+                if (isMatch) { 
+                    return done(null, user); 
+                } else {
+                    return done(null, false);
+                }
+            });
         }).catch(err => err)
     }
 ));

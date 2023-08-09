@@ -19,6 +19,7 @@ export class UserService {
   login(data: any) {
     return this.http.post('/api/user/login', data).toPromise()
       .then(user => {
+        console.log('user returned: ', user);
         if (Object.keys(user).indexOf('message') == -1) { return user } 
         else { return Object.values(user)[0]; }
       })
