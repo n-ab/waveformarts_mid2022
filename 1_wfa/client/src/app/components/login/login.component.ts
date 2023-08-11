@@ -73,12 +73,14 @@ export class LoginComponent implements OnInit, AfterViewInit {
     };
     if (this.showLoginWithUsernamePassword == true) {
       const user = await this.userService.login(this.loginWithUsernamePasswordForm.getRawValue());
-      console.log('user: ', user);
-      console.log('user.error: ', user.error);
-      console.log('user.error.message: ', user.error.message);
+      // if success
+      if (!user.error || !user.error.message) {
+        console.log('login component user: ', user);
+        this.router.navigateByUrl('account', {state: {'userId': user._id}});
+        return this.dialogRef.close(user._id);
+      }
+      // if error
       if (user.error.message == 'Your password is incorrect.' || 'No trace of that user exists.') { this.error = true; this.errorMessage = user.error.message; this.dialogRef.updateSize('450px', '300px');}
-      console.log('user: ', user);
-      return user;
     }
   }
 

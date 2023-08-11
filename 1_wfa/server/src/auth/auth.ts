@@ -9,16 +9,15 @@ const app = express();
 
 export function login(req: any, res: any, next: any) {
     passport.authenticate('local', (err, user, info) => {
-        console.log('user: ', user);
-        if (err) { return next(err); }
-        if (!user) { return res.status(401).json({message: 'No trace of that user exists.'}); }
+        if (err) {
+            return next(err);
+        }
+        if (!user) { return res.status(401).json({message: 'Invalid credentials'}); }
         req.login(user, (err: any) => {
             if (err) {
-                console.error('req.login failed: ', err);
                 return next(err);
             }
-            // Respond with a successful JSON object
-            res.status(200).json({ message: 'Login successful', user: user });
+            res.status(200).json({ message: 'Login successful', user: user._id });
         });
     })(req, res, next);
 }
@@ -48,10 +47,9 @@ passport.deserializeUser((id, done) => {
 
 passport.use(new LocalStrategy(
     function(username, password, done) {
-        console.log('4');
         UserModel.findOne({username: username}, function(err: any, user: any) {
             if (err)                        { return done(err) }
-            if (!user)                      { return done(null, false, { message: 'No trace of that user exists.' }); }
+            if (!user)                      { return done(null, false, { message: '2 No trace of that user exists.' }); }
             bcrypt.compare(password, user.password, (err, isMatch) => {
                 if (err) { return done(err); }
                 if (isMatch) { 
@@ -60,6 +58,7 @@ passport.use(new LocalStrategy(
                     return done(null, false);
                 }
             });
-        }).catch(err => err)
+        })
+        .catch(err => err)
     }
 ));

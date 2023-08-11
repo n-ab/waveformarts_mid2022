@@ -4,12 +4,12 @@
         <div (click)="goToAdmin()" style="height: 10px; width: 10px; border: 1px solid black;"></div>
     </div>
     <div class="nav-right">
-        <div class="hamburger" *ngIf="!user" (click)="signIn()">
+        <div class="hamburger" *ngIf="!userLoggedIn" (click)="signIn()">
             <div class="hamburger-line"></div>
             <div class="hamburger-line"></div>
             <div class="hamburger-line"></div>
         </div>
     </div>
-    <div class="logout" *ngIf="user" (click)="logout()">log out</div>
-    <div *ngIf="user" class="account" (click)="account()" style="user-select: none;">account</div>
+    <div class="logout" *ngIf="userLoggedIn" (click)="logout()">log out</div>
+    <div *ngIf="userLoggedIn" class="account" (click)="account()" style="user-select: none;">account</div>
 </div>

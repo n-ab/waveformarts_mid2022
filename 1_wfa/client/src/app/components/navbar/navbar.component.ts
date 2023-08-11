@@ -14,6 +14,7 @@ import { MetricsService } from 'src/app/services/metrics.service';
 })
 export class NavbarComponent implements OnInit {
   user!: User;
+  userLoggedIn = false;
   metricHeader = 'Landing';
 
   constructor(private router: Router, private dialog: MatDialog, private userService: UserService, private windowService: WindowService, private metricsService: MetricsService) { }
@@ -27,7 +28,10 @@ export class NavbarComponent implements OnInit {
   userCheck(): void {
     this.userService.check()
       .then(user => {
+        console.log('user: ', user);
+        if (user == false) return;
         this.user = user;
+        this.userLoggedIn = true;
       })
   }
 
@@ -37,9 +41,13 @@ export class NavbarComponent implements OnInit {
       height: '280px',
       autoFocus: true,
       panelClass: 'mat-dialog-height-transition'
-     }).afterClosed().subscribe(userSignedIn => {
-      this.user = userSignedIn;
-     })
+     }).afterClosed().toPromise()
+      .then(user => {
+        console.log('user: ', user);
+        this.user = user;
+        this.userLoggedIn = true;
+        return user;
+      })
   }
 
   account() {
@@ -58,7 +66,7 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     this.userService.logout()
-      .then(() => { this.router.navigateByUrl('') })
+      .then(() => { this.router.navigateByUrl(''); this.userLoggedIn = false; })
       .catch(err => console.log(err));
   }
 
