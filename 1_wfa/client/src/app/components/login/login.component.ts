@@ -76,8 +76,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
       // if success
       if (!user.error || !user.error.message) {
         console.log('login component user: ', user);
-        this.router.navigateByUrl('account', {state: {'userId': user._id}});
-        return this.dialogRef.close(user._id);
+        this.router.navigateByUrl('account', {state: {'userId': user}});
+        return this.dialogRef.close(user);
       }
       // if error
       if (user.error.message == 'Your password is incorrect.' || 'No trace of that user exists.') { this.error = true; this.errorMessage = user.error.message; this.dialogRef.updateSize('450px', '300px');}

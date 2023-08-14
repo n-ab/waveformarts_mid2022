@@ -44,9 +44,13 @@ export class NavbarComponent implements OnInit {
      }).afterClosed().toPromise()
       .then(user => {
         console.log('user: ', user);
-        this.user = user;
-        this.userLoggedIn = true;
-        return user;
+        if (user) {
+          this.user = user;
+          this.userLoggedIn = true;
+          return user;
+        } else {
+         return; 
+        }
       })
   }
 
