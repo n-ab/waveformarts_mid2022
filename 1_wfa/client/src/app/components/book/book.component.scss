@@ -1,0 +1,61 @@
+.wrapper {
+    position: absolute;
+    width: 100vw;
+}
+
+.book-container {
+    margin: auto;
+    margin-top: 5%;
+    width: 90%;
+    max-width: 1000px;
+    padding: 1rem;
+}
+
+.title {
+    color: white;
+    font-size: 200%;
+    font-weight: 100;
+    margin: 38px 50px 50px 50px;
+}
+
+.form-chunk-wrapper {
+    display: inline-block;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.205);
+    padding: 1rem;
+    margin-bottom: 1rem;;
+}
+
+.dates {
+    width: 200px;
+    vertical-align: top;
+}
+
+.mixer-mics {
+    width: 400px;
+    vertical-align: top;
+    margin-left: 2rem;
+}
+
+.timecode {
+    width: 200px;
+    margin-left: 200px;
+}
+
+.form-chunk-title {
+    color: white;
+    font-size: 150%;
+    font-weight: 100;
+}
+
+mat-form-field, input {
+    display: block;
+}
+
+.date-picker {
+    color: white;
+}
+
+.text-area {
+
+}

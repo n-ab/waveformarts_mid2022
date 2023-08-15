@@ -1,1 +1,47 @@
-<p>book works!</p>
+<div class="wrapper">
+    <div class="book-container">
+        <div class="title">Book Us</div>
+        <!-- dates, equipment needed (make / model / number of cameras), script upload -->
+        <form [formGroup]="bookForm" (submit)="submit()">
+            <!-- DATE PICKER -->
+            <div class="form-chunk-wrapper dates">
+                <div class="form-chunk-title">Select Dates</div>
+                <mat-form-field class="date-picker">
+                    <mat-date-range-input [rangePicker]="rangePicker">
+                      <input id="startDate" matStartDate name="startDate" formControlName="startDate">
+                      <input id="endDate"   matEndDate   name="endDate"   formControlName="endDate"  >
+                    </mat-date-range-input>
+                    <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="rangePicker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #rangePicker>
+                      <mat-date-range-picker-actions>
+                        <button mat-button matDateRangePickerCancel>Cancel</button>
+                        <button mat-raised-button color="primary" matDateRangePickerApply>Apply</button>
+                      </mat-date-range-picker-actions>
+                    </mat-date-range-picker>
+                </mat-form-field>
+            </div>
+    
+            <div class="form-chunk-wrapper mixer-mics">
+                <div class="form-chunk-title">Mixer / Mics</div>
+                <mat-form-field><input matInput type="text" name="mixer" formControlName="mixer" placeholder="Select Mixer"></mat-form-field>
+                <mat-form-field><input matInput type="text" name="wireless" formControlName="wireless" placeholder="Select Wireless"></mat-form-field>
+                <mat-form-field><input matInput type="text" name="wirelessAmount" formControlName="wirelessAmount" placeholder="Wireless Amount"></mat-form-field>
+                <mat-form-field><input matInput type="text" name="numberOfCharacters" formControlName="numberOfCharacters" placeholder="Number Of Characters"></mat-form-field>
+                <mat-form-field><input matInput type="text" name="boom" formControlName="boom" placeholder="Select Boom"></mat-form-field>
+                <mat-form-field><input matInput type="text" name="boomAmount" formControlName="boomAmount" placeholder="Boom Amount"></mat-form-field>
+            </div>
+
+            <div class="form-chunk-wrapper timecode">
+                <div class="form-chunk-title">Timecode / Sync</div>
+                <mat-form-field><input matInput type="text" name="timecodeAmount" formControlName="timecodeAmount" placeholder="Number Of Cameras"></mat-form-field>
+                <mat-form-field><input matInput type="text" name="cameraTimecodeInput" formControlName="cameraTimecodeInput" placeholder="Timecode Input on Cameras"></mat-form-field>
+                <mat-form-field><input matInput type="text" name="slate" formControlName="slate" placeholder="Timecode Slate"></mat-form-field>
+            </div>
+    
+            <div class="form-chunk-wrapper">
+                <mat-form-field class="text-area"><textarea matInput type="text" name="additionalNotes" formControlName="additionalNotes" placeholder="Additional Notes"></textarea></mat-form-field>
+            </div>
+        </form>
+    </div>
+</div>

@@ -14,6 +14,7 @@ import { ProjectManageComponent } from './components/project-manage/project-mana
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+// --- material -------------
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule} from '@angular/material/dialog';
@@ -25,6 +26,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+// --- -----------------
 import { WindowComponent } from './components/window/window.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { BookComponent } from './components/book/book.component';
@@ -93,7 +95,7 @@ import { StartProjectComponent } from './components/start-project/start-project.
     BrowserAnimationsModule,
     HttpClientModule,
     // angular material modules
-    MatButtonModule, MatDialogModule, MatDialogModule, MatCheckboxModule, MatInputModule, MatFormFieldModule, MatDatepickerModule, MatPaginatorModule, MatRadioModule, MatExpansionModule, MatProgressSpinnerModule
+    MatButtonModule, MatDialogModule, MatDialogModule, MatCheckboxModule, MatInputModule, MatFormFieldModule, MatDatepickerModule, MatPaginatorModule, MatRadioModule, MatExpansionModule, MatProgressSpinnerModule, MatNativeDateModule
   ],
   providers: [MatNativeDateModule, AudioContext, WindowService],
   bootstrap: [AppComponent]
