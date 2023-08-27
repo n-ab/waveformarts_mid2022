@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from 'src/app/models';
+import { User, Project } from 'src/app/models';
 import { MetricsService } from 'src/app/services/metrics.service';
 import { UserService } from 'src/app/services/user.service';
 import { WindowService } from 'src/app/services/window.service';
@@ -12,6 +12,14 @@ import { UserQuestionComponent } from '../user-question/user-question.component'
 import { FaqAccountComponent } from '../faq-account/faq-account.component';
 import { ReportComponent } from '../report/report.component';
 import { SuggestComponent } from '../suggest/suggest.component';
+import { JoinprojectComponent } from '../joinproject/joinproject.component';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UserInfoComponent } from '../user-info/user-info.component';
+
+interface Selectedfile {
+  file: File; 
+  dataURL: string;
+}
 
 @Component({
   selector: 'app-account',
@@ -22,6 +30,9 @@ export class AccountComponent implements OnInit {
 
   metricHeader = 'Account';
   user!: User;
+  userProjects: Project[] = [];
+  userSounds: File[] = [];
+  selectedFiles: File[] = [];
 
   constructor(private router: Router, private windowService: WindowService, private metricsService: MetricsService, private userService: UserService, private dialog: MatDialog) { }
 
@@ -37,6 +48,85 @@ export class AccountComponent implements OnInit {
     this.windowService.bgImageMarginLeft.next(-2600);
     this.windowService.bgImageWidth.next(5000);
     this.metricsService.addPageMetrics(this.metricHeader, history.state.navigatedFrom);
+  }
+
+  startProject() {
+    this.router.navigateByUrl('upload');
+  }
+
+  joinProject() {
+    this.dialog.open(JoinprojectComponent, {
+      width: '50%',
+      height: '250px',
+      maxWidth: '700px',
+      data: this.user._id
+    });
+  }
+  
+
+  async uploadFile(event: Event) {
+    if ((event.target as HTMLInputElement).files![0] != null) {
+      const files = (event.target as HTMLInputElement).files!;
+      const fileList = await Array.prototype.forEach.call(files, file => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        this.selectedFiles.push(file);
+      });
+      this.userService.uploadFileToUser(fileList);
+    }
+    
+    // console.log('upload file event: ', event);
+    // const files = (event?.target as HTMLInputElement).files!;
+    // if (files && files.length > 0) {
+    //   const formData = new FormData();
+    //   this.selectedFiles = [];
+    //   for (let i=0; i < files.length; i++) {
+    //     const file = files[i];
+    //     const reader = new FileReader();
+    //     reader.readAsDataURL(file);
+    //     const readerPromise = new Promise<string>((resolve, reject) => {
+    //       reader.onload = () => resolve(reader.result as string);
+    //       reader.onload = () => reject(reader.error);
+    //     });
+    //     const dataURL = await readerPromise;
+    //     const selectedFile: Selectedfile = { file, dataURL }
+    //     this.selectedFiles.push(selectedFile);
+    //   }
+    // }
+    // const formData = new FormData();
+    // if ((event.target as HTMLInputElement).files![0] != null) {
+    //   const reee = await Array.prototype.forEach.call(files, file => {
+    //     const reader = new FileReader();
+    //     reader.readAsDataURL(file);
+    //     this.selectedFiles.push(file);
+    //   })
+    //   return this.userService.uploadFileToUser(this.accountFileUploadForm.getRawValue());
+    // }
+  }
+
+  settingsInfo() {
+    this.dialog.open(UserInfoComponent, {
+      width: '40%',
+      height: '70%',
+      maxWidth: '500px',
+    })
+  }
+
+  settingsSecurity() {
+
+  }
+
+  settingsSetDownloadDestination() {
+
+  }
+
+  settingsPolicies() {
+    
+  }
+
+  logout() {
+    this.userService.logout();
+    this.router.navigateByUrl('');
   }
 
   // R O U T I N G --- M E N U     O P T I O N S

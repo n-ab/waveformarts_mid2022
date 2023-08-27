@@ -1,9 +1,11 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from 'src/app/models';
 import { FileService } from 'src/app/services/file.service';
 import { MetricsService } from 'src/app/services/metrics.service';
 import { ProjectService } from 'src/app/services/project.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-upload',
@@ -18,8 +20,9 @@ export class UploadComponent implements OnInit, AfterViewInit {
   metricsHeader = 'Upload';
   selectedFiles: File[] = [];
   description!: any;
+  user!: User;
 
-  constructor(private router: Router, private fileService: FileService, private metricsService: MetricsService, private projectService: ProjectService) {
+  constructor(private router: Router, private fileService: FileService, private metricsService: MetricsService, private projectService: ProjectService, private userService: UserService) {
     this.uploadForm = new FormGroup({
       companyProject: new FormControl(''),
       email: new FormControl('', Validators.required),
@@ -30,6 +33,12 @@ export class UploadComponent implements OnInit, AfterViewInit {
   
   ngOnInit(): void {
     this.metricsService.addPageMetrics(this.metricsHeader, history.state.navigatedFrom);
+    this.userService.check()
+      .then(user => {
+        if (user == false) return;
+        this.user = user;
+        return user;
+      })
   }
   
   ngAfterViewInit(): void {

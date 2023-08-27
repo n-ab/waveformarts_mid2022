@@ -2,32 +2,38 @@ import express from 'express';
 import * as userController from '../controllers/userController';
 import { login, logout } from '../auth/auth';
 import multer from 'multer';
+import fs from 'fs';
 
 export const app = express();
 
+type CustomFile = Express.Multer.File & { fieldname?: string, originalname?: string, encoding?: string, mimetype?: string, destination?: string, filename?: string, path?: string, size?: number, }
+
 // --- M U L T E R ----------
 
-const storageQuestion = multer.diskStorage({
-    destination: (req, file, callback) => {
-        callback(null, "src/images/questions");
-    },
-    filename: (req, file, callback) => {
-        console.log('req.body', req.body);
-        console.log('file', file);
-        callback(null, 'reee');
-    }
-})
+// const storageQuestion = multer.diskStorage({
+//     destination: (req, file, callback) => {
+//         callback(null, "src/images/questions");
+//     },
+//     filename: (req, file, callback) => {
+//         console.log('req.body', req.body);
+//         console.log('file', file);
+//         callback(null, 'reee');
+//     }
+// })
 
-const storageReport = multer.diskStorage({
-    destination: (req, file, callback) => {
-        callback(null, "src/images/questions");
-    },
-    filename: (req, file, callback) => {
-        console.log('req.body', req.body);
-        console.log('file', file);
-        callback(null, 'reee');
-    }
-})
+// const storageReport = multer.diskStorage({
+//     destination: (req, file, callback) => {
+//         callback(null, "src/images/questions");
+//     },
+//     filename: (req, file, callback) => {
+//         console.log('req.body', req.body);
+//         console.log('file', file);
+//         callback(null, 'reee');
+//     }
+// })
+
+const storage = multer.diskStorage({ filename: (req: any, file, cb) => { cb(null, file.originalname); } })
+const upload = multer({ storage });
 
 // --- S E S S I O N      F U N C T I O N S ------------------------------
 
@@ -36,7 +42,7 @@ app.get('/check', (req: any, res) => {
         console.log('no login.');
         return res.status(200).json(false);
     }
-    console.log('LOGGED IN: ', req.user.firstName);
+    console.log('LOGGED IN: ', req.user);
     
     return res.status(200).json(req.user);
 })
@@ -53,6 +59,12 @@ app.post('/register', async (req: any, res) => {
     console.log('registering:', req.body);
     const user = await userController.register(req.body);
     return res.status(200).json(user.email);
+})
+
+app.post('/addFileToUser', upload.array('files'), async (req: any, res) => {
+    fs.mkdir(`./audioFiles/${req.user._id}`, {recursive: true}, (err) => { if (err) return res.status(500).json(err); });
+    const files = req.files as CustomFile[];
+    console.log('adding files to user: ', req.body);
 })
 
 app.get('/fetchFiles', async (req: any, res) => {
@@ -84,18 +96,6 @@ app.get('/fetchPlan', async (req: any, res) => {
     const plan = await userController.fetchPlan(req.user._id);
     console.log('users plan = ', plan);
     return res.status(200).json(plan);
-})
-
-app.post('/askQuestion', multer({storage: storageQuestion}).single('image'), async (req: any, res) => {
-    const question = await userController.addQuestion(req.user, req.body);
-    console.log('question asked: ', question);
-    return res.status(200).json(question);
-})
-
-app.post('/reportIssue', multer({storage: storageReport}).single('image'), async (req: any, res) => {
-    const issue = await userController.reportIssue(req.user, req.body);
-    console.log('issue reported: ', issue);
-    return res.status(200).json(issue);
 })
 
 app.post('/makeSuggestion', async (req: any, res) => {

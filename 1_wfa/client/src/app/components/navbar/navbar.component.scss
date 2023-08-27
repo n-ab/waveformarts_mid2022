@@ -52,16 +52,18 @@
     float: right;
     margin-top: 17px;
     padding: 7px 35px;
+    text-align: center;
     border-radius: 6px;
     font-weight: 100;
     font-size: 90%;
     letter-spacing: 1px;
     color: white;
-    box-shadow: 0px 0px 4px 1px #000103;
+    box-shadow: 0px 0px 2px 1px #003f56;
     animation: fadeIn 1s ease;
     transition: all .3s ease;
 }
 
 .account:hover {
-    box-shadow: 0px 0px 2px 1px #003f56;
+    box-shadow: 0px 0px 2px 1px #000103;
+    letter-spacing: 2px;
 }

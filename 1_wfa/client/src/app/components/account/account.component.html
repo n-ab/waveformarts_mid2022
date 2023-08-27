@@ -4,12 +4,27 @@
         <div class="choices">
             <div class="choice">
                 <div class="choice-title">Projects</div>
+                <div class="projects" *ngIf="userProjects.length > 1;">{{ userProjects | json }}</div>
+                <div class="nothing-to-display" *ngIf="userProjects.length <= 0">no projects to display</div>
+                <div class="start-button" *ngIf="userProjects.length <= 0" (click)="startProject()">start a project</div>
+                <div class="start-button" *ngIf="userProjects.length <= 0" (click)="joinProject()">join a project</div>
             </div>
             <div class="choice">
-                <div class="choice-title">Sounds</div>
+                <div class="choice-title">Uploads / Downloads</div>
+                <div class="files" *ngIf="userSounds.length > 1">{{ userSounds | json }}</div>
+                <div class="nothing-to-display" *ngIf="userSounds.length <= 0">no files to display</div>
+                    <input style="display: none;" type="file" id="file-list" #sound style="display: none;" name="audioFile" formControlName="audioFile" (change)="uploadFile($event)" multiple>
+                    <div class="start-button" *ngIf="userSounds.length <= 0" (click)="sound.click()">upload a file</div>
             </div>
             <div class="choice">
                 <div class="choice-title">Settings</div>
+                <div class="settings">
+                    <div class="setting" (click)="settingsInfo()">Your Info</div>
+                    <div class="setting"(click)="settingsSecurity()">Security / Password</div>
+                    <div class="setting"(click)="settingsSetDownloadDestination()">Download Destination</div>
+                    <div class="setting"(click)="settingsPolicies()">Waveform Arts Policies</div>
+                    <div class="log-out"(click)="logout()">Log Out</div>
+                </div>
             </div>
         </div>
         <!-- <div class="account-choices">

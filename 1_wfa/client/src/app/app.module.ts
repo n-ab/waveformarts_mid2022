@@ -50,6 +50,8 @@ import { UserUploadfileComponent } from './components/user-uploadfile/user-uploa
 import { SuggestComponent } from './components/suggest/suggest.component';
 import { UserCommunicationsComponent } from './components/user-communications/user-communications.component';
 import { StartProjectComponent } from './components/start-project/start-project.component';
+import { JoinprojectComponent } from './components/joinproject/joinproject.component';
+import { UserInfoComponent } from './components/user-info/user-info.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +84,9 @@ import { StartProjectComponent } from './components/start-project/start-project.
     UserUploadfileComponent,
     SuggestComponent,
     UserCommunicationsComponent,
-    StartProjectComponent
+    StartProjectComponent,
+    JoinprojectComponent,
+    UserInfoComponent
   ],
   imports: [
     BrowserModule,

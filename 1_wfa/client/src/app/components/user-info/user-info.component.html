@@ -1,0 +1,45 @@
+<!-- 
+    firstName
+    lastName
+    fullName
+    password
+    email
+    username
+    company
+    clientNumber
+    plan
+ -->
+ <div class="title">Your Information</div>
+ <form [formGroup]="userInfoForm">
+    <div class="user-info-item">{{ user.firstName }}</div>
+    <div class="change-button" (click)="selected('firstName')">
+
+    </div>
+    <mat-form-field *ngIf="changeFirstName"><input matInput type="text" name="firstName" formControlName="firstName" placeholder="first name"></mat-form-field>
+    <div class="user-info-item">{{ user.lastName }}</div>
+    <div class="change-button" (click)="selected('lastName')">
+
+    </div>
+    <mat-form-field *ngIf="changeLastName"><input matInput type="text" name="lastName" formControlName="lastName" placeholder="last name"></mat-form-field>
+    <div class="user-info-item">{{ user.password }}</div>
+    <div class="change-button">
+
+    </div>
+    <mat-form-field *ngIf="changePassword"><input matInput type="password" name="password" formControlName="password" placeholder="password"></mat-form-field>
+    <div class="user-info-item">{{ user.email }}</div>
+    <div class="change-button">
+
+    </div>
+    <mat-form-field *ngIf="changeEmail"><input matInput type="text" name="email" formControlName="email" placeholder="email"></mat-form-field>
+    <div class="user-info-item">{{ user.username }}</div>
+    <div class="change-button">
+
+    </div>
+    <mat-form-field *ngIf="changeUsername"><input matInput type="text" name="username" formControlName="username" placeholder="username"></mat-form-field>
+    <div class="user-info-item">{{ user.company }}</div>
+    <div class="change-button">
+
+    </div>
+    <mat-form-field *ngIf="changeCompany"><input matInput type="text" name="company" formControlName="company" placeholder="company"></mat-form-field>
+    
+ </form>

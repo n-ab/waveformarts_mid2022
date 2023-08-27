@@ -39,6 +39,12 @@ export class UserService {
       .catch(err => console.log('error registering: ', err));
   }
 
+  uploadFileToUser(data: any) {
+    return this.http.post('/api/user/addFileToUser', data).toPromise()
+      .then(user => user)
+      .catch(err => err);
+  }
+
   fetchFiles() {
     return this.http.get('/api/user/fetchFiles').toPromise()
       .then(files => files)

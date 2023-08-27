@@ -36,7 +36,7 @@ passport.serializeUser((user: any, done) => {
   });
   
 passport.deserializeUser((id, done) => {
-    UserModel.findById(id).select('firstName ')
+    UserModel.findById(id).select('firstName projects uploads downloads')
         .lean()
         .exec()
         .then(user => {
