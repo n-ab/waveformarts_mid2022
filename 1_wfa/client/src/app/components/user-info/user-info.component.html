@@ -1,20 +1,10 @@
-<!-- 
-    firstName
-    lastName
-    fullName
-    password
-    email
-    username
-    company
-    clientNumber
-    plan
- -->
- <div class="title">Your Information</div>
+<div class="title">Your Information</div>
+<div style="font-weight: 100; font-size: 80%; color: white;">{{ user | json }}</div>
  <form [formGroup]="userInfoForm">
-    <div class="user-info-item">{{ user.firstName }}</div>
-    <div class="change-button" (click)="selected('firstName')">
+   <mat-form-field><input matInput type="text" [(ngModel)]="user.firstName" (input)="update()"></mat-form-field>
 
-    </div>
+    <!-- <div class="user-info-item">{{ user.firstName }}</div>
+    <div class="change-button" (click)="selected('firstName')"></div>
     <mat-form-field *ngIf="changeFirstName"><input matInput type="text" name="firstName" formControlName="firstName" placeholder="first name"></mat-form-field>
     <div class="user-info-item">{{ user.lastName }}</div>
     <div class="change-button" (click)="selected('lastName')">
@@ -40,6 +30,6 @@
     <div class="change-button">
 
     </div>
-    <mat-form-field *ngIf="changeCompany"><input matInput type="text" name="company" formControlName="company" placeholder="company"></mat-form-field>
+    <mat-form-field *ngIf="changeCompany"><input matInput type="text" name="company" formControlName="company" placeholder="company"></mat-form-field> -->
     
  </form>

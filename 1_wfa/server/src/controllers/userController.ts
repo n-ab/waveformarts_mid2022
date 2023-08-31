@@ -143,9 +143,12 @@ export async function addMessageIdToSender(message: any, senderId: string) {
 }
 
 export async function fetchPopulatedUserData(userId: string) {
-    const user = await UserModel.findById(userId).populate('discussions').populate('messagesSent').populate('downloads').populate('uploads').populate('projects');
-    console.log('------------------------------');
+    const user = await UserModel.findById(userId)
+        .populate('firstName')
+        .populate('lastName')
+        .populate('email')
+        .populate('username')
+        .populate('company');
     console.log('USER SHOULD BE FULLY POPULATED -----', user);
-    console.log('------------------------------');
     return user;
 }

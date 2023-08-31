@@ -22,6 +22,8 @@ export class UserInfoComponent implements OnInit {
   changeUsername = false;
   changeCompany = false;
 
+  secondsSinceLastKeydown = 0;
+
   constructor(private userService: UserService, ) {
     this.userInfoForm = new FormGroup({
       firstName: new FormControl(null),
@@ -36,21 +38,17 @@ export class UserInfoComponent implements OnInit {
   ngOnInit(): void {
     this.userService.check()
       .then(user => {
-        this.user = user;
+        this.userService.fetchPopulatedUserData()
+          .then(user => {
+            console.log('final user returned with all his or her shit lmao: ', user);
+            this.user = user;
+          })
       })
       .catch(err => err);
   }
 
-  selected(selection: string) {
-    switch (selection) {
-      case 'firstName':
-        this.changeFirstName = true;
-        break;
-      case 'lastName':
-        this.changeLastName = true;
-        console.log('hey chloe lmao');
-        break;
-    }
+  update() {
+    
   }
 
 }

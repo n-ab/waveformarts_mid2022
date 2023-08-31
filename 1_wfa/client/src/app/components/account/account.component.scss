@@ -29,7 +29,6 @@
 .choice {
     box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.483);
     width: 24%;
-    height: 420px;
     padding: 1rem 2rem;
     border-radius: 7px;
 }
@@ -106,4 +105,36 @@
 .log-out:hover {
     letter-spacing: 3px;
     background: rgba(107, 0, 0, 0.496);
+}
+
+.uploads-downloads {
+    transition: all 1s ease-in-out;
+}
+
+@media (max-width: 1215px) {
+    .uploads-downloads {
+        font-size: 140%;
+    }
+}
+
+@media (max-width: 973px) {
+    .uploads-downloads {
+        font-size: 120%;
+    }
+}
+
+@media (max-width: 834px) {
+    .choices {
+        display: inline-block;
+        width: 100%;
+    }
+    .choice {
+        display: block;
+        margin: auto;
+        width: 75%;
+        margin-top: 30px;
+    }
+    .uploads-downloads {
+        font-size: 175%;
+    }
 }

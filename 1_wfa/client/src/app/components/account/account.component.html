@@ -10,7 +10,7 @@
                 <div class="start-button" *ngIf="userProjects.length <= 0" (click)="joinProject()">join a project</div>
             </div>
             <div class="choice">
-                <div class="choice-title">Uploads / Downloads</div>
+                <div class="choice-title uploads-downloads">Uploads / Downloads</div>
                 <div class="files" *ngIf="userSounds.length > 1">{{ userSounds | json }}</div>
                 <div class="nothing-to-display" *ngIf="userSounds.length <= 0">no files to display</div>
                     <input style="display: none;" type="file" id="file-list" #sound style="display: none;" name="audioFile" formControlName="audioFile" (change)="uploadFile($event)" multiple>
