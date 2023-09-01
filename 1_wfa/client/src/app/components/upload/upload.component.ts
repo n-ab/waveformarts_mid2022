@@ -35,8 +35,13 @@ export class UploadComponent implements OnInit, AfterViewInit {
     this.metricsService.addPageMetrics(this.metricsHeader, history.state.navigatedFrom);
     this.userService.check()
       .then(user => {
+        console.log('PRE EMAILCOMPANYPROJECT user returned: ', user);
+        
         if (user == false) return;
-        this.user = user;
+        this.userService.fetchEmailCompanyProject()
+          .then(user => {
+            this.user = user;
+          })
         return user;
       })
   }

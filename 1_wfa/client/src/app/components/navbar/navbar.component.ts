@@ -20,7 +20,9 @@ export class NavbarComponent implements OnInit {
   constructor(private router: Router, private dialog: MatDialog, private userService: UserService, private windowService: WindowService, private metricsService: MetricsService) { }
 
   ngOnInit(): void {
-    this.userCheck();
+    this.userService.loggedIn.subscribe(data => {
+      this.userLoggedIn = data;
+    });
     this.metricsService.addPageMetrics(this.metricHeader, history.state.navigatedFrom);
     
   }

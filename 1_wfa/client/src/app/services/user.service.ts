@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  // app_www_form_urlencoded = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+  private loggedInSubject = new Subject<any>();
+  loggedIn = this.loggedInSubject.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -27,6 +29,7 @@ export class UserService {
   }
 
   logout() {
+    this.loggedInSubject.next(false);
     return this.http.post('/api/user/logout', 'log out').toPromise()
       .then(userLogoutConfirmed => userLogoutConfirmed)
       .catch(err => err);
@@ -102,6 +105,12 @@ export class UserService {
   fetchPopulatedUserData() {
     return this.http.get('/api/user/fetchPopulatedUserData').toPromise()
       .then(userData => userData)
+      .catch(err => err);
+  }
+
+  fetchEmailCompanyProject() {
+    return this.http.get('/api/user/fetchEmailCompanyProject').toPromise()
+      .then(user => user)
       .catch(err => err);
   }
 

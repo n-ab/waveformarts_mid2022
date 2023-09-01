@@ -98,10 +98,8 @@ app.get('/fetchPlan', async (req: any, res) => {
     return res.status(200).json(plan);
 })
 
-app.post('/makeSuggestion', async (req: any, res) => {
-    const suggestion = await userController.makeSuggestion(req.user, req.body);
-    console.log('suggestion saved: ', suggestion);
-    return res.status(200).json(suggestion);
+app.get('/fetchEmailCompanyProject', async (req: any, res) => {
+    
 })
 
 app.get('/fetchMessages', async (req: any, res) => {

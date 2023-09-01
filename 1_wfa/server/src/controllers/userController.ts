@@ -107,14 +107,10 @@ export async function reportIssue(userId: string, issue: any) {
     return report;
 }
 
-export async function makeSuggestion(userId: string, suggestion: any) {
-    const user = await UserModel.findById(userId);
-    console.log('suggestion = ', suggestion);
-    // const report = await ReportModel.create({issue: issue.complaint, additionalInfo: issue.additionalInfo, image: issue.imageFilePath, reportedBy: userId}).then(report => report._id).catch(err => console.log(err));
-    const suggestionMade = await SuggestionModel.create({suggestion: suggestion.suggestion, suggestedBy: userId}).then(suggestion => suggestion?._id).catch(err => console.log('error: ', err));
-    user?.reports.push(suggestionMade);
-    await user?.save();
-    return suggestionMade;
+export async function fetchEmailCompanyProject(userId: string) {
+    const user = await UserModel.findById(userId).select('company email projects');
+    console.log('returning user: ', user);
+    return user;
 }
 
 export async function fetchMessages(userId: string) {
