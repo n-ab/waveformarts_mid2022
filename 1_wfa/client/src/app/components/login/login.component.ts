@@ -75,7 +75,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
       const user = await this.userService.login(this.loginWithUsernamePasswordForm.getRawValue());
       // if success
       if (!user.error || !user.error.message) {
-        console.log('login component user: ', user);
         this.router.navigateByUrl('account', {state: {'userId': user}});
         return this.dialogRef.close(user);
       }

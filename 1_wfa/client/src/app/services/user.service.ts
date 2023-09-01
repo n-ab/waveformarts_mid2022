@@ -19,6 +19,7 @@ export class UserService {
   }
 
   login(data: any) {
+    this.loggedInSubject.next(true);
     return this.http.post('/api/user/login', data).toPromise()
       .then(user => {
         return user;

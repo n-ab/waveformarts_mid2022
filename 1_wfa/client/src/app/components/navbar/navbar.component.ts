@@ -14,12 +14,16 @@ import { MetricsService } from 'src/app/services/metrics.service';
 })
 export class NavbarComponent implements OnInit {
   user!: User;
-  userLoggedIn = false;
+  userLoggedIn!: boolean;
   metricHeader = 'Landing';
 
   constructor(private router: Router, private dialog: MatDialog, private userService: UserService, private windowService: WindowService, private metricsService: MetricsService) { }
 
   ngOnInit(): void {
+    this.userService.check()
+      .then(user => {
+        if (user) this.userLoggedIn = true;
+      })
     this.userService.loggedIn.subscribe(data => {
       this.userLoggedIn = data;
     });
