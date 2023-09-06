@@ -1,6 +1,6 @@
 <div class="wrapper">
     <div class="account-container">
-        <div class="title">Hi {{ user.firstName }}</div>
+        <div class="title" *ngIf="user">Hi {{ user.firstName }}</div>
         <div class="choices">
             <div class="choice">
                 <div class="choice-title">Projects</div>
@@ -13,7 +13,9 @@
                 <div class="choice-title uploads-downloads">Uploads / Downloads</div>
                 <div class="files" *ngIf="userSounds.length > 1">{{ userSounds | json }}</div>
                 <div class="nothing-to-display" *ngIf="userSounds.length <= 0">no files to display</div>
-                    <input style="display: none;" type="file" id="file-list" #sound style="display: none;" name="audioFile" formControlName="audioFile" (change)="uploadFile($event)" multiple>
+                    <form [formGroup]="fileUploadForm">
+                        <input style="display: none;" type="file" id="file-list" #sound style="display: none;" name="audioFile" formControlName="audioFile" (change)="uploadFile($event)" multiple>
+                    </form>
                     <div class="start-button" *ngIf="userSounds.length <= 0" (click)="sound.click()">upload a file</div>
             </div>
             <div class="choice">

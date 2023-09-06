@@ -13,8 +13,9 @@ import { FaqAccountComponent } from '../faq-account/faq-account.component';
 import { ReportComponent } from '../report/report.component';
 import { SuggestComponent } from '../suggest/suggest.component';
 import { JoinprojectComponent } from '../joinproject/joinproject.component';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserInfoComponent } from '../user-info/user-info.component';
+import { StartProjectComponent } from '../start-project/start-project.component';
+import { FormControl, FormGroup } from '@angular/forms';
 
 interface Selectedfile {
   file: File; 
@@ -33,8 +34,13 @@ export class AccountComponent implements OnInit {
   userProjects: Project[] = [];
   userSounds: File[] = [];
   selectedFiles: File[] = [];
+  fileUploadForm!: FormGroup;
 
-  constructor(private router: Router, private windowService: WindowService, private metricsService: MetricsService, private userService: UserService, private dialog: MatDialog) { }
+  constructor(private router: Router, private windowService: WindowService, private metricsService: MetricsService, private userService: UserService, private dialog: MatDialog) {
+    this.fileUploadForm = new FormGroup({
+      audioFile: new FormControl(null)
+    })
+  }
 
   ngOnInit(): void {
     this.userService.check()
@@ -51,7 +57,11 @@ export class AccountComponent implements OnInit {
   }
 
   startProject() {
-    this.router.navigateByUrl('upload');
+    this.dialog.open(StartProjectComponent, {
+      width: '50%',
+      height: '80%',
+      maxWidth: '700px'
+    })
   }
 
   joinProject() {
