@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
@@ -10,48 +10,45 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   templateUrl: './start-project.component.html',
   styleUrls: ['./start-project.component.scss']
 })
-export class StartProjectComponent implements OnInit {
+export class StartProjectComponent implements OnInit, AfterViewInit {
 
   createProjectForm!: FormGroup;
-  joinProjectForm!: FormGroup;
-  startingProject!: boolean;
+  emailList: string[] = [];
+  showStep2 = false;
 
   constructor(private windowService: WindowService, private userService: UserService, private router: Router, @Inject(MAT_DIALOG_DATA) public matData: string, public dialogRef: MatDialogRef<StartProjectComponent>) {
     this.createProjectForm = new FormGroup({
       title: new FormControl(''),
-    })
-    this.joinProjectForm = new FormGroup({
-      projectNumber: new FormControl(''),
-      currentMemberName: new FormControl(''),
-    })
+      projectLeadEmail: new FormControl(''),
+      description: new FormControl(''),
+      projectLeadName: new FormControl(''),
+      emailList: new FormControl(['']),
+    });
   }
 
   ngOnInit(): void {
-    console.log('this.matData = ', this.matData);
-    if (this.matData == 'join') {
-      console.log('JOINING project');
-      this.startingProject = false;
-    } else {
-      console.log('STARTING project');
-      this.startingProject = true;
-    }
-    
-    this.windowService.bgImageMarginTop.next(1000);
+  }
+
+  ngAfterViewInit(): void {
+    document.getElementById('email-submit')?.addEventListener('keydown', event => {
+      console.log('event: ', event);
+      
+      console.log('the shit that was pressed down is:', event.key);
+    })
   }
 
   submitProject(): void {
     this.userService.submitProject(this.createProjectForm.getRawValue())
       .then(project => {
-        this.router.navigateByUrl('account/messages', {state: {project: project, selection: 'sendMessage'}});
+        
       })
   }
 
-  joinProject(): void {
-    this.userService.joinProject(this.joinProjectForm.getRawValue())
-      .then(projectUsers => {
-        console.log('projectUsers returned from server: ', projectUsers);
-        this.dialogRef.close();
-      })
-      .catch(err => console.log(err))
+  displayStepTwo() {
+    this.showStep2 = true;
+  }
+
+  addEmailToEmailList(email: string): void {
+    this.emailList.push(email);
   }
 }

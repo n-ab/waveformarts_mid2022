@@ -58,7 +58,7 @@ export class AccountComponent implements OnInit {
 
   startProject() {
     this.dialog.open(StartProjectComponent, {
-      width: '50%',
+      width: '70%',
       height: '80%',
       maxWidth: '700px'
     })

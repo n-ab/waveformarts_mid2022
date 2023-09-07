@@ -1,13 +1,21 @@
 <div class="wrapper">
-    <div class="title" *ngIf="startingProject">Start Aa Project</div>
-    <form *ngIf="startingProject" [formGroup]="createProjectForm" (ngSubmit)="submitProject()">
-        <mat-form-field><input matInput type="text" name="title" formControlName="title" placeholder="title"></mat-form-field>
-        <button mat-raised-button type="submit" class="submit" (click)="submitProject()">start project</button>
-    </form>
-    <div class="title" *ngIf="startingProject">Join A Project</div>
-    <form *ngIf="!startingProject" [formGroup]="joinProjectForm" (ngSubmit)="joinProject()">
-        <mat-form-field><input matInput type="text" name="projectNumber" formControlName="projectNumber" placeholder="What is the project number?"></mat-form-field>
-        <mat-form-field><input matInput type="text" name="currentMemberName" formControlName="currentMemberName" placeholder="Name of someone currently on this project: "></mat-form-field>
-        <button mat-raised-button type="submit" class="submit" (click)="joinProject()">join project</button>
+    <form [formGroup]="createProjectForm" (ngSubmit)="submitProject()">
+        <div id="step-1" *ngIf="!showStep2">
+            <div class="title">Let's start with the basics</div>
+            <mat-form-field><input matInput type="text" name="title" formControlName="title" placeholder="project title" autofocus></mat-form-field>
+            <mat-form-field><input matInput type="text" name="projectLeadEmail" formControlName="projectLeadEmail" placeholder="project email"></mat-form-field>
+            <mat-form-field><input matInput type="text" name="description" formControlName="description" placeholder="descibe the project"></mat-form-field>
+            <mat-form-field><input matInput type="text" name="projectLeadName" formControlName="projectLeadName" placeholder="name of project leader"></mat-form-field>
+            <button mat-raised-button type="submit" class="submit-button" (click)="displayStepTwo()">next step</button>
+        </div>
+        <div id="step-2" *ngIf="showStep2">
+            <div class="title">Send invitations to join project</div>
+            <div class="email-list-if" *ngIf="emailList">
+                <div class="email-list-for" *ngFor="let email of emailList">
+                    <div class="email-wrapper">{{ email }}</div>
+                </div>
+            </div>
+            <mat-form-field><input matInput id="email-submit" type="text" name="email" placeholder="send email to:"></mat-form-field>
+        </div>
     </form>
 </div>
