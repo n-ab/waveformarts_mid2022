@@ -13,6 +13,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class StartProjectComponent implements OnInit, AfterViewInit {
 
   createProjectForm!: FormGroup;
+  newEmail!: string;
   emailList: string[] = [];
   showStep2 = false;
 
@@ -48,7 +49,8 @@ export class StartProjectComponent implements OnInit, AfterViewInit {
     this.showStep2 = true;
   }
 
-  addEmailToEmailList(email: string): void {
-    this.emailList.push(email);
+  addEmailToList(): void {
+    this.emailList.push(this.newEmail);
+    this.newEmail = '';
   }
 }

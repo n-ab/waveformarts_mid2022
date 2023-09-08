@@ -13,4 +13,48 @@ mat-form-field {
     margin: auto;
     display: block;
     width: 40%;
+    margin-top: 10px;
+}
+
+.email-row {
+    display: grid;
+    grid-template-columns: 8fr 2fr;
+}
+
+.email-wrapper {
+    border: 1px solid white;
+    background: rgba(0, 0, 0, 0.113);
+    border-radius: 5px;
+    padding: 7px;
+    width: 80%;
+    text-align: center;
+}
+
+.left-column {
+    padding: 5px;
+    margin: 5px;
+}
+
+.right-column {
+    padding: 5px;
+    margin: 5px;
+}
+
+
+
+.email-list-if {
+    margin-bottom: 10px;
+}
+
+.email-spacer {
+    height: 3px;
+}
+
+.remove-email {
+    border: 1px solid rgb(0, 148, 254);
+    background: rgba(0, 0, 0, 0.113);
+    border-radius: 5px;
+    padding: 3px;
+    width: 20px;
+    text-align: center;
 }
