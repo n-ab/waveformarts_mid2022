@@ -14,6 +14,7 @@ import { ProjectManageComponent } from './components/project-manage/project-mana
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PrettyJsonPipe } from './pipes/prettifyJsonPipe';
 // --- material -------------
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -86,7 +87,8 @@ import { UserInfoComponent } from './components/user-info/user-info.component';
     UserCommunicationsComponent,
     StartProjectComponent,
     JoinprojectComponent,
-    UserInfoComponent
+    UserInfoComponent,
+    PrettyJsonPipe
   ],
   imports: [
     BrowserModule,

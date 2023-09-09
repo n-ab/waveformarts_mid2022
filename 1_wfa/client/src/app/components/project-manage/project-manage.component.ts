@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { MetricsService } from 'src/app/services/metrics.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { ProjectObject } from '../../../../../server/src/models/project';
+import { PrettyJsonPipe } from 'src/app/pipes/prettifyJsonPipe';
 import { Router } from '@angular/router';
 
 @Component({

@@ -13,7 +13,6 @@ export async function createNewProject(data: any, filePaths: string[]) {
 }
 
 export async function getProjectById(data: any) {
-    console.log('getProjectById() - id: ', JSON.stringify(data));
     const project = await ProjectModel.findById(data).populate('users').then(project => project);
     return project;
 }

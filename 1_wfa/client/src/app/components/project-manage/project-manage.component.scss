@@ -8,11 +8,15 @@
 }
 
 .project-title {
-    margin-left: 10%;
     color: white;
     font-size: 300%;
     font-weight: 100;
     animation: fadeIn 1s ease;
+    background-color: rgba(76, 222, 255, 0.363);
+}
+
+.project-title-container {
+    margin-left: 10%;
 }
 
 .project-description {
@@ -22,6 +26,17 @@
     font-weight: 100;
     opacity: 0;
     animation: fadeIn 1s ease .3s forwards;
+}
+
+.project-lead {
+    padding: 1rem;
+    color: white;
+    font-weight: 100;
+    border-radius: 8px;
+    background-color: rgba(139, 139, 139, 0.245);
+    width: 200px;
+    height: 100px;
+    margin-left: 12%;
 }
 
 @media(max-width: 501) {

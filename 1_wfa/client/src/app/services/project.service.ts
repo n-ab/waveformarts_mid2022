@@ -21,8 +21,8 @@ export class ProjectService {
       .catch(err => err);
   }
 
-  getProjectData(projectId: string) {
-    return this.http.get(`/api/project/getProjectData/${projectId}`).toPromise()
+  getProjectData(projectId: any) {
+    return this.http.get(`/api/project/getProjectData/${projectId.projectId}`).toPromise()
       .then(project => project)
       .catch(e => e.error);
   }
