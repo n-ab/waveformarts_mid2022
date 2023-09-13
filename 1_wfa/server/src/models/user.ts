@@ -3,7 +3,7 @@ import { userInfo } from 'os';
 
 export interface UserObject extends mongoose.Document {
     _id: any,
-    status: boolean,
+    registered: boolean,
     role: string,
     firstName: string,
     lastName: string,
@@ -32,7 +32,7 @@ export interface UserObject extends mongoose.Document {
 const schema = new mongoose.Schema({
     role: String,
     email: String,
-    status: Boolean,
+    registered: Boolean,
     company: String,
     lastName: String,
     fullName: String,

@@ -31,20 +31,22 @@ form {
     background-image: linear-gradient(0.31turn, #00d0ff, #0088ff);
     padding: 1rem;
     border-radius: 5px;
+    width: 350px;
+    display: block;
+    margin: auto;
 }
 
 //------------------
 
 .form-row {
-    display: flex;
-    justify-content: space-evenly;
+    // display: flex;
+    // justify-content: space-evenly;
 
 }
 
 mat-form-field {
     display: block;
     margin-bottom: 1rem;
-    width: 45%;
 }
 
 .mff-1 {

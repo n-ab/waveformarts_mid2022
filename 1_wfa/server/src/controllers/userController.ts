@@ -5,12 +5,14 @@ import { SuggestionModel } from '../models/suggestion';
 import { MessageModel } from '../models/message';
 import { DiscussionModel } from '../models/discussion';
 import * as bcrypt from 'bcryptjs';
+import { PairUsernumberEmailModel } from '../models/pairUsernumberEmail';
 
 export async function register(data: any) {
     console.log('Registering new user with data: ', data);
+    const randNum = Math.floor(Math.random() * 899999 + 100000);
     const encryptedPassword = await encryptPassword(data.password);
-    return UserModel.create({
-        status: true,
+    const user = await UserModel.create({
+        registered: true,
         role: 'user',
         firstName: data.firstName,
         lastName: data.lastName,
@@ -21,7 +23,7 @@ export async function register(data: any) {
         username: data.email,
         company: '',
         projects: [],
-        clientNumber: Math.floor(Math.random() * 899999 + 100000),
+        clientNumber: randNum,
         discussions: [],
         messagesSent: [],
         readMessages: [],
@@ -32,11 +34,12 @@ export async function register(data: any) {
         questions: [],
         reports: [],
         suggestions: [],
-    })
-    .then(user => {
-        console.log('saved user with clientNumber: ', user.clientNumber);
-        return user;
-    })
+    });
+    const newPair = await PairUsernumberEmailModel.create({
+        clientNumber: randNum,
+        email: user.email
+    });
+    return user;
 }
 
 export async function encryptPassword(password: string) {

@@ -1,5 +1,6 @@
 import { ProjectModel } from '../models/project';
 import { UserModel } from '../models/user';
+import { PairUsernumberEmailModel } from '../models/pairUsernumberEmail';
 import * as bcrypt from 'bcryptjs';
 
 // NEW PROJECT PATH WITH NO KNOWN USER
@@ -51,19 +52,21 @@ export async function joinProject(projectId: string, userId: string) {
 }
 
 export async function contact(data: any) {
-    const contactInfo = await UserModel.create({
+    const randNum = Math.floor(Math.random() * 899999 + 100000);
+    const unregisteredUser = await UserModel.create({
         firstName: data.firstName,
         lastName: data.lastName,
         company: data.company,
         email: data.email,
-        password: ''
-    })
-    .then(user => {
-        var salt = bcrypt.genSaltSync(10);
-        var hash = bcrypt.hashSync(data.password, salt);
-        user.save();
-        // hash password shit here
-    })
+        password: '',
+        clientNumber: randNum,
+        status: false
+    });
+    const newPair = await PairUsernumberEmailModel.create({
+        clientNumber: randNum,
+        email: unregisteredUser.email
+    });
+    return unregisteredUser;
 }
 
 export async function saveUnhashedPassword(password: any, userId: string) {
