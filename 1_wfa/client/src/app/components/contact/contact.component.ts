@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MetricsService } from 'src/app/services/metrics.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -22,7 +23,7 @@ export class ContactComponent implements OnInit, AfterViewInit {
   projectTitle!: string;
   message!: string;
 
-  constructor(private metricsService: MetricsService, private userService: UserService) {
+  constructor(private metricsService: MetricsService, private userService: UserService, private router: Router) {
     this.contactForm = new FormGroup({
       name: new FormControl('', null),
       email: new FormControl('', null),
@@ -73,7 +74,11 @@ export class ContactComponent implements OnInit, AfterViewInit {
   }
 
   submit() {
-    this.userService.contact(this.contactForm.getRawValue());
+    this.userService.contact(this.contactForm.getRawValue())
+      .then(user => {
+        console.log('new contact form successfully submitted: ', user);
+      });
+    this.router.navigateByUrl('post-contact');
   }
 
 }

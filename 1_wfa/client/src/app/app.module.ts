@@ -53,6 +53,7 @@ import { UserCommunicationsComponent } from './components/user-communications/us
 import { StartProjectComponent } from './components/start-project/start-project.component';
 import { JoinprojectComponent } from './components/joinproject/joinproject.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
+import { ContactPostComponent } from './components/contact-post/contact-post.component';
 
 @NgModule({
   declarations: [
@@ -88,7 +89,8 @@ import { UserInfoComponent } from './components/user-info/user-info.component';
     StartProjectComponent,
     JoinprojectComponent,
     UserInfoComponent,
-    PrettyJsonPipe
+    PrettyJsonPipe,
+    ContactPostComponent
   ],
   imports: [
     BrowserModule,

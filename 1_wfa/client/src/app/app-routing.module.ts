@@ -23,6 +23,7 @@ import { UserPasswordresetComponent } from './components/user-passwordreset/user
 import { UserPlanComponent } from './components/user-plan/user-plan.component';
 import { UserQuestionComponent } from './components/user-question/user-question.component';
 import { ProjectManageComponent } from './components/project-manage/project-manage.component';
+import { ContactPostComponent } from './components/contact-post/contact-post.component';
 
 const routes: Routes = [
   { path: '',                       component: LandingComponent},
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: 'account',                component: AccountComponent},
   { path: 'admin',                  component: AdminComponent},
   { path: 'contact',                component: ContactComponent},
+  { path: 'post-contact',           component: ContactPostComponent},
   { path: 'book',                   component: BookComponent},
   { path: 'rentals',                component: RentalsComponent},
   { path: 'highlights',             component: HighlightsComponent},
