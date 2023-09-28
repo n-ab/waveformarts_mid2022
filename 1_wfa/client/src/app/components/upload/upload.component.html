@@ -7,7 +7,7 @@
             <mat-form-field>   <input matInput type="text" name="companyProject" formControlName="companyProject" placeholder="Company Name / Project Name"></mat-form-field>
             <mat-form-field *ngIf="!user">   <input matInput type="text" name="email" formControlName="email" placeholder="Contact Email"></mat-form-field>
             <div class="user" *ngIf="user">{{ user | json }}</div>
-            <mat-form-field><textarea matInput type="text" name="description" formControlName="description" placeholder="Description" class="description" id="description"></textarea></mat-form-field>
+            <mat-form-field><textarea matInput type="text" name="description" formControlName="description" placeholder="What needs to be done?" class="description" id="description"></textarea></mat-form-field>
         </div>
         <hr class="hr-mobile">
         <div class="files">
