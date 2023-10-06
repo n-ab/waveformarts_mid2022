@@ -22,7 +22,7 @@ const schema = new mongoose.Schema ({
     companyProject: String,
     projectLeadName: String,
     users: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-    messages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Message' }],
+    messages: [String],
     discussions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Discussion' }],
 });
 

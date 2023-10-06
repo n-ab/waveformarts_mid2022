@@ -1,12 +1,15 @@
 .title {
     color: white;
-    font-size: 150%;
+    font-size: 125%;
     font-weight: 100;
     padding: 1rem;
+    text-align: center;
+    animation: letterSpacingEffect 1s ease forwards;
 }
 
 mat-form-field {
     display: block;
+    animation: expandDown2 1s ease forwards;
 }
 
 .submit-button {
@@ -16,9 +19,22 @@ mat-form-field {
     margin-top: 10px;
 }
 
+.back-button {
+    font-weight: 100;
+    text-align: center;
+    
+}
+
+.add-email-to-list-button {
+    font-weight: 100;
+    letter-spacing: 2px;
+}
+
 .email-row {
     display: grid;
     grid-template-columns: 8fr 2fr;
+    opacity: 0;
+    animation: expandDown2 1s ease forwards;
 }
 
 .email-wrapper {

@@ -8,14 +8,14 @@
 <!-- /////////////////////////////// -->
 
 <div class="login" *ngIf="showLoginOptions">
-    <div class="login-with-username-password option" (click)="selectedLoginWithUsername()">Log In With Username / Password</div>
+    <div class="login-with-username-password option" (click)="selectedLoginWithUsername()">Log In With Email / Password</div>
     <div id="spacer"></div>
     <div class="login-with-project-name option" (click)="selectedLoginWithProjectName()">Log In With Project Name / Number</div>
 </div>
 
 <div class="login" *ngIf="showLoginWithUsernamePassword">
     <form [formGroup]="loginWithUsernamePasswordForm">
-        <mat-form-field class="dialog-form-input"><input matInput type="text" name="username" formControlName="username" placeholder="username"></mat-form-field>
+        <mat-form-field class="dialog-form-input"><input matInput type="text" name="username" formControlName="username" placeholder="email"></mat-form-field>
         <mat-form-field class="dialog-form-input"><input matInput type="password" name="password" formControlName="password" placeholder="password"></mat-form-field>
         <div *ngIf="error" class="error">{{ errorMessage | json }}</div>
         <button class="submit-button" mat-raised-button (click)="login()">sign in</button>

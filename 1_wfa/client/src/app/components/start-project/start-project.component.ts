@@ -38,10 +38,16 @@ export class StartProjectComponent implements OnInit, AfterViewInit {
     })
   }
 
+  back(): void {
+    this.showStep2 = false;
+  }
+
   submitProject(): void {
+    this.createProjectForm.patchValue({ emailList: this.emailList });
+    console.log('submitting project: ', this.createProjectForm.getRawValue());
     this.userService.submitProject(this.createProjectForm.getRawValue())
       .then(project => {
-        
+        console.log('you started a project: ', project);
       })
   }
 
@@ -52,5 +58,10 @@ export class StartProjectComponent implements OnInit, AfterViewInit {
   addEmailToList(): void {
     this.emailList.push(this.newEmail);
     this.newEmail = '';
+  }
+
+  removeEmail(email: string) {
+    const index = this.emailList.indexOf(email);
+    if (index !== -1) { this.emailList.splice(index, 1); }
   }
 }

@@ -15,10 +15,12 @@
 }
 
 .title {
+    opacity: 0;
     color: white;
     font-size: 200%;
     font-weight: 100;
     margin: 38px 50px 50px 50px;
+    animation: letterSpacingEffect 2s ease forwards;
 }
 
 .choices {
@@ -26,17 +28,25 @@
     justify-content: space-around;
 }
 
+.div-as-hr {
+    border-bottom: 1px solid white;
+    animation: hrEffect 1s ease forwards;
+}
+
 .choice {
-    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.483);
     width: 24%;
     padding: 1rem 2rem;
     border-radius: 7px;
+    margin-top: 32px;
 }
+
 
 .choice-title {
     color: white;
     font-size: 175%;
     font-weight: 100;
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out 1s forwards;
 }
 
 .nothing-to-display {
@@ -45,23 +55,28 @@
     letter-spacing: 2px;
     text-align: center;
     margin-top: 42px;
-    background: rgba(0, 0, 0, 0.44);
+    background: rgb(0 0 0 / 65%);
     border-radius: 9px;
     padding: 1rem;
     user-select: none;
+}
+
+.account-selection-option {
+    opacity: 0;
+    animation: expandDown 1s ease 1.3s forwards;
 }
 
 .start-button {
     color: white;
     font-weight: 100;
     letter-spacing: 2px;
-    text-align: center;
-    background: linear-gradient(180deg, #00b7ff, #008feb);
     border-radius: 9px;
+    user-select: none;
     padding: 17px 17px;
     margin-top: 1rem;
-    user-select: none;
+    background: linear-gradient(180deg, #00b7ff, #008feb);
     box-shadow: 0px 0px 4px 1px #0063bb;
+    text-align: center;
     transition: letter-spacing .3s ease-in-out;
 }
 
@@ -77,11 +92,11 @@
     color: white;
     font-weight: 100;
     letter-spacing: 2px;
-    background: rgba(0, 0, 0, 0.44);
     border-radius: 9px;
+    user-select: none;
     padding: 17px 17px;
     margin-top: 1rem;
-    user-select: none;
+    background: rgba(0, 0, 0, 0.44);
     transition: letter-spacing .3s ease-in-out;
 }
 

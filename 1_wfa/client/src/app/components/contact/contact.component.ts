@@ -29,7 +29,7 @@ export class ContactComponent implements OnInit, AfterViewInit {
       email: new FormControl('', null),
       company: new FormControl('', null),
       projectTitle: new FormControl('', null),
-      message: new FormControl('', null)
+      initialMessage: new FormControl('', null)
     });
   }
 
@@ -61,8 +61,6 @@ export class ContactComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.secTwo = true;
       const textArea = document.getElementById('text-area');
-      console.log('textArea = ', textArea);
-      
       textArea?.autofocus;
     }, 500);
   }

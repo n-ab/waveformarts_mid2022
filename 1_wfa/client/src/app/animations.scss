@@ -71,4 +71,18 @@
 // --- contact ----------------
 // --- book ----------------
 // --- account ----------------
+@keyframes hrEffect {
+    0% {   width: 0%; opacity: 0;}
+    100% { width: 50%; opacity: 1; }
+}
+
+@keyframes expandDown {
+    0%   { padding: 0px 0px; opacity: 0;  }
+    100% { padding: 17px 17px; opacity: 1; }
+}
+
+@keyframes expandDown2 {
+    0%   { margin: 0px 0px; opacity: 0;  }
+    100% { margin: 5px 5px; opacity: 1; }
+}
 // --- rentals ----------------

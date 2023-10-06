@@ -16,14 +16,15 @@ export async function register(data: any) {
         role: 'user',
         firstName: data.firstName,
         lastName: data.lastName,
-        password: encryptedPassword,
-        nameAbbreviation: data.firstName[0].toUpperCase() + data.lastName.toLowerCase(),
         fullName: data.firstName + ' ' + data.lastName,
+        company: data.company || '',
         email: data.email,
-        username: data.email,
-        company: '',
-        projects: [],
+        password: encryptedPassword,
         clientNumber: randNum,
+        fullyRegistered: true,
+        nameAbbreviation: data.firstName[0].toUpperCase() + data.lastName.toLowerCase(),
+        username: data.email,
+        projects: [],
         discussions: [],
         messagesSent: [],
         readMessages: [],
@@ -40,6 +41,17 @@ export async function register(data: any) {
         email: user.email
     });
     return user;
+}
+
+export async function mergeUserAccounts() {
+    
+}
+
+export async function saveFilePathToUser(userId: string, filePaths: string[]) {
+    console.log('filePaths: ', filePaths);
+    const user = await UserModel.findById(userId).then(user => user);
+    // START HERE
+    // user.file
 }
 
 export async function encryptPassword(password: string) {

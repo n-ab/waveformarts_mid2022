@@ -14,14 +14,19 @@
                 <div class="email-list-for" *ngFor="let email of emailList">
                     <div class="email-row">
                         <div class="email-wrapper left-column">{{ email }}</div>
-                        <div class="remove-email right-column">-</div>
+                        <div class="remove-email right-column" (click)="removeEmail(email)">-</div>
                     </div>
                     <div class="email-spacer"></div>
                 </div>
             </div>
             <!-- <mat-form-field><input matInput id="email-submit" type="text" name="email" placeholder="send email to:"></mat-form-field> -->
             <mat-form-field><input matInput type="text" [(ngModel)]="newEmail" [ngModelOptions]="{standalone: true}" placeholder="email to add"></mat-form-field>
-            <button mat-raised-button type="button" (click)="addEmailToList()">add email to list</button>
+            <button mat-raised-button type="button" (click)="addEmailToList()" class="add-email-to-list-button">add email to list</button>
+            <hr>
+            <div class="step-two-footer">
+                <button mat-raised-button class="back-button" (click)="back()"><</button>
+                <button mat-raised-button class="submit" (click)="submitProject()">submit</button>
+            </div>
         </div>
     </form>
 </div>

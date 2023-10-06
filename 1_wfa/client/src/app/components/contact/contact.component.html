@@ -2,6 +2,9 @@
     <div class="contact-container">
         <div class="contact-title contact-title-margin-bottom-1" id="contact-title">
             Contact
+            <br>
+            handle the data.firstName and data.lastName deal where you have to split those fields in two but maintain width / height
+            <br>
         </div>
         <form class="contact-form" [formGroup]="contactForm" (ngSubmit)="submit()">
             <div class="form-section form-section-one" *ngIf="showSectionOne">
@@ -20,7 +23,7 @@
                     <div class="form-section-2-data-item">{{ projectTitle }}</div>
                 </div>
                 <div class="form-section-message" style="margin-top: 25px; margin-bottom: 10px;">How Can We Help?</div>
-                <mat-form-field style="width: 100% !important;"><textarea matInput id="text-area" name="message" formControlName="message" placeholder="Please be as detailed as possible regarding your needs and goals..." autofocus></textarea></mat-form-field>
+                <mat-form-field style="width: 100% !important;"><textarea matInput id="text-area" name="initialMessage" formControlName="initialMessage" placeholder="Please be as detailed as possible regarding your needs and goals..." autofocus></textarea></mat-form-field>
             </div>
             <div class="button-container">
                 <button type="button" mat-raised-button (click)="back()" *ngIf="showSectionTwo">back</button><button type="button" mat-raised-button (click)="submit()" *ngIf="showSectionTwo">submit</button>

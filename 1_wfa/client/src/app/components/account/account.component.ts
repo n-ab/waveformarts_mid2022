@@ -30,11 +30,15 @@ interface Selectedfile {
 export class AccountComponent implements OnInit {
 
   metricHeader = 'Account';
+
   user!: User;
+
   userProjects: Project[] = [];
   userSounds: File[] = [];
-  selectedFiles: File[] = [];
   fileUploadForm!: FormGroup;
+  
+  selectedFiles: File[] = [];
+  showSelectedFiles = false;
 
   constructor(private router: Router, private windowService: WindowService, private metricsService: MetricsService, private userService: UserService, private dialog: MatDialog) {
     this.fileUploadForm = new FormGroup({
@@ -51,15 +55,15 @@ export class AccountComponent implements OnInit {
           this.router.navigateByUrl('');
         }
       })
-    this.windowService.bgImageMarginLeft.next(-2600);
-    this.windowService.bgImageWidth.next(5000);
+    this.windowService.bgImageMarginLeft.next(-225);
+    this.windowService.bgImageWidth.next(2400);
     this.metricsService.addPageMetrics(this.metricHeader, history.state.navigatedFrom);
   }
 
   startProject() {
     this.dialog.open(StartProjectComponent, {
       width: '400px',
-      height: '420px',
+      height: '450px',
       maxWidth: '700px'
     })
   }
@@ -75,43 +79,21 @@ export class AccountComponent implements OnInit {
   
 
   async uploadFile(event: Event) {
+    console.log('1', event);
     if ((event.target as HTMLInputElement).files![0] != null) {
       const files = (event.target as HTMLInputElement).files!;
-      const fileList = await Array.prototype.forEach.call(files, file => {
+      console.log('2', files);
+      // === method 1 ================
+      const fileList = Array.from(files).map(file => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
+        console.log('3', file);
         this.selectedFiles.push(file);
+        return file;
       });
-      this.userService.uploadFileToUser(fileList);
+    console.log('4', this.selectedFiles);
+        this.userService.uploadFileToUser(fileList);
     }
-    
-    // console.log('upload file event: ', event);
-    // const files = (event?.target as HTMLInputElement).files!;
-    // if (files && files.length > 0) {
-    //   const formData = new FormData();
-    //   this.selectedFiles = [];
-    //   for (let i=0; i < files.length; i++) {
-    //     const file = files[i];
-    //     const reader = new FileReader();
-    //     reader.readAsDataURL(file);
-    //     const readerPromise = new Promise<string>((resolve, reject) => {
-    //       reader.onload = () => resolve(reader.result as string);
-    //       reader.onload = () => reject(reader.error);
-    //     });
-    //     const dataURL = await readerPromise;
-    //     const selectedFile: Selectedfile = { file, dataURL }
-    //     this.selectedFiles.push(selectedFile);
-    //   }
-    // }
-    // const formData = new FormData();
-    // if ((event.target as HTMLInputElement).files![0] != null) {
-    //   const reee = await Array.prototype.forEach.call(files, file => {
-    //     const reader = new FileReader();
-    //     reader.readAsDataURL(file);
-    //     this.selectedFiles.push(file);
-    //   })
-    //   return this.userService.uploadFileToUser(this.accountFileUploadForm.getRawValue());
-    // }
   }
 
   settingsInfo() {

@@ -2,7 +2,9 @@ import express from 'express';
 import * as userController from '../controllers/userController';
 import { login, logout } from '../auth/auth';
 import multer from 'multer';
+import path from 'path';
 import fs from 'fs';
+import { promisify } from 'util';
 
 export const app = express();
 
@@ -64,7 +66,19 @@ app.post('/register', async (req: any, res) => {
 app.post('/addFileToUser', upload.array('files'), async (req: any, res) => {
     fs.mkdir(`./audioFiles/${req.user._id}`, {recursive: true}, (err) => { if (err) return res.status(500).json(err); });
     const files = req.files as CustomFile[];
-    console.log('adding files to user: ', req.body);
+    const filePaths: string[] = [];
+    const renameAsync = promisify(fs.rename);
+    try {
+        await Promise.all(files?.map(async (file) => {
+            const destinationPath = path.join('./audioFiles', req.body.companyProject, file.originalname);            
+            await renameAsync(file.path, destinationPath);
+            filePaths.push(destinationPath);
+        }))
+    } catch (error) {
+        console.error('failed to move file to project directory: ', error);
+        return res.status(500).json('reeee');
+    }
+    return res.status(200).json(filePaths);
 })
 
 app.get('/fetchFiles', async (req: any, res) => {

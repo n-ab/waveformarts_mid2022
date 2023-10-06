@@ -52,20 +52,31 @@ export async function joinProject(projectId: string, userId: string) {
 }
 
 export async function contact(data: any) {
+    console.log('contact() - data = ', data);
     const randNum = Math.floor(Math.random() * 899999 + 100000);
     const unregisteredUser = await UserModel.create({
         firstName: data.firstName,
         lastName: data.lastName,
+        fullName: data.firstName + ' ' + data.lastName,
         company: data.company,
         email: data.email,
         password: '',
         clientNumber: randNum,
-        status: false
+        fullyRegistered: false
     });
     const newPair = await PairUsernumberEmailModel.create({
         clientNumber: randNum,
         email: unregisteredUser.email
     });
+    const project = await ProjectModel.create({
+        title: data.projectTitle,
+        messages: [data.initialMessage],
+        companyProject: data.company,
+        users: [unregisteredUser._id],
+        email: data.email,
+        projectLeadName: unregisteredUser.fullName,
+        number: randNum - 1
+    })
     return unregisteredUser;
 }
 

@@ -84,6 +84,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   async register() {
+    console.log('register form content: ', this.registerForm.getRawValue());
     const userRegistered = await this.userService.register(this.registerForm.getRawValue());
     this.newRegisteredUser = userRegistered;
     this.showRegister = false;

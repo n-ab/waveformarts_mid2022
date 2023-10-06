@@ -1,97 +1,41 @@
 <div class="wrapper">
     <div class="account-container">
-        <div class="title" *ngIf="user">Hi {{ user.firstName }}</div>
+        <div class="title" *ngIf="user">Welcome back, {{ user.firstName }}</div>
+        <div class="div-as-hr"></div>
         <div class="choices">
             <div class="choice">
                 <div class="choice-title">Projects</div>
                 <div class="projects" *ngIf="userProjects.length > 1;">{{ userProjects | json }}</div>
-                <div class="nothing-to-display" *ngIf="userProjects.length <= 0">no projects to display</div>
-                <div class="start-button" *ngIf="userProjects.length <= 0" (click)="startProject()">start a project</div>
-                <div class="start-button" *ngIf="userProjects.length <= 0" (click)="joinProject()">join a project</div>
+                <div class="nothing-to-display account-selection-option" *ngIf="userProjects.length <= 0">no projects to display</div>
+                <div class="start-button account-selection-option" *ngIf="userProjects.length <= 0" (click)="startProject()">start a project</div>
+                <div class="start-button account-selection-option" *ngIf="userProjects.length <= 0" (click)="joinProject()">join a project</div>
             </div>
             <div class="choice">
-                <div class="choice-title uploads-downloads">Uploads / Downloads</div>
-                <div class="files" *ngIf="userSounds.length > 1">{{ userSounds | json }}</div>
-                <div class="nothing-to-display" *ngIf="userSounds.length <= 0">no files to display</div>
+                <div class="choice-title uploads-downloads">Files</div>
+                <div class="files account-selection-option" *ngIf="userSounds.length > 1">{{ userSounds | json }}</div>
+                <div class="nothing-to-display account-selection-option" *ngIf="selectedFiles.length <= 0">no files to display</div>
                     <form [formGroup]="fileUploadForm">
                         <input style="display: none;" type="file" id="file-list" #sound style="display: none;" name="audioFile" formControlName="audioFile" (change)="uploadFile($event)" multiple>
                     </form>
-                    <div class="start-button" *ngIf="userSounds.length <= 0" (click)="sound.click()">upload a file</div>
+                    <div class="start-button account-selection-option" *ngIf="selectedFiles.length <= 0" (click)="sound.click()">upload a file</div>
+                    <div class="file-list" *ngIf="selectedFiles.length > 0">
+                        <div class="selected-files" *ngFor="let file of selectedFiles">
+                            {{ file | json }}
+                            <br>
+                            {{ selectedFiles[0] | json }}
+                        </div>
+                    </div>
             </div>
             <div class="choice">
                 <div class="choice-title">Settings</div>
                 <div class="settings">
-                    <div class="setting" (click)="settingsInfo()">Your Info</div>
-                    <div class="setting"(click)="settingsSecurity()">Security / Password</div>
-                    <div class="setting"(click)="settingsSetDownloadDestination()">Download Destination</div>
-                    <div class="setting"(click)="settingsPolicies()">Waveform Arts Policies</div>
-                    <div class="log-out"(click)="logout()">Log Out</div>
+                    <div class="setting account-selection-option" (click)="settingsInfo()">Your Info</div>
+                    <div class="setting account-selection-option"(click)="settingsSecurity()">Security / Password</div>
+                    <div class="setting account-selection-option"(click)="settingsSetDownloadDestination()">Download Destination</div>
+                    <div class="setting account-selection-option"(click)="settingsPolicies()">Waveform Arts Policies</div>
+                    <div class="log-out account-selection-option"(click)="logout()">Log Out</div>
                 </div>
             </div>
         </div>
-        <!-- <div class="account-choices">
-            <div class="account-choice ac1">
-                <div class="account-choice-title">Uploads / Downloads</div>
-                <div class="account-choice-nav-out">
-                    <div class="account-choice-nav-out-title first-account-choice" (click)="goToYourUploads()">Your Uploads</div>
-                </div>
-                <div class="account-choice-nav-out">
-                    <div class="account-choice-nav-out-title" (click)="goToYourDownloads()">Your Downloads</div>
-                </div>
-                <div class="account-choice-nav-out">
-                    <div class="account-choice-nav-out-title" (click)="goToManageFiles()">Manage Files</div>
-                </div>
-                <div class="account-choice-nav-out">
-                    <div class="account-choice-nav-out-title" (click)="goToShop()">Find New Sounds</div>
-                </div>
-            </div>
-            <div class="account-choice ac2">
-                <div class="account-choice-title">Settings</div>
-                <div class="account-choice-nav-out">
-                    <div class="account-choice-nav-out-title first-account-choice" (click)="goToResetPassword()">Reset Password</div>
-                </div>
-                <div class="account-choice-nav-out">
-                    <div class="account-choice-nav-out-title" (click)="goToChangeEmail()">Change Email</div>
-                </div>
-                <div class="account-choice-nav-out">
-                    <div class="account-choice-nav-out-title" (click)="goToCurrentPlan()">Current Plan</div>
-                </div>
-                <div class="account-choice-nav-out">
-                    <div class="account-choice-nav-out-title" (click)="goToOrderHistory()">Order History</div>
-                </div>
-            </div>
-        </div>
-        <div class="account-choices-bottom">
-            <div class="account-choice ac3">
-                <div class="account-choice-title">Projects</div>
-                <div class="account-choice-nav-out">
-                    <div class="account-choice-nav-out-title first-account-choice" (click)="goToYourMessages()">Your Projects</div>
-                </div>
-                <div class="account-choice-nav-out">
-                    <div class="account-choice-nav-out-title" (click)="goToComposeMessage()">Send Message</div>
-                </div>
-                <div class="account-choice-nav-out">
-                    <div class="account-choice-nav-out-title" (click)="goToSendFile()">Send File</div>
-                </div>
-                <div class="account-choice-nav-out">
-                    <div class="account-choice-nav-out-title" (click)="goToStarredMessages()">Starred Messages</div>
-                </div>
-            </div>
-            <div class="account-choice ac4">
-                <div class="account-choice-title">Support</div>
-                <div class="account-choice-nav-out">
-                    <div class="account-choice-nav-out-title first-account-choice" (click)="goToAskQuestion()">Ask a Question</div>
-                </div>
-                <div class="account-choice-nav-out">
-                    <div class="account-choice-nav-out-title" (click)="goToFAQs()">FAQs</div>
-                </div>
-                <div class="account-choice-nav-out">
-                    <div class="account-choice-nav-out-title" (click)="goToReportProblem()">Report Problem</div>
-                </div>
-                <div class="account-choice-nav-out">
-                    <div class="account-choice-nav-out-title" (click)="goToSuggestFeature()">Suggest Feature</div>
-                </div>
-            </div>
-        </div> -->
     </div>
 </div>
