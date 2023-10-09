@@ -58,6 +58,12 @@ export class StartProjectComponent implements OnInit, AfterViewInit {
   addEmailToList(): void {
     this.emailList.push(this.newEmail);
     this.newEmail = '';
+    const emailSubmitField = document.getElementById('email-submit-field');
+    const emailSubmitButton = document.getElementById('email-submit-button');
+    emailSubmitButton?.addEventListener('submit', function(e) {
+      e.preventDefault();
+      emailSubmitField?.focus();
+    })
   }
 
   removeEmail(email: string) {
