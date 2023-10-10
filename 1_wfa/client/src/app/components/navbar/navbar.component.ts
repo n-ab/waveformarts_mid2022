@@ -22,7 +22,12 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.userService.check()
       .then(user => {
-        if (user) this.userLoggedIn = true;
+        console.log('user: ', user);
+        if (!user.message) {
+          this.userLoggedIn = true;
+        } else {
+          this.userLoggedIn = false;
+        }
       })
     this.userService.loggedIn.subscribe(data => {
       this.userLoggedIn = data;

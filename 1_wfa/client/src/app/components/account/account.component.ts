@@ -49,7 +49,7 @@ export class AccountComponent implements OnInit {
   ngOnInit(): void {
     this.userService.check()
       .then (userFound => {
-        if (userFound) {
+        if (!userFound.message) {
           this.user = userFound;
         } else {
           this.router.navigateByUrl('');

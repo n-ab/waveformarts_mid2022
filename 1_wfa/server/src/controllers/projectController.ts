@@ -4,12 +4,22 @@ import { PairUsernumberEmailModel } from '../models/pairUsernumberEmail';
 import * as bcrypt from 'bcryptjs';
 
 // NEW PROJECT PATH WITH NO KNOWN USER
-export async function createNewProject(data: any, filePaths: string[]) {
-    const project = await ProjectModel.create({ title: data.title, companyProject: data.companyProject, description: data.description, email: data.email, projectLead: data.email, filePaths: filePaths, number: Math.floor(Math.random() * 899999 + 100000) });
-    const user =    await UserModel.create({    email: data.email, status: true, role: 'lead', nameAbbreviation: data.companyProject, company: data.companyProject, projects: project._id });
-    project.users.push(user._id);
-    await project.save();
-    await user.save();
+export async function createNewProject(data: any, filePaths: string[], user: any) {
+    console.log('createNewProject() - data: ', data);
+    console.log('createNewProject() - filePaths', filePaths);
+    console.log('createNewProject() - user', user);
+    
+    // there is a req.user
+    const project = await ProjectModel.create({ 
+        title: data.title, 
+        projectLeadName: data.projectLeadName,
+        projectLeadEmail: data.projectLeadEmail,
+        description: data.description, 
+        number: Math.floor(Math.random() * 899999 + 100000) ,
+        emailList: data.emailList, 
+        filePaths: filePaths
+    });
+    // need to make path for if there's req.user or not
     return {projectId: project._id, projectNumber: project.number};
 }
 
