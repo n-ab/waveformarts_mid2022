@@ -12,13 +12,15 @@ type CustomFile = Express.Multer.File & { fieldname?: string, originalname?: str
 const storage = multer.diskStorage({ filename: (req: any, file, cb) => { cb(null, file.originalname); } })
 const upload = multer({ storage });
 
+app.post('/submitProjectWithNoFiles', async (req: any, res) => {
+    const projectCreationConfirmation = await projectController.createNewProject(req.body, [], req.user._id);
+    return res.status(200).json(projectCreationConfirmation);
+})
+
 app.post('/submitProject', upload.array('files'), async (req: any, res) => {
-    console.log('/startProject - req.body', req.body);
-
-    // IF THERE ARE FILES
-
+    console.log('debugger counter 1 1 1');
+    
     if (req.body.hasOwnProperty('files')) {
-        console.log('handling NEW PROJECT + FILES');
         fs.mkdir(`./audioFiles/${req.body.companyProject}`, {recursive: true}, (err) => { if (err) return res.status(500).json(err); });
         const files = req.files as CustomFile[];
         const filePaths: string[] = [];
@@ -31,20 +33,11 @@ app.post('/submitProject', upload.array('files'), async (req: any, res) => {
             }));
         } catch (error) {
             console.error('failed to move file to project directory: ', error);
-            return res.status(500).json('reeee');
+            return res.status(500).json(error);
         }
     } else {
-
-        // IF THERE ARE NO FILES
-
-        console.log('handling NEW PROJECT - no files');
-        if (req.user) {
-            const projectId = await projectController.createNewProject(req.body, [], req.user._id);
-            return res.status(200).json(projectId);
-        } else {
-            const projectId = await projectController.createNewProject(req.body, [], null);
-            return res.status(200).json(projectId);
-        }
+        const projectId = await projectController.createNewProject(req.body, [], req.user._id);
+        return res.status(200).json(projectId);
     }
 })
 

@@ -2,16 +2,16 @@
     <form [formGroup]="createProjectForm" (ngSubmit)="submitProject()">
         <div id="step-1" *ngIf="!showStep2">
             <div class="title">Let's start with the basics</div>
-            <mat-form-field><input matInput type="text" name="title" formControlName="title" placeholder="project title" autofocus></mat-form-field>
+            <mat-form-field><input matInput type="text" name="title" formControlName="title" placeholder="project title"></mat-form-field>
             <mat-form-field><input matInput type="text" name="projectLeadEmail" formControlName="projectLeadEmail" placeholder="project email"></mat-form-field>
             <mat-form-field><input matInput type="text" name="description" formControlName="description" placeholder="descibe the project"></mat-form-field>
             <mat-form-field><input matInput type="text" name="projectLeadName" formControlName="projectLeadName" placeholder="project lead"></mat-form-field>
             <button mat-raised-button type="submit" class="submit-button" (click)="displayStepTwo()">next step</button>
         </div>
-        <div id="step-2" *ngIf="showStep2">
+        <div id="step-2" *ngIf="showStep2" #step2>
             <div class="title">Send invitations to join project</div>
             <div class="submit-email-row">
-                <mat-form-field><input id="email-submit-field" matInput type="text" [(ngModel)]="newEmail" [ngModelOptions]="{standalone: true}" placeholder="email to add"></mat-form-field>
+                <mat-form-field><input id="email-submit-field" matInput #emailSubmitField type="text" [(ngModel)]="newEmail" [ngModelOptions]="{standalone: true}" placeholder="email to add"></mat-form-field>
                 <button mat-raised-button id="email-submit-button" type="button" (click)="addEmailToList()" class="add-email-to-list-button">+</button>
             </div>
             <div class="email-list-if" *ngIf="emailList">

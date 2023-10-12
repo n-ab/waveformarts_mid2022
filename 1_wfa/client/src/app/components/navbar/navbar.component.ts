@@ -22,15 +22,16 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.userService.check()
       .then(user => {
-        console.log('user: ', user);
-        if (!user.message) {
+        if (user) {
           this.userLoggedIn = true;
         } else {
           this.userLoggedIn = false;
         }
       })
     this.userService.loggedIn.subscribe(data => {
+      console.log('data: ', data);
       this.userLoggedIn = data;
+      console.log('this.userLoggedIn', this.userLoggedIn);
     });
     this.metricsService.addPageMetrics(this.metricHeader, history.state.navigatedFrom);
     

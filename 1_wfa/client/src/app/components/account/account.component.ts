@@ -49,6 +49,7 @@ export class AccountComponent implements OnInit {
   ngOnInit(): void {
     this.userService.check()
       .then (userFound => {
+        console.log('userFound: ', userFound);
         if (!userFound.message) {
           this.user = userFound;
         } else {

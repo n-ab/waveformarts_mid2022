@@ -115,8 +115,8 @@ export class UserService {
       .catch(err => err);
   }
 
-  submitProject(project: any) {
-    return this.http.post('/api/project/submitProject', project).toPromise()
+  submitProjectWithNoFiles(project: any) {
+    return this.http.post('/api/project/submitProjectWithNoFiles', project).toPromise()
       .then(project => project)
       .catch(err => err);
   }

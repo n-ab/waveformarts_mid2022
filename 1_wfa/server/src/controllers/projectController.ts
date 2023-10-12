@@ -4,12 +4,9 @@ import { PairUsernumberEmailModel } from '../models/pairUsernumberEmail';
 import * as bcrypt from 'bcryptjs';
 
 // NEW PROJECT PATH WITH NO KNOWN USER
-export async function createNewProject(data: any, filePaths: string[], user: any) {
-    console.log('createNewProject() - data: ', data);
-    console.log('createNewProject() - filePaths', filePaths);
-    console.log('createNewProject() - user', user);
+export async function createNewProject(data: any, filePaths: string[], userId: any) {
+    console.log('debugger counter 2 2 2 ');
     
-    // there is a req.user
     const project = await ProjectModel.create({ 
         title: data.title, 
         projectLeadName: data.projectLeadName,
@@ -19,14 +16,35 @@ export async function createNewProject(data: any, filePaths: string[], user: any
         emailList: data.emailList, 
         filePaths: filePaths
     });
+    console.log('user id of REQ . USER = ', userId);
+    if (userId) {
+
+        project.users.push(userId);
+    }
+    const user = await UserModel.findById(userId).then(user => user);
+    user?.projects.push(project._id);
+    user?.save();
     // need to make path for if there's req.user or not
-    return {projectId: project._id, projectNumber: project.number};
+    return {projectId: project._id, name: project.title}
 }
 
 export async function getProjectById(data: any) {
     const project = await ProjectModel.findById(data).populate('users').then(project => project);
     return project;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ----------------------------------
 // EXISTING USER MAKING A NEW PROJECT
