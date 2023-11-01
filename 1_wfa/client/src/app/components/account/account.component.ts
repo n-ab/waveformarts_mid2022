@@ -16,6 +16,7 @@ import { JoinprojectComponent } from '../joinproject/joinproject.component';
 import { UserInfoComponent } from '../user-info/user-info.component';
 import { StartProjectComponent } from '../start-project/start-project.component';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ProjectService } from 'src/app/services/project.service';
 
 interface Selectedfile {
   file: File; 
@@ -34,13 +35,16 @@ export class AccountComponent implements OnInit {
   user!: User;
 
   userProjects: Project[] = [];
+  filteredProjects: Project[] = [];
+  titlesToTestAgainst: string[] = [];
+
   userSounds: File[] = [];
   fileUploadForm!: FormGroup;
   
   selectedFiles: File[] = [];
   showSelectedFiles = false;
 
-  constructor(private router: Router, private windowService: WindowService, private metricsService: MetricsService, private userService: UserService, private dialog: MatDialog) {
+  constructor(private router: Router, private windowService: WindowService, private metricsService: MetricsService, private userService: UserService, private dialog: MatDialog, private projectService: ProjectService) {
     this.fileUploadForm = new FormGroup({
       audioFile: new FormControl(null)
     })
@@ -48,12 +52,13 @@ export class AccountComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.check()
-      .then (userFound => {
-        console.log('userFound: ', userFound);
-        if (!userFound.message) {
-          this.user = userFound;
-        } else {
-          this.router.navigateByUrl('');
+      .then (user => {
+        console.log('userFound: ', user);
+        if (user == false) { this.router.navigateByUrl(''); } 
+        else {
+          this.user = user;
+          this.userProjects = user.projects;
+          this.fetchProjects(user.projects);
         }
       })
     this.windowService.bgImageMarginLeft.next(-225);
@@ -71,9 +76,9 @@ export class AccountComponent implements OnInit {
 
   joinProject() {
     this.dialog.open(JoinprojectComponent, {
-      width: '50%',
-      height: '250px',
-      maxWidth: '700px',
+      width: '400px',
+      height: '220px',
+      autoFocus: true,
       data: this.user._id
     });
   }
@@ -97,6 +102,44 @@ export class AccountComponent implements OnInit {
     }
   }
 
+  
+  fetchProjects(projectIds: string[]) {
+    return this.projectService.fetchProjects(projectIds)
+    .then(populatedProjects => {
+      for (let i = 0; i < populatedProjects.length; i++) {
+        this.titlesToTestAgainst.push(populatedProjects[i].title);
+      }
+      for (let i = 0; i < populatedProjects.length; i++) {
+        if (populatedProjects[i].title !== this.titlesToTestAgainst[0]) {
+          this.filteredProjects.push(populatedProjects[i].title);
+          console.log('1 this.filteredProjects: ', this.filteredProjects);
+        } else {
+          this.filteredProjects.push(populatedProjects[i]);
+          console.log('2 this.filteredProjects: ', this.filteredProjects);
+          return;
+        }
+      }
+    })
+  }
+
+  putProjectTitlesInArray(stuff: any[]) {
+    for (let i = 0; i < stuff.length; i++) {
+      const element = stuff[i];
+      
+    }
+  }
+
+  goToProject(event: any) {
+    this.router.navigateByUrl('project', {state: {id: event}});
+  }
+  
+  logout() {
+    this.userService.logout();
+    this.router.navigateByUrl('');
+  }
+  
+  // R O U T I N G --- M E N U     O P T I O N S
+  
   settingsInfo() {
     this.dialog.open(UserInfoComponent, {
       width: '40%',
@@ -105,29 +148,10 @@ export class AccountComponent implements OnInit {
     })
   }
 
-  settingsSecurity() {
-
-  }
-
-  settingsSetDownloadDestination() {
-
-  }
-
-  settingsPolicies() {
-    
-  }
-
-  logout() {
-    this.userService.logout();
-    this.router.navigateByUrl('');
-  }
-
-  // R O U T I N G --- M E N U     O P T I O N S
-
   goToYourUploads(): void {
     this.router.navigateByUrl('account/files', {state: {navigatedFrom: 'Account', selection: 'uploads' }});
   }
-
+  
   goToYourDownloads(): void {
     this.router.navigateByUrl('account/files', {state: {navigatedFrom: 'Account', selection: 'downloads' }});
   }

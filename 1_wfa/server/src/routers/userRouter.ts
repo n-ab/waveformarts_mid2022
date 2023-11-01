@@ -1,5 +1,6 @@
 import express from 'express';
 import * as userController from '../controllers/userController';
+import * as projectController from '../controllers/projectController';
 import { login, logout } from '../auth/auth';
 import multer from 'multer';
 import path from 'path';
@@ -61,6 +62,12 @@ app.post('/register', async (req: any, res) => {
     console.log('registering:', req.body);
     const user = await userController.register(req.body);
     return res.status(200).json(user.email);
+})
+
+app.post('/submitProjectWithNoFiles', async (req: any, res) => {
+    console.log('===== req.body: ', req.body);
+    const projectCreationConfirmation = await projectController.createNewProject(req.body, [], req.user._id);
+    return res.status(200).json(projectCreationConfirmation);
 })
 
 app.post('/addFileToUser', upload.array('files'), async (req: any, res) => {

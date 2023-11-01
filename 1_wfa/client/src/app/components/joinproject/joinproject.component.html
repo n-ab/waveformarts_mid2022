@@ -1,1 +1,6 @@
-<p>joinproject works!</p>
+<form [formGroup]="joinProjectForm">
+    <mat-form-field class="dialog-form-input"><input matInput type="text" name="number" formControlName="number" placeholder="project number"></mat-form-field>
+    <mat-form-field class="dialog-form-input"><input matInput type="text" name="title" formControlName="title" placeholder="project name"></mat-form-field>
+    <div *ngIf="error" class="error">{{ errorMessage }}</div>
+    <button class="submit-button" mat-raised-button (click)="join()">sign in</button>
+</form>

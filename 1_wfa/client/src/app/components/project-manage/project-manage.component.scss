@@ -7,17 +7,48 @@
     margin-top: 125px;
 }
 
+.project {
+
+}
+
 .project-title {
     color: white;
-    font-size: 300%;
-    font-weight: 100;
     animation: fadeIn 1s ease;
     background-color: rgba(76, 222, 255, 0.363);
 }
 
 .project-title-container {
+    padding: 9px 25px;
     margin-left: 10%;
-    padding: 25px;
+    font-size: 300%;
+    font-weight: 100;
+}
+
+.project-lead-name {
+    margin-left: 17%;
+    font-size: 120%;
+    color: grey;
+    font-weight: 100;
+    padding-bottom: 20px;
+    animation: projectLeadName 1.7s ease .2s forwards;
+}
+
+.add-button {
+    color: white;
+    font-weight: 100;
+    letter-spacing: 2px;
+    border-radius: 9px;
+    user-select: none;
+    margin: auto;
+    display: block;
+    margin-top: 17px;
+    background: rgba(0, 0, 0, 0.541);
+    transition: letter-spacing .3s ease-in-out;
+}
+
+@keyframes projectLeadName {
+    0%   { color: grey; letter-spacing: 1px; }
+    100% { color: white; letter-spacing: 2px; }
 }
 
 .project-description {
@@ -40,6 +71,148 @@
     margin-left: 12%;
 }
 
-@media(max-width: 501) {
+.settings {
+    display: flex;
+    justify-content: space-evenly;
+}
 
+.setting {
+    border-radius: 8px;
+    width: 45%;
+    max-width: 400px;
+    padding: 1rem;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+}
+
+.setting-title {
+    color: white;
+    font-weight: 100;
+    font-size: 150%;
+    padding: 15px;
+    opacity: 0;
+    animation: expandSide 1s ease forwards;
+}
+
+.none-message {
+    color: white;
+    padding: 1rem 10px;
+    font-size: 90%;
+    font-weight: 100;
+    letter-spacing: 2px;
+    border-radius: 9px;
+    user-select: none;
+    margin-left: 1rem;;
+    margin-top: 1rem;
+    background: rgba(0, 0, 0, 0.541);
+    transition: letter-spacing .3s ease-in-out;
+    text-align: center;
+}
+
+.small-spacer {
+    border-bottom: 1px solid white;
+    width: 20px;
+    display: block;
+    margin: auto;
+    padding-top: 19px;
+}
+
+@keyframes colorChange {
+    0% { color: rgb(0, 213, 255);}
+    50% { color: white;}
+    100% { color: rgb(0, 213, 255);}
+}
+
+.message-engineer {
+    animation: colorChange 10s infinite;
+}
+
+form {
+    font-weight: 100;
+    color: white;
+}
+
+.add-user-or {
+    text-align: center;
+    display: inline;
+    margin-top: 25px;
+}
+
+textarea {
+    
+}
+
+button {
+    display: block;
+    margin: auto;
+    font-weight: 100;
+    letter-spacing: 2px;
+    width: 75%;
+}
+
+.project-form {
+    background: rgba(0, 0, 0, 0.541);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out forwards;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+}
+
+.member-ng-for-wrapper {
+    color: white;
+    padding: 1rem 10px;
+    font-size: 90%;
+    font-weight: 100;
+    letter-spacing: 2px;
+    border-radius: 9px;
+    margin-left: 1rem;;
+    margin-top: 1rem;
+    background: rgba(0, 0, 0, 0.541);
+    transition: letter-spacing .3s ease-in-out;
+}
+
+.members {
+    display: flex;
+    margin-bottom: 2px;
+}
+
+.member-email {
+    padding: 8px;
+    flex: 80;
+    width: 30%;
+}
+
+.removal-container {
+    background-color: rgba(0, 0, 0, 0.535);
+    transition: background-color .4s ease-in-out;
+    border-radius: 8px;
+}
+
+.removal-button {
+    flex: 10;
+    text-align: center;
+    margin-top: 3px;
+    padding: 5px 19px;
+    user-select: none;
+}
+
+.removal-container:hover {
+    background-color: rgba(120, 0, 0, 0.535);
+}
+
+.submit-button {
+    width: 50%;
+    display: block;
+    margin: auto;
+    opacity: 0;
+    animation: fadeIn 1s ease .2s forwards;
+}
+
+.user-mat-form-field {
+    width: 40%;
 }

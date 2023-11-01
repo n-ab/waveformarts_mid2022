@@ -126,6 +126,39 @@
     transition: all 1s ease-in-out;
 }
 
+.filtered-projects {
+    color: white;
+    font-weight: 100;
+    letter-spacing: 2px;
+    border-radius: 9px;
+    user-select: none;
+    padding: 17px 17px;
+    margin-top: 42px;
+    background: rgba(0, 0, 0, 0.44);
+    opacity: 0;
+    animation: expandDown 1s ease 1.3s forwards;
+}
+
+.project-title {
+    font-size: 110%;
+}
+
+.project-lead {
+    font-size: 80%;
+    font-weight: 100;
+    margin-left: 12px;
+    margin-top: 5px;
+}
+
+.project {
+    letter-spacing: 1px;
+    transition: letter-spacing 1s ease-in-out;
+}
+
+.project:hover {
+    letter-spacing: 2px;
+}
+
 @media (max-width: 1215px) {
     .uploads-downloads {
         font-size: 140%;

@@ -12,14 +12,13 @@ type CustomFile = Express.Multer.File & { fieldname?: string, originalname?: str
 const storage = multer.diskStorage({ filename: (req: any, file, cb) => { cb(null, file.originalname); } })
 const upload = multer({ storage });
 
-app.post('/submitProjectWithNoFiles', async (req: any, res) => {
+app.post('/startProjectWithNoFiles', async (req: any, res) => {
+    console.log('+++++ req.body: ', req.body);
     const projectCreationConfirmation = await projectController.createNewProject(req.body, [], req.user._id);
     return res.status(200).json(projectCreationConfirmation);
 })
 
 app.post('/submitProject', upload.array('files'), async (req: any, res) => {
-    console.log('debugger counter 1 1 1');
-    
     if (req.body.hasOwnProperty('files')) {
         fs.mkdir(`./audioFiles/${req.body.companyProject}`, {recursive: true}, (err) => { if (err) return res.status(500).json(err); });
         const files = req.files as CustomFile[];
@@ -41,15 +40,47 @@ app.post('/submitProject', upload.array('files'), async (req: any, res) => {
     }
 })
 
-app.get('/getProjectData/:id', async (req: any, res) => {
-    if (req.params.id.length <= 0 || req.params.id == 'undefined') return res.status(500).json('A project id was not sent from client-side.');
-    const project = await projectController.getProjectById(req.params.id);
-    if (project) return res.status(200).json(project);
-    return res.status(500).json('REEEEE');
-    
-})
-
 app.post('/contact', async (req: any, res) => {
     const contactInfo = await projectController.contact(req.body);
     return res.status(200).json(contactInfo);
+})
+
+app.get('/fetchProjects', async (req: any, res) => {
+    const projects = await projectController.fetchProjects(req.user._id);
+    return res.status(200).json(projects);
+})
+
+app.get('/getProjectData/:id', async (req: any, res) => {
+    console.log('+ Object.values(req.params)', Object.values(req.params)[0]);
+    if (Object.values(req.params)[0] !== undefined) {
+        const project = await projectController.fetchSingleProjectData(req.params.id);
+        return res.status(200).json(project);
+    } else {
+        console.log('------ something is undefined. returning 401.');
+        return res.status(401).json('Server restarted. Please log in again.');
+    }
+});
+
+app.post('/loginToProject', async (req: any, res) => {
+    console.log('logging into project...', req.body);
+    const project = await projectController.joinProject(req.body.title, req.body.number, req.user._id);
+    return res.status(200).json(project);
+})
+
+app.post('/addUserToProject', async (req: any, res) => {
+    if (req.body.wfaUserId == '') {
+        const updatedProject = await projectController.addUnregisteredUserToProject(req.body);
+        console.log('updatedProject', updatedProject);
+        return res.status(200).json(updatedProject);
+    } else {
+        const updatedProject = await projectController.addRegisteredUserToProject(req.body);
+        console.log('updatedProject', updatedProject);
+        return res.status(200).json(updatedProject);
+    }
+});
+
+app.get('/repopulateTeamMembers/:id', async (req: any, res) => {
+    const updatedTeamMemberList = await projectController.repopulateTeamMembers(req.params.id);
+    console.log('updated user list: ', updatedTeamMemberList);
+    return res.status(200).json(updatedTeamMemberList);
 })

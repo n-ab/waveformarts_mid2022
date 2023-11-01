@@ -2,14 +2,54 @@
     <div class="project" *ngIf="project">
         <div class="project-title">
             <div class="project-title-container">{{ project.title }}</div>
+            <div class="project-lead-name">{{ project.projectLeadName }}</div>
         </div>
-        <div class="project-lead">
-            <div class="finish-project-lead-info" *ngIf="!project.projectLeadName">finish project lead info</div>
-            <div class="project-lead-info-item">{{ project.projectLeadName }}</div>
+        <div class="settings" *ngIf="project">
+            <div class="setting">
+                <div class="setting-title">Team Members</div>
+                <div class="member-ng-for-wrapper">
+                    <div class="members" *ngFor="let member of trimmedTeamMembers">
+                        <div class="member-email" *ngIf="member">{{ member.email }}</div>
+                        <div class="removal-container">
+                            <div class="removal-button" (click)="removeFromTeam(member.id)">-</div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="project.users.length == 0" class="none-message">you are the sole member</div>
+                <div *ngIf="project.discussions.length == 0" class="small-spacer"></div>
+                <button mat-raised-button class="add-to-team add-button" (click)="showAddToTeam()">add to team</button>
+            </div>
+            <div class="setting">
+                <div class="setting-title">Project Files</div>
+                <div *ngIf="project.filePaths.length == 0" class="none-message">no files have been added </div>
+                <div *ngIf="project.discussions.length == 0" class="small-spacer"></div>
+                <button mat-raised-button class="add-file add-button">add file to project</button>
+            </div>
+            <div class="setting">
+                <div class="setting-title">Communications</div>
+                <div class="communications" *ngFor="let discussion of project.discussions">{{ discussion | json }}</div>
+                <div *ngIf="project.discussions.length == 0" class="none-message">no discussions have been started</div>
+                <div *ngIf="project.discussions.length == 0" class="small-spacer"></div>
+                <button mat-raised-button class="add-a-discussion add-button" (click)="showStartDiscussion()">start a discussion</button>
+                <button mat-raised-button class="add-a-discussion add-button message-engineer" (click)="showMessageEngineer()">message your engineer</button>
+            </div>
         </div>
-    </div>
+        <form [formGroup]="addUserForm" class="project-form" *ngIf="showUserForm">
+            <mat-form-field class="user-mat-form-field"><input matInput type="text" name="email" formControlName="email" placeholder="Add by email"></mat-form-field>
+            <div class="add-user-or">or</div>
+            <mat-form-field class="user-mat-form-field"><input matInput type="text" name="wfaUserId" formControlName="wfaUserId" placeholder="Add by their user ID"></mat-form-field>
+        </form>
+        <br>
+        <button *ngIf="showUserForm" mat-raised-button type="button" class="submit-button" (click)="addToTeam()">submit</button>
 
-    <div style="position: absolute; margin: 200px 0px 0px 25%; border: 1px solid #2679875c; box-shadow: 0px 0px 25px -8px black; text-align: center; letter-spacing: 2px; color: white; max-width: 50%; font-weight: 100; padding: 1rem;">
-    {{ project | prettyJson }}
+        <form [formGroup]="messageEngineerForm" class="project-form" *ngIf="showMessageEngineerForm">
+            <mat-form-field class="textarea-engineer"><textarea matInput type="text" name="message" formControlName="message" placeholder="Message (goes directly to engineer)"></textarea></mat-form-field>
+        </form>
+        <button *ngIf="showMessageEngineerForm" mat-raised-button type="button" class="submit-button" (click)="messageYourEngineer()">submit</button>
+        <form [formGroup]="addDiscussionForm" class="project-form" *ngIf="showDiscussionForm">
+            <mat-form-field *ngIf="project.users.length == 0" ><input matInput type="text" name="recipients" formControlName="recipients" placeholder="Add recipients"></mat-form-field>
+            <mat-form-field class="textarea-discussion"><textarea matInput type="text" name="message" formControlName="message" placeholder="Message"></textarea></mat-form-field>
+        </form>
+        <button *ngIf="showDiscussionForm" mat-raised-button type="button" class="submit-button" (click)="startADiscussion()">submit</button>
     </div>
 </div>

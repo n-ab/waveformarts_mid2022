@@ -1,7 +1,7 @@
 import express from 'express';
 import session from 'express-session';
 import { config } from '../config';
-// import bodyParser from 'body-parser';
+import 'dotenv/config';
 import mongoose from 'mongoose';
 import passport from 'passport';
 import { UserModel } from '../src/models/user';
@@ -47,7 +47,7 @@ passport.serializeUser((user: any, done) => {
   });
   
 passport.deserializeUser((id, done) => {
-    UserModel.findById(id).select('_id firstName')
+    UserModel.findById(id).select('_id firstName projects')
         .lean()
         .exec()
         .then(user => {

@@ -3,13 +3,26 @@
         <div class="title" *ngIf="user">Welcome back, {{ user.firstName }}</div>
         <div class="div-as-hr"></div>
         <div class="choices">
+
+            <!-- P R O J E C T S  -->
+
             <div class="choice">
                 <div class="choice-title">Projects</div>
-                <div class="projects" *ngIf="userProjects.length > 1;">{{ userProjects | json }}</div>
-                <div class="nothing-to-display account-selection-option" *ngIf="userProjects.length <= 0">no projects to display</div>
-                <div class="start-button account-selection-option" *ngIf="userProjects.length <= 0" (click)="startProject()">start a project</div>
-                <div class="start-button account-selection-option" *ngIf="userProjects.length <= 0" (click)="joinProject()">join a project</div>
+                <div class="projects" *ngIf="filteredProjects">
+                    <div class="filtered-projects" *ngFor="let project of filteredProjects">
+                        <div class="project" (click)="goToProject(project._id)">
+                            <div class="project-title">{{ project.title }}</div>
+                            <div class="project-lead">{{ project.projectLeadName }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nothing-to-display account-selection-option" *ngIf="filteredProjects.length <= 0">no projects to display</div>
+                <div class="start-button account-selection-option" (click)="startProject()">start a project</div>
+                <div class="start-button account-selection-option" (click)="joinProject()">join a project</div>
             </div>
+
+            <!-- F I L E   U P L O A D  -->
+
             <div class="choice">
                 <div class="choice-title uploads-downloads">Files</div>
                 <div class="files account-selection-option" *ngIf="userSounds.length > 1">{{ userSounds | json }}</div>
@@ -26,13 +39,16 @@
                         </div>
                     </div>
             </div>
+
+            <!-- S E T T I N G S  -->
+
             <div class="choice">
                 <div class="choice-title">Settings</div>
                 <div class="settings">
                     <div class="setting account-selection-option" (click)="settingsInfo()">Your Info</div>
-                    <div class="setting account-selection-option"(click)="settingsSecurity()">Security / Password</div>
-                    <div class="setting account-selection-option"(click)="settingsSetDownloadDestination()">Download Destination</div>
-                    <div class="setting account-selection-option"(click)="settingsPolicies()">Waveform Arts Policies</div>
+                    <div class="setting account-selection-option">Security / Password</div>
+                    <div class="setting account-selection-option">Download Destination</div>
+                    <div class="setting account-selection-option">Policies</div>
                     <div class="log-out account-selection-option"(click)="logout()">Log Out</div>
                 </div>
             </div>

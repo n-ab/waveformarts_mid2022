@@ -1,0 +1,18 @@
+@import '../../animations.scss';
+
+.dialog-form-input {
+    display: block;
+    width: 90%;
+    margin: auto;
+}
+
+.submit-button {
+    margin: auto;
+    background: #40404038;
+    width: 69%;
+    display: block;
+    font-weight: 100;
+    letter-spacing: 2px;
+    opacity: 0;
+    animation: fadeIn 2s ease .3s forwards;
+}

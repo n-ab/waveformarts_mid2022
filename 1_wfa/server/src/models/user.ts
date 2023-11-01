@@ -4,6 +4,7 @@ import { userInfo } from 'os';
 export interface UserObject extends mongoose.Document {
     _id: any,
     registered: boolean,
+    pending: boolean,
     role: string,
     firstName: string,
     lastName: string,
@@ -34,6 +35,7 @@ const schema = new mongoose.Schema({
     role: String,
     email: String,
     registered: Boolean,
+    pending: Boolean,
     company: String,
     lastName: String,
     fullName: String,

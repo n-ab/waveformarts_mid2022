@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { WindowService } from 'src/app/services/window.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
   selector: 'app-start-project',
@@ -17,12 +18,12 @@ export class StartProjectComponent implements OnInit, AfterViewInit {
   emailList: string[] = [];
   showStep2 = false;
 
-  constructor(private windowService: WindowService, private userService: UserService, private router: Router, @Inject(MAT_DIALOG_DATA) public matData: string, public dialogRef: MatDialogRef<StartProjectComponent>, private renderer: Renderer2, private el: ElementRef) {
+  constructor(private windowService: WindowService, private userService: UserService, private router: Router, @Inject(MAT_DIALOG_DATA) public matData: string, public dialogRef: MatDialogRef<StartProjectComponent>, private renderer: Renderer2, private el: ElementRef, private projectService: ProjectService) {
     this.createProjectForm = new FormGroup({
-      title: new FormControl(''),
-      projectLeadEmail: new FormControl(''),
-      description: new FormControl(''),
-      projectLeadName: new FormControl(''),
+      title: new FormControl('Trauma Bonded'),
+      projectLeadEmail: new FormControl('chloe@traumabonded.com'),
+      description: new FormControl('i have fatty liver disease and am trying to be as healthy as possible. I am currently eating a breakfast of 3 eggs scrambled, a ton of arugula, and seasoned with cumin, pepper, and turmeric. How can I make this meal even healthier?'),
+      projectLeadName: new FormControl('Chloe Burns'),
       emailList: new FormControl(['']),
     });
   }
@@ -44,11 +45,10 @@ export class StartProjectComponent implements OnInit, AfterViewInit {
 
   submitProject(): void {
     this.createProjectForm.patchValue({ emailList: this.emailList });
-    console.log('submitting project: ', this.createProjectForm.getRawValue());
-    this.userService.submitProjectWithNoFiles(this.createProjectForm.getRawValue())
+    this.projectService.startProject(this.createProjectForm.getRawValue())
       .then(project => {
-        console.log('you started a project: ', project);
         this.router.navigateByUrl('project', {state: {projectId: project.projectId}});
+        this.dialogRef.close();
       })
       .catch(err => err);
   }
