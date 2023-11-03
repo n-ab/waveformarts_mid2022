@@ -29,6 +29,7 @@ export interface UserObject extends mongoose.Document {
     questions: string[],
     reports: string[],
     suggestions: string[],
+    removalMessage: string;
 }
 
 const schema = new mongoose.Schema({
@@ -56,6 +57,7 @@ const schema = new mongoose.Schema({
     downloads: [{ type: mongoose.Schema.Types.ObjectId, ref: 'File' }],
     questions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Question' }],
     suggestions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Suggestion' }],
+    removalMessage: String,
     discussions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Discussion' }],
     messagesSent: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Message' }],
 }, { timestamps: true });

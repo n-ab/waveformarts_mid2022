@@ -11,6 +11,10 @@
 
 }
 
+form {
+    vertical-align: top;
+}
+
 .project-title {
     color: white;
     animation: fadeIn 1s ease;
@@ -138,10 +142,6 @@ form {
     margin-top: 25px;
 }
 
-textarea {
-    
-}
-
 button {
     display: block;
     margin: auto;
@@ -154,7 +154,6 @@ button {
     background: rgba(0, 0, 0, 0.541);
     padding: 1rem;
     border-radius: 8px;
-    margin-top: 2rem;
     opacity: 0;
     animation: fadeIn 1s ease-in-out forwards;
     margin: auto;
@@ -215,4 +214,12 @@ button {
 
 .user-mat-form-field {
     width: 40%;
+}
+
+.textarea-engineer {
+
+}
+
+.textarea-discussion {
+
 }

@@ -48,8 +48,7 @@ export async function fetchProjects(userId: string) {
 }
 
 export async function fetchSingleProjectData(id: string) {
-    const project = await ProjectModel.findById(id).then(project => project).catch(err => err);
-    console.log(project);
+    const project = await ProjectModel.findById(id).then(project => project).catch(err => {console.log('error fetching single project: ', err); return err;});
     return project;
 }
 
@@ -111,6 +110,33 @@ export async function repopulateTeamMembers(projectId: string) {
     return adjustedUsers;
 }
 
+export async function removeFromTeam(userId: string, projectId: string) {
+    try  {
+        // --- project ------
+        console.log('trying...');
+        await UserModel.findById(userId)
+            .then(async user => {
+                const userProjects = user?.projects;
+                const userProjectsIndex = userProjects?.indexOf(projectId);
+                if (userProjectsIndex) userProjects?.splice(userProjectsIndex, 1);
+                await user?.save();
+                return user;
+            });
+        const project = await ProjectModel.findById(projectId)
+            .then(async project => {
+                const projectUsers = project?.users;
+                const projectUsersIndex = projectUsers?.indexOf(userId);
+                if (projectUsersIndex) projectUsers?.splice(projectUsersIndex, 1);
+                await project?.save();
+                return project;
+            });
+        return project;
+    } 
+    catch (err) {
+        console.log('catching...', err);
+    }
+}
+
 export async function addDiscussionToProject(data: any) {
     const project = await ProjectModel.findById(data.projectId).then(project => project);
     project?.discussions.push(data.discussionId);
@@ -170,3 +196,4 @@ export async function checkAttemptedPassword(attemptedPassword: string, userId: 
     if (user!.password == hash) return true;
     return false;
 }
+

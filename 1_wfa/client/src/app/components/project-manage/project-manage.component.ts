@@ -135,7 +135,7 @@ export class ProjectManageComponent implements OnInit {
   removeFromTeam(id: string) {
     this.projectService.removeFromTeam(id, history.state.id)
       .then(() => {
-        return;
+        this.repopulateTeamMembers();
       })
   }
 

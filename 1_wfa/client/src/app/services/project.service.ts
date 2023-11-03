@@ -57,6 +57,7 @@ export class ProjectService {
 
   removeFromTeam(userId: string, projectId: string) {
     const data = {userId, projectId};
+    console.log('data: ', data);
     return this.http.post('/api/project/removeFromTeam', data).toPromise()
       .then(teamMemberArray => teamMemberArray)
       .catch(err => err);

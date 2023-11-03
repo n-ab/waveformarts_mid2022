@@ -79,6 +79,12 @@ app.post('/addUserToProject', async (req: any, res) => {
     }
 });
 
+app.post('/removeFromTeam', async (req: any, res) => {
+    const updatedUserList = await projectController.removeFromTeam(req.body.userId, req.body.projectId);
+    console.log('updatedUserList: ', updatedUserList);
+    return res.status(200).json(updatedUserList);
+});
+
 app.get('/repopulateTeamMembers/:id', async (req: any, res) => {
     const updatedTeamMemberList = await projectController.repopulateTeamMembers(req.params.id);
     console.log('updated user list: ', updatedTeamMemberList);
