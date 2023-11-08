@@ -89,4 +89,16 @@ app.get('/repopulateTeamMembers/:id', async (req: any, res) => {
     const updatedTeamMemberList = await projectController.repopulateTeamMembers(req.params.id);
     console.log('updated user list: ', updatedTeamMemberList);
     return res.status(200).json(updatedTeamMemberList);
-})
+});
+
+app.get('/repopulateDiscussions/:id', async (req: any, res) => {
+    console.log('1 attempting to repopulate discussions...', req.body + ' | ' + req.params);
+    const updatedDiscussions = await projectController.repopulateDiscussions(req.params.id);
+    console.log('updated user list: ', updatedDiscussions);
+    return res.status(200).json(updatedDiscussions);
+});
+
+app.post('/startADiscussion', async (req: any, res) => {
+    const updatedDiscussionList = await projectController.startADiscussion(req.body);
+    return res.status(200).json(updatedDiscussionList);
+});

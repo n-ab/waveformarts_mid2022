@@ -1,5 +1,6 @@
 import { ProjectModel, ProjectObject } from '../models/project';
 import { UserModel, UserObject } from '../models/user';
+import { DiscussionModel, DiscussionObject } from '../models/discussion';
 import { PairUsernumberEmailModel } from '../models/pairUsernumberEmail';
 import * as nodemailer from 'nodemailer';
 import * as bcrypt from 'bcryptjs';
@@ -91,10 +92,18 @@ export interface TrimmedUserObject {
     pending: boolean,
 }
 
+export interface TrimmedDiscussionObject {
+    id: string,
+    recentMessagePreview: string,
+    thereIsRecentMessage: boolean
+  }
+
 export async function repopulateTeamMembers(projectId: string) {
+
     const project = await ProjectModel.findById(projectId).then(project => project).catch(err => err);
     const projectUsers = project.users;
     const adjustedUsers: TrimmedUserObject[] = [];
+
     if (!project) { return; }
     if (!projectUsers) { return; }
     const users = await Promise.all(project!.users.map(async (id: string) => {
@@ -110,15 +119,42 @@ export async function repopulateTeamMembers(projectId: string) {
     return adjustedUsers;
 }
 
+export async function repopulateDiscussions(projectId: string) {
+    console.log('2 attempting to repopulate discussions...');
+
+    const project = await ProjectModel.findById(projectId).then(project => project).catch(err => err);
+    const projectDiscussions = project.discussions;
+    console.log('project: ', project);
+    console.log('project discussions: ', projectDiscussions);
+    const adjustedDiscussions: TrimmedDiscussionObject[] = [];
+
+    if (!project) return;
+    if (!projectDiscussions) return;
+    const discussions = await Promise.all(project!.discussions.map(async (id: string) => {
+        const discussion = await DiscussionModel.findById(id).then(discussion => discussion);
+        if (discussion) {
+            const trimmedDiscussionObject: TrimmedDiscussionObject = { id: discussion._id, recentMessagePreview: discussion.recentMessagePreview, thereIsRecentMessage: true }
+            adjustedDiscussions.push(trimmedDiscussionObject);
+            return discussion;
+        } else {
+            return null;
+        }
+    }));
+    return adjustedDiscussions;
+}
+
 export async function removeFromTeam(userId: string, projectId: string) {
     try  {
         // --- project ------
         console.log('trying...');
-        await UserModel.findById(userId)
+        const user = await UserModel.findById(userId)
             .then(async user => {
                 const userProjects = user?.projects;
                 const userProjectsIndex = userProjects?.indexOf(projectId);
-                if (userProjectsIndex) userProjects?.splice(userProjectsIndex, 1);
+                console.log('userprojects index: ', userProjectsIndex);
+                if (userProjectsIndex) {
+                    userProjects?.splice(userProjectsIndex, 1);
+                }
                 await user?.save();
                 return user;
             });
@@ -130,6 +166,8 @@ export async function removeFromTeam(userId: string, projectId: string) {
                 await project?.save();
                 return project;
             });
+        console.log('user.projects: ', user?.projects);
+        console.log('project.users: ', project?.users);
         return project;
     } 
     catch (err) {
@@ -137,11 +175,19 @@ export async function removeFromTeam(userId: string, projectId: string) {
     }
 }
 
-export async function addDiscussionToProject(data: any) {
-    const project = await ProjectModel.findById(data.projectId).then(project => project);
-    project?.discussions.push(data.discussionId);
-    await project?.save();
-    return project?.discussions;
+export async function startADiscussion(data: any) {
+    const discussion = await DiscussionModel.create({
+        recipients: data.recipients,
+        messages: [data.message],
+        project: data.projectId
+    });
+    const project = await ProjectModel.findById(data.projectId)
+        .then(project => {
+            project?.discussions.push(discussion._id);
+            return project?.discussions;
+        })
+        .catch(err => err);
+    return project;
 }
 
 export async function joinProject(title: string, number: string, userId: string) {

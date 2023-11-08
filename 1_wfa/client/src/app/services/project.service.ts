@@ -55,6 +55,15 @@ export class ProjectService {
       .catch(err => err);
   }
 
+  repopulateDiscussions(projectId: string) {
+    return this.http.get(`/api/project/repopulateDiscussions/${projectId}`).toPromise()
+      .then(discussionArray => {
+        console.log('discussionArray: ', discussionArray);
+        return discussionArray;
+      })
+      .catch(err => err);
+  }
+
   removeFromTeam(userId: string, projectId: string) {
     const data = {userId, projectId};
     console.log('data: ', data);
@@ -69,7 +78,8 @@ export class ProjectService {
       .catch(err => err);
   }
 
-  startADiscussion(data: any) {
+  startADiscussion(data: any, projectId: string) {
+    data.projectId = projectId;
     return this.http.post('/api/project/startADiscussion', data).toPromise()
       .then(projectDiscussions => projectDiscussions)
       .catch(err => err);

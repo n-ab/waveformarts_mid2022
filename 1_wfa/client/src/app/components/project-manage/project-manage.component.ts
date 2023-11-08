@@ -12,6 +12,12 @@ export interface TrimmedUserObject {
   pending: boolean,
 }
 
+export interface TrimmedDiscussionObject {
+  id: string,
+  recentMessagePreview: string,
+  thereIsRecentMessage: boolean
+}
+
 @Component({
   selector: 'app-project-manage',
   templateUrl: './project-manage.component.html',
@@ -37,6 +43,7 @@ export class ProjectManageComponent implements OnInit {
   messageEngineerForm: FormGroup;
 
   trimmedTeamMembers: TrimmedUserObject[] = [];
+  trimmedDiscussions: TrimmedDiscussionObject[] = [];
 
   audioPreview = '';
 
@@ -51,7 +58,7 @@ export class ProjectManageComponent implements OnInit {
       audioFile: new FormControl(null, Validators.required),
     });
     this.addDiscussionForm = new FormGroup({
-      recipients: new FormControl('', Validators.required),
+      users: new FormControl('', Validators.required),
       message: new FormControl(''),
     });
     this.messageEngineerForm = new FormGroup({
@@ -132,6 +139,14 @@ export class ProjectManageComponent implements OnInit {
       .catch(err => console.log('error repopulating team members: ', err));
   }
 
+  repopulateDiscussions() {
+    this.projectService.repopulateDiscussions(history.state.id)
+      .then(updatedDiscussionArray => {
+        this.trimmedDiscussions = updatedDiscussionArray;
+        return updatedDiscussionArray;
+      })
+  }
+
   removeFromTeam(id: string) {
     this.projectService.removeFromTeam(id, history.state.id)
       .then(() => {
@@ -149,7 +164,7 @@ export class ProjectManageComponent implements OnInit {
   }
 
   startADiscussion() {
-    this.projectService.startADiscussion(this.addDiscussionForm.getRawValue())
+    this.projectService.startADiscussion(this.addDiscussionForm.getRawValue(), history.state.id)
     .then(projectDiscussions => {
       console.log('projectDiscussions = ', projectDiscussions);
 

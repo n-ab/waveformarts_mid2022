@@ -27,7 +27,7 @@
             </div>
             <div class="setting">
                 <div class="setting-title">Communications</div>
-                <div class="communications" *ngFor="let discussion of project.discussions">{{ discussion | json }}</div>
+                <div class="communications" *ngFor="let discussion of trimmedDiscussions">{{ discussion | json }}</div>
                 <div *ngIf="project.discussions.length == 0" class="none-message">no discussions have been started</div>
                 <div *ngIf="project.discussions.length == 0" class="small-spacer"></div>
                 <button mat-raised-button class="add-a-discussion add-button" (click)="showStartDiscussion()">start a discussion</button>
@@ -47,9 +47,10 @@
         </form>
         <button *ngIf="showMessageEngineerForm" mat-raised-button type="button" class="submit-button" (click)="messageYourEngineer()">submit</button>
         <form [formGroup]="addDiscussionForm" class="project-form" *ngIf="showDiscussionForm">
-            <mat-form-field *ngIf="project.users.length == 0" ><input matInput type="text" name="recipients" formControlName="recipients" placeholder="Add recipients"></mat-form-field>
-            <mat-form-field class="textarea-discussion"><textarea matInput type="text" name="message" formControlName="message" placeholder="Message"></textarea></mat-form-field>
+            <mat-form-field *ngIf="project.users.length == 0" ><input matInput type="text" name="users" formControlName="users" placeholder="Add Recipients"></mat-form-field>
+            <mat-form-field class="textarea-discussion"><textarea style="height: 5rem;" matInput type="text" name="message" formControlName="message" placeholder="Start A Discussion"></textarea></mat-form-field>
         </form>
+        <div style="height: 20px;" *ngIf="showDiscussionForm"></div>
         <button *ngIf="showDiscussionForm" mat-raised-button type="button" class="submit-button" (click)="startADiscussion()">submit</button>
     </div>
 </div>
