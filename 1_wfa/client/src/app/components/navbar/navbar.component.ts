@@ -22,7 +22,8 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.userService.check()
       .then(user => {
-        if (user) {
+        console.log('&&& user: ', user);
+        if (user !== false) {
           this.userLoggedIn = true;
         } else {
           this.userLoggedIn = false;
@@ -55,7 +56,7 @@ export class NavbarComponent implements OnInit {
       panelClass: 'mat-dialog-height-transition'
      }).afterClosed().toPromise()
       .then(user => {
-        console.log('user: ', user);
+        console.log('& user: ', user);
         if (user) {
           this.user = user;
           this.userLoggedIn = true;

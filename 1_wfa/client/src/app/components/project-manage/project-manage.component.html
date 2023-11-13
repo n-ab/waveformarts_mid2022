@@ -7,7 +7,7 @@
         <div class="settings" *ngIf="project">
             <div class="setting">
                 <div class="setting-title">Team Members</div>
-                <div class="member-ng-for-wrapper">
+                <div class="member-ng-for-wrapper" *ngIf="trimmedTeamMembers.length > 0">
                     <div class="members" *ngFor="let member of trimmedTeamMembers">
                         <div class="member-email" *ngIf="member">{{ member.email }}</div>
                         <div class="removal-container">

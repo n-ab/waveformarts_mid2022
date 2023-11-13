@@ -15,8 +15,9 @@ import { SuggestComponent } from '../suggest/suggest.component';
 import { JoinprojectComponent } from '../joinproject/joinproject.component';
 import { UserInfoComponent } from '../user-info/user-info.component';
 import { StartProjectComponent } from '../start-project/start-project.component';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProjectService } from 'src/app/services/project.service';
+import { fileTypeValidator } from 'src/app/customFileValidator';
 
 interface Selectedfile {
   file: File; 
@@ -46,7 +47,7 @@ export class AccountComponent implements OnInit {
 
   constructor(private router: Router, private windowService: WindowService, private metricsService: MetricsService, private userService: UserService, private dialog: MatDialog, private projectService: ProjectService) {
     this.fileUploadForm = new FormGroup({
-      audioFile: new FormControl(null)
+      audioFile: new FormControl(null, [Validators.required, fileTypeValidator(['.wav', '.mp3'])])
     })
   }
 
@@ -106,10 +107,15 @@ export class AccountComponent implements OnInit {
   fetchProjects(projectIds: string[]) {
     return this.projectService.fetchProjects(projectIds)
     .then(populatedProjects => {
+      // putting titles in an array to make sure duplicates aren't entered.
+      // this indicates a glaring issue that projects are saved twice.
       for (let i = 0; i < populatedProjects.length; i++) {
         this.titlesToTestAgainst.push(populatedProjects[i].title);
       }
+      // if a title isn't in the array, put the entire project in the filteredProjects array.
+      // your issue is here.
       for (let i = 0; i < populatedProjects.length; i++) {
+        console.log(`${populatedProjects[i].title}` + ' ? == ? ' + this.titlesToTestAgainst[0]);
         if (populatedProjects[i].title !== this.titlesToTestAgainst[0]) {
           this.filteredProjects.push(populatedProjects[i].title);
           console.log('1 this.filteredProjects: ', this.filteredProjects);
