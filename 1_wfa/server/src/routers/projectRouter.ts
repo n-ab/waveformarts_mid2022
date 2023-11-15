@@ -14,8 +14,13 @@ const upload = multer({ storage });
 
 app.post('/startProjectWithNoFiles', async (req: any, res) => {
     console.log('+++++ req.body: ', req.body);
-    const projectCreationConfirmation = await projectController.createNewProject(req.body, [], req.user._id);
-    return res.status(200).json(projectCreationConfirmation);
+    if (!req.user) {
+        const projectCreationConfirmation = await projectController.createNewProject(req.body, [], '');
+        return res.status(200).json(projectCreationConfirmation);
+    } else {
+        const projectCreationConfirmation = await projectController.createNewProject(req.body, [], req.user._id);
+        return res.status(200).json(projectCreationConfirmation);
+    }
 })
 
 app.post('/submitProject', upload.array('files'), async (req: any, res) => {
@@ -102,3 +107,13 @@ app.post('/startADiscussion', async (req: any, res) => {
     const updatedDiscussionList = await projectController.startADiscussion(req.body);
     return res.status(200).json(updatedDiscussionList);
 });
+
+app.post('/uploadFilesToProject', async (req: any, res) => {
+    console.log(req.body);
+    console.log(req.files);
+    console.log(req.query);
+    console.log(req.params);
+
+    // const updatedFileList = await projectController.addFilePathsToProjectAndUser(req.files);
+    // return res.status(200).json(updatedFileList);
+})

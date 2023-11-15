@@ -97,4 +97,14 @@ export class ProjectService {
       .catch(err => err);
   }
 
+  uploadFilesToProject(files: any) {
+    console.log('$$$$$$$$$', files);
+    return this.http.post('/api/project/uploadFilesToProject', files).toPromise()
+      .then(updatedFileList => {
+        console.log(updatedFileList);
+        return updatedFileList;
+      })
+      .catch(err => err);
+  }
+
 }

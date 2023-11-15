@@ -116,7 +116,11 @@ export class ProjectManageComponent implements OnInit {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         this.selectedFiles.push(file);
-      })
+      });
+      console.log('this.selectedFiles = ', this.selectedFiles);
+      const formData = new FormData();
+      this.selectedFiles.forEach((file, i) => { formData.append('files', this.selectedFiles[i])})
+      this.projectService.uploadFilesToProject(formData);
     }
   }
 

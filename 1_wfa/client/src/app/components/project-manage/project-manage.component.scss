@@ -160,6 +160,7 @@ button {
     display: flex;
     justify-content: space-between;
     width: 70%;
+    vertical-align: top;
 }
 
 .member-ng-for-wrapper {
@@ -217,7 +218,8 @@ button {
 }
 
 .textarea-engineer {
-
+    width: 100%;
+    height: 7rem;
 }
 
 .textarea-discussion {

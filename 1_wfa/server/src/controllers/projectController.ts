@@ -8,26 +8,38 @@ import * as bcrypt from 'bcryptjs';
 // NEW PROJECT PATH WITH NO KNOWN USER
 export async function createNewProject(data: any, filePaths: string[], userId: any) {
     console.log('createNewProject()');
-    const user = await UserModel.findById(userId).then(user => user);
-    if (user?.projects.indexOf(data.title)) {
-        console.log('111 user?.projects.indexOf(data.title) ', user?.projects.indexOf(data.title));
+    if (userId !== '') {
+        const user = await UserModel.findById(userId).then(user => user).catch(err => err);
+        if (user?.projects.indexOf(data.title)) {
+            console.log('111 user?.projects.indexOf(data.title) ', user?.projects.indexOf(data.title));
+        } else {
+            console.log('222 user?.projects.indexOf(data.title) ', user?.projects.indexOf(data.title));
+        }
+        const project = await ProjectModel.create({ 
+            title: data.title, 
+            projectLeadName: data.projectLeadName,
+            projectLeadEmail: data.projectLeadEmail,
+            description: data.description, 
+            number: Math.floor(Math.random() * 899999 + 100000) ,
+            emailList: data.emailList, 
+            filePaths: filePaths
+        });
+        user?.projects.push(project._id);
+        user?.save();
+        if (userId) { project.users.push(userId); }
+        return {projectId: project._id, name: project.title}
     } else {
-        console.log('222 user?.projects.indexOf(data.title) ', user?.projects.indexOf(data.title));
+        const project = await ProjectModel.create({ 
+            title: data.title, 
+            projectLeadName: data.projectLeadName,
+            projectLeadEmail: data.projectLeadEmail,
+            description: data.description, 
+            number: Math.floor(Math.random() * 899999 + 100000) ,
+            emailList: data.emailList, 
+            filePaths: filePaths
+        });
+        return {projectId: project._id};
     }
-    const project = await ProjectModel.create({ 
-        title: data.title, 
-        projectLeadName: data.projectLeadName,
-        projectLeadEmail: data.projectLeadEmail,
-        description: data.description, 
-        number: Math.floor(Math.random() * 899999 + 100000) ,
-        emailList: data.emailList, 
-        filePaths: filePaths
-    });
-    if (userId) { project.users.push(userId); }
-    console.log('user.projects.length: ', user?.projects.length);
-    user?.projects.push(project._id);
-    user?.save();
-    return {projectId: project._id, name: project.title}
 }
 
 export async function fetchProjects(userId: string) {
@@ -243,3 +255,7 @@ export async function checkAttemptedPassword(attemptedPassword: string, userId: 
     return false;
 }
 
+export async function addFilePathsToProjectAndUser(filePaths: any, userId: string, projectId: string) {
+    console.log('filePaths: ', filePaths);
+    // Projec
+}
