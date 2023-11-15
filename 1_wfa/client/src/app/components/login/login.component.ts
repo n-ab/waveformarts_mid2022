@@ -72,14 +72,20 @@ export class LoginComponent implements OnInit, AfterViewInit {
       return project;
     };
     if (this.showLoginWithUsernamePassword == true) {
-      const user = await this.userService.login(this.loginWithUsernamePasswordForm.getRawValue());
+      const user = await this.userService.login(this.loginWithUsernamePasswordForm.getRawValue())
+                          .then(user => {
+                            console.log('*** user: ', user);
+                            this.dialogRef.close();
+                            this.router.navigateByUrl('account', {state: {'userId': user}});
+                          })
+                          .catch(err => {this.dialogRef.updateSize('450px', '300px'); console.log('login() err: ', err); this.errorMessage = err; this.error = err;});
       // if success
-      if (!user.error || !user.error.message) {
-        this.router.navigateByUrl('account', {state: {'userId': user}});
-        return this.dialogRef.close(user);
-      }
-      // if error
-      if (user.error.message == 'Your password is incorrect.' || 'No trace of that user exists.') { this.error = true; this.errorMessage = user.error.message; this.dialogRef.updateSize('450px', '300px');}
+      // if (!user.error || !user.error.message) {
+      //   if (user.error.message == 'Your password is incorrect.' || 'No trace of that user exists.') { this.error = true; this.errorMessage = user.error.message; this.dialogRef.updateSize('450px', '300px');}
+      // } else {
+      //   this.router.navigateByUrl('account', {state: {'userId': user}});
+      //   return this.dialogRef.close(user);
+      // }
     }
   }
 

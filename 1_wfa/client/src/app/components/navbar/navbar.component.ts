@@ -14,30 +14,28 @@ import { MetricsService } from 'src/app/services/metrics.service';
 })
 export class NavbarComponent implements OnInit {
   user!: User;
-  userLoggedIn!: boolean;
+  userLoggedIn!: boolean; // <-- hamburger vs account boolean
   metricHeader = 'Landing';
 
   constructor(private router: Router, private dialog: MatDialog, private userService: UserService, private windowService: WindowService, private metricsService: MetricsService) { }
 
   ngOnInit(): void {
     this.userService.check()
-      .then(user => {
-        console.log('&&& user: ', user);
-        if (user !== false) {
-          this.userLoggedIn = true;
-        } else {
-          this.userLoggedIn = false;
-        }
+      .then(checkResult => {
+        console.log('checkResult = ', checkResult);
+        this.userLoggedIn = checkResult;
       })
+      .catch(err => {
+        console.log(err); 
+        return err;
+      });
     this.userService.loggedIn.subscribe(data => {
-      console.log('data: ', data);
       this.userLoggedIn = data;
-      console.log('this.userLoggedIn', this.userLoggedIn);
     });
     this.metricsService.addPageMetrics(this.metricHeader, history.state.navigatedFrom);
     
   }
-
+  
   userCheck(): void {
     this.userService.check()
       .then(user => {
@@ -48,6 +46,7 @@ export class NavbarComponent implements OnInit {
       })
   }
 
+  // hamburger button
   signIn(): void {
      const dialogRef = this.dialog.open(LoginComponent, {
       width: '400px',
@@ -55,15 +54,13 @@ export class NavbarComponent implements OnInit {
       autoFocus: true,
       panelClass: 'mat-dialog-height-transition'
      }).afterClosed().toPromise()
-      .then(user => {
-        console.log('& user: ', user);
-        if (user) {
-          this.user = user;
-          this.userLoggedIn = true;
-          return user;
-        } else {
-         return; 
-        }
+      .then(resultAfterClosed => {
+        console.log('result after closing signIn()', resultAfterClosed);
+        
+      })
+      .catch(err => {
+        console.log('error with signIn()', err);
+        
       })
   }
 

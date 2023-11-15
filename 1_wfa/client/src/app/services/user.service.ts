@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -19,14 +19,15 @@ export class UserService {
   }
 
   login(data: any) {
-    this.loggedInSubject.next(true);
     return this.http.post('/api/user/login', data).toPromise()
       .then(user => {
+        this.loggedInSubject.next(true);
         return user;
-        // if (Object.keys(user).indexOf('message') == -1) { return user } 
-        // else { return Object.values(user)[0]; }
       })
-      .catch(err => err);
+      .catch(err => {
+        this.loggedInSubject.next(false);
+        return Promise.reject(err.error.message);
+      });
   }
 
   logout() {
