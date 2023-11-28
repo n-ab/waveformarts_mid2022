@@ -201,6 +201,24 @@ button {
     user-select: none;
 }
 
+.lead-container {
+    background-color: rgba(0, 0, 0, 0.535);
+    transition: background-color .4s ease-in-out;
+    border-radius: 8px;
+}
+
+.lead-button {
+    flex: 10;
+    text-align: center;
+    margin-top: 3px;
+    padding: 5px 9px;
+    user-select: none;
+}
+
+.lead-container:hover {
+    background-color: rgba(0, 225, 255, 0.444);
+}
+
 .removal-container:hover {
     background-color: rgba(120, 0, 0, 0.535);
 }

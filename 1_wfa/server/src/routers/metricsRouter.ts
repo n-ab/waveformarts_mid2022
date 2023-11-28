@@ -14,7 +14,7 @@ app.post('/addPageVisitedFrom', (req: any, res) => {
 })
 
 app.post('/addPageMetrics', async (req: any, res) => {
-    console.log('adding page metrics with data: ', req.body);
+    // console.log('adding page metrics with data: ', req.body);
     return res.status(200).json('REVIEW /addPageMetrics... ');
     // const metricsSaved = metricsController.addPageMetrics(req.body);
     // return res.status(200).json(metricsSaved);

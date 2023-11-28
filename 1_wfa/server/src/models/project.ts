@@ -12,6 +12,7 @@ export interface ProjectObject extends mongoose.Document {
     users: string[],
     discussions: string[],
     messages: string[],
+    
 }
 
 const schema = new mongoose.Schema ({

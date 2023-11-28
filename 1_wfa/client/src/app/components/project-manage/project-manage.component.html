@@ -10,8 +10,11 @@
                 <div class="member-ng-for-wrapper" *ngIf="trimmedTeamMembers.length > 0">
                     <div class="members" *ngFor="let member of trimmedTeamMembers">
                         <div class="member-email" *ngIf="member">{{ member.email }}</div>
-                        <div class="removal-container">
+                        <div class="removal-container" *ngIf="member.email !== project.projectLeadEmail">
                             <div class="removal-button" (click)="removeFromTeam(member.id)">-</div>
+                        </div>
+                        <div class="lead-container">
+                            <div class="lead-button" *ngIf="member.email == project.projectLeadEmail" style="font-size: 75%; margin-top: 5px;">lead</div>
                         </div>
                     </div>
                 </div>

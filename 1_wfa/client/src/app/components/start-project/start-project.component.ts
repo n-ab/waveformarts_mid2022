@@ -20,10 +20,10 @@ export class StartProjectComponent implements OnInit, AfterViewInit {
 
   constructor(private windowService: WindowService, private userService: UserService, private router: Router, @Inject(MAT_DIALOG_DATA) public matData: string, public dialogRef: MatDialogRef<StartProjectComponent>, private renderer: Renderer2, private el: ElementRef, private projectService: ProjectService) {
     this.createProjectForm = new FormGroup({
-      title: new FormControl('Trauma Bonded'),
-      projectLeadEmail: new FormControl('chloe@traumabonded.com'),
-      description: new FormControl('i have fatty liver disease and am trying to be as healthy as possible. I am currently eating a breakfast of 3 eggs scrambled, a ton of arugula, and seasoned with cumin, pepper, and turmeric. How can I make this meal even healthier?'),
-      projectLeadName: new FormControl('Chloe Burns'),
+      title: new FormControl('Burrows'),
+      projectLeadEmail: new FormControl('nick@waveform-arts.com'),
+      description: new FormControl('Low budget feature length narrative about a native kid raised white and the physical, spiritual, and cultural implications it had on his growth and has on his future.'),
+      projectLeadName: new FormControl('Nick Abercrombie'),
       emailList: new FormControl(['']),
     });
   }
@@ -44,13 +44,17 @@ export class StartProjectComponent implements OnInit, AfterViewInit {
   }
 
   submitProject(): void {
+    console.log('1 1 1 1 ');
     this.createProjectForm.patchValue({ emailList: this.emailList });
-    this.projectService.startProject(this.createProjectForm.getRawValue())
-      .then(project => {
-        this.router.navigateByUrl('project', {state: {projectId: project.projectId}});
-        this.dialogRef.close();
-      })
-      .catch(err => err);
+    this.dialogRef.close({projectData: this.createProjectForm.getRawValue()});
+    // this.dialogRef.afterClosed().subscribe(projectData => projectData);
+    // this.projectService.startProject(this.createProjectForm.getRawValue())
+      // .then(project => {
+        // console.log('project: ', project);
+        // this.router.navigateByUrl('project', {state: {projectId: project.projectId}});
+        // this.dialogRef.close();
+      // })
+      // .catch(err => err);
   }
 
   displayStepTwo() {

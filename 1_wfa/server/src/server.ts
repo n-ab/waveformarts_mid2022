@@ -57,6 +57,8 @@ passport.deserializeUser((id, done) => {
 });
 
 // --- m o n g o o s e ----------------------------------------
+
+mongoose.set('strictQuery', false);
 mongoose.connect(config.database)
     .then(() => {
         console.log(`and using database: ${config.database}`);

@@ -1,7 +1,0 @@
-<div class="title">Suggest A Feature</div>
-
-<form [formGroup]="suggestionForm" (ngSubmit)="makeSuggestion()">
-    <mat-form-field><textarea matInput type="text" name="suggestion" formControlName="suggestion" placeholder="Tell us your idea!"></textarea></mat-form-field>
-    <br>
-    <button mat-raised-button type="submit" class="submit" [disabled]="!suggestionForm.valid">submit</button>
-</form>

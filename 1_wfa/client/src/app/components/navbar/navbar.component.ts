@@ -22,7 +22,6 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.userService.check()
       .then(checkResult => {
-        console.log('checkResult = ', checkResult);
         this.userLoggedIn = checkResult;
       })
       .catch(err => {

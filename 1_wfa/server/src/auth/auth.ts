@@ -8,18 +8,18 @@ const passport = new Passport();
 const app = express();
 
 export function login(req: any, res: any, next: any) {
-    console.log('attempting to log in...');
     
     passport.authenticate('local', (err, user, info) => {
         if (err) {
             return next(err);
         }
         if (!user) { console.log('rejected.'); return res.status(401).json({message: 'Invalid credentials'}); }
-        console.log('auth() - user: ', user);
         req.login(user, (err: any) => {
             if (err) {
+                console.log('login failed.');
                 return next(err);
             }
+            console.log('login success.');
             res.status(200).json({ message: 'Login successful', user: user._id });
         });
     })(req, res, next);

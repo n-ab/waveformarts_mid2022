@@ -67,13 +67,12 @@ export class ProjectManageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('history.state.id', history.state.id);
     if (!history.state.id) { this.router.navigateByUrl('account'); }
     if (history.state.id == undefined) { this.router.navigateByUrl('account'); }
     this.metricsService.addPageMetrics(this.metricHeader, history.state.navigatedFrom);
     this.projectService.getProjectData(history.state.id)
       .then(project => {
-        console.log('$$$ project returned from project-manage: ', project);
+        console.log('project returned: ', project.title);
         this.project = project;
         this.repopulateTeamMembers();
       })
@@ -133,11 +132,10 @@ export class ProjectManageComponent implements OnInit {
   }
 
   repopulateTeamMembers() {
-    console.log('history.state: ', history.state);
     this.projectService.repopulateTeamMembers(history.state.id)
       .then(updatedTeamMemberArray => {
         this.trimmedTeamMembers = updatedTeamMemberArray;
-        console.log('trimmedTeamMembers: ', this.trimmedTeamMembers);
+        // console.log('trimmedTeamMembers: ', this.trimmedTeamMembers);
         return updatedTeamMemberArray;
       })
       .catch(err => console.log('error repopulating team members: ', err));
@@ -152,10 +150,11 @@ export class ProjectManageComponent implements OnInit {
   }
 
   removeFromTeam(id: string) {
+    console.log('1.');
+    console.log('attempting to remove user with id: ', id);
     this.projectService.removeFromTeam(id, history.state.id)
-      .then(() => {
-        this.repopulateTeamMembers();
-      })
+      .then(() => {console.log('6. attempted to remove user with id: ', id); this.repopulateTeamMembers();})
+      .catch(err => console.log('error removing user: ', err));
   }
 
   addFileToProject() {

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserMessagesComponent } from './user-messages.component';
+import { ProjectFilesComponent } from './project-files.component';
 
-describe('UserMessagesComponent', () => {
-  let component: UserMessagesComponent;
-  let fixture: ComponentFixture<UserMessagesComponent>;
+describe('ProjectFilesComponent', () => {
+  let component: ProjectFilesComponent;
+  let fixture: ComponentFixture<ProjectFilesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserMessagesComponent ]
+      declarations: [ ProjectFilesComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserMessagesComponent);
+    fixture = TestBed.createComponent(ProjectFilesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

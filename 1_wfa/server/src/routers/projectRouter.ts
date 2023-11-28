@@ -12,8 +12,15 @@ type CustomFile = Express.Multer.File & { fieldname?: string, originalname?: str
 const storage = multer.diskStorage({ filename: (req: any, file, cb) => { cb(null, file.originalname); } })
 const upload = multer({ storage });
 
+app.post('/startProject', async (req: any, res) => {
+    if (req.user) {
+        const project = await projectController.startProject(req.body.projectData, req.user._id);
+        return res.status(200).json(project);
+    }
+})
+
 app.post('/startProjectWithNoFiles', async (req: any, res) => {
-    console.log('+++++ req.body: ', req.body);
+    console.log('starting project with data: ', req.body);
     if (!req.user) {
         const projectCreationConfirmation = await projectController.createNewProject(req.body, [], '');
         return res.status(200).json(projectCreationConfirmation);
@@ -53,12 +60,18 @@ app.post('/contact', async (req: any, res) => {
 app.get('/fetchProjects', async (req: any, res) => {
     const projects = await projectController.fetchProjects(req.user._id);
     return res.status(200).json(projects);
-})
+});
+
+app.get('/fetchProjectsByUserId', async (req: any, res) => {
+    const projects = await projectController.fetchProjectsByUserId(req.user._id);
+    return res.status(200).json(projects);
+});
 
 app.get('/getProjectData/:id', async (req: any, res) => {
-    console.log('+ Object.values(req.params)', Object.values(req.params)[0]);
+    // console.log('+ Object.values(req.params)', Object.values(req.params)[0]);
     if (Object.values(req.params)[0] !== undefined) {
-        const project = await projectController.fetchSingleProjectData(req.params.id);
+        const project = await projectController.fetchSingleProjectData(req.params.id)
+            .catch(err => { console.log('error in getProjectData/:id', err); return err; });
         return res.status(200).json(project);
     } else {
         console.log('------ something is undefined. returning 401.');
@@ -92,14 +105,14 @@ app.post('/removeFromTeam', async (req: any, res) => {
 
 app.get('/repopulateTeamMembers/:id', async (req: any, res) => {
     const updatedTeamMemberList = await projectController.repopulateTeamMembers(req.params.id);
-    console.log('updated user list: ', updatedTeamMemberList);
+    console.log('repopulated team members: ', updatedTeamMemberList);
     return res.status(200).json(updatedTeamMemberList);
 });
 
 app.get('/repopulateDiscussions/:id', async (req: any, res) => {
     console.log('1 attempting to repopulate discussions...', req.body + ' | ' + req.params);
     const updatedDiscussions = await projectController.repopulateDiscussions(req.params.id);
-    console.log('updated user list: ', updatedDiscussions);
+    console.log('updated DISCUSSION list: ', updatedDiscussions);
     return res.status(200).json(updatedDiscussions);
 });
 

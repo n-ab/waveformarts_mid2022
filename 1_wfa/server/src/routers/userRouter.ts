@@ -45,7 +45,7 @@ app.get('/check', (req: any, res) => {
         console.log('no login.');
         return res.status(200).json(false);
     }
-    console.log('LOGGED IN: ', req.user);
+    // console.log('LOGGED IN: ', req.user._id);
     
     return res.status(200).json(req.user);
 })

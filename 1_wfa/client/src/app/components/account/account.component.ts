@@ -7,17 +7,12 @@ import { WindowService } from 'src/app/services/window.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UserPasswordresetComponent } from '../user-passwordreset/user-passwordreset.component';
 import { UserEmailresetComponent } from '../user-emailreset/user-emailreset.component';
-import { UserPlanComponent } from '../user-plan/user-plan.component';
-import { UserQuestionComponent } from '../user-question/user-question.component';
-import { FaqAccountComponent } from '../faq-account/faq-account.component';
-import { ReportComponent } from '../report/report.component';
-import { SuggestComponent } from '../suggest/suggest.component';
 import { JoinprojectComponent } from '../joinproject/joinproject.component';
 import { UserInfoComponent } from '../user-info/user-info.component';
 import { StartProjectComponent } from '../start-project/start-project.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProjectService } from 'src/app/services/project.service';
-import { fileTypeValidator } from 'src/app/customFileValidator';
+// import { fileTypeValidator } from 'src/app/customFileValidator';
 
 interface Selectedfile {
   file: File; 
@@ -47,14 +42,14 @@ export class AccountComponent implements OnInit {
 
   constructor(private router: Router, private windowService: WindowService, private metricsService: MetricsService, private userService: UserService, private dialog: MatDialog, private projectService: ProjectService) {
     this.fileUploadForm = new FormGroup({
-      audioFile: new FormControl(null, [Validators.required, fileTypeValidator(['.wav', '.mp3'])])
+      // audioFile: new FormControl(null, [Validators.required, fileTypeValidator(['.wav', '.mp3'])])
+      audioFile: new FormControl(null)
     })
   }
 
   ngOnInit(): void {
     this.userService.check()
       .then (user => {
-        console.log('userFound: ', user);
         if (user == false) { this.router.navigateByUrl(''); } 
         else {
           this.user = user;
@@ -72,7 +67,11 @@ export class AccountComponent implements OnInit {
       width: '400px',
       height: '450px',
       maxWidth: '700px'
-    })
+    }).afterClosed().subscribe(projectData => {
+      console.log('project data: ', projectData);
+      this.projectService.startProject(projectData);
+      this.fetchProjectsByUserId();
+    });
   }
 
   joinProject() {
@@ -103,29 +102,27 @@ export class AccountComponent implements OnInit {
     }
   }
 
+  fetchProjectsByUserId() {
+    return this.projectService.fetchProjectsByUserId();
+  }
   
   fetchProjects(projectIds: string[]) {
     return this.projectService.fetchProjects(projectIds)
     .then(populatedProjects => {
-      // putting titles in an array to make sure duplicates aren't entered.
-      // this indicates a glaring issue that projects are saved twice.
-      for (let i = 0; i < populatedProjects.length; i++) {
-        this.titlesToTestAgainst.push(populatedProjects[i].title);
-      }
-      // if a title isn't in the array, put the entire project in the filteredProjects array.
-      // your issue is here.
-      for (let i = 0; i < populatedProjects.length; i++) {
-        console.log(`${populatedProjects[i].title}` + ' ? == ? ' + this.titlesToTestAgainst[0]);
-        if (populatedProjects[i].title !== this.titlesToTestAgainst[0]) {
-          this.filteredProjects.push(populatedProjects[i].title);
-          console.log('1 this.filteredProjects: ', this.filteredProjects);
-        } else {
-          this.filteredProjects.push(populatedProjects[i]);
-          console.log('2 this.filteredProjects: ', this.filteredProjects);
-          return;
-        }
-      }
-    })
+      this.filteredProjects = populatedProjects;
+      // for (let i = 0; i < populatedProjects.length; i++) {
+      //   this.titlesToTestAgainst.push(populatedProjects[i].title);
+      // }
+      // for (let i = 0; i < populatedProjects.length; i++) {
+      //   console.log(`${populatedProjects[i].title}` + ' ? == ? ' + this.titlesToTestAgainst[0]);
+      //   if (populatedProjects[i].title !== this.titlesToTestAgainst[0]) {
+      //     this.filteredProjects.push(populatedProjects[i].title);
+      //   } else {
+      //     this.filteredProjects.push(populatedProjects[i]);
+      //     return;
+      //   }
+      // }
+    });
   }
 
   putProjectTitlesInArray(stuff: any[]) {
@@ -185,74 +182,6 @@ export class AccountComponent implements OnInit {
       maxWidth: '700px',
       height: '345px'
     });
-  }
-
-  goToCurrentPlan(): void {
-    this.dialog.open(UserPlanComponent, {
-      width: '95%',
-      maxWidth: '1000px',
-      height: '57%'
-    });
-  }
-
-  goToOrderHistory(): void {
-    this.router.navigateByUrl('account/orders', {state: {visitedFrom: 'Account'}});
-  }
-
-  goToYourMessages(): void {
-    this.router.navigateByUrl('account/messages', {state: {visitedFrom: 'Account', selection: 'viewMessages'}});
-  }
-
-  goToComposeMessage(): void {
-    this.router.navigateByUrl('account/messages', {state: {visitedFrom: 'Account', selection: 'sendMessage'}});
-  }
-  
-  goToSendFile(): void {
-    this.router.navigateByUrl('account/messages', {state: {visitedFrom: 'Account', selection: 'sendFile'}});
-  }
-  
-  goToStarredMessages(): void {
-    this.router.navigateByUrl('account/messages', {state: {visitedFrom: 'Account', selection: 'viewStarredMessages'}});
-  }
-
-  goToCommunications(): void {
-    this.router.navigateByUrl('communications', {state: {selection: 'viewMessages'}})
-  }
-
-  goToAskQuestion(): void {
-    this.dialog.open(UserQuestionComponent, {
-      width: '75%',
-      maxWidth: '1000px',
-      height: '439px'
-    });
-  }
-  
-  goToFAQs(): void {
-    this.dialog.open(FaqAccountComponent, {
-      width: '85%',
-      maxWidth: '1000px',
-      height: '490px'
-    });
-  }
-
-  goToSuggestFeature(): void {
-    this.dialog.open(SuggestComponent, {
-      width: '75%',
-      maxWidth: '1000px',
-      height: '439px'
-    });
-  }
-
-  goToReportProblem(): void {
-    this.dialog.open(ReportComponent, {
-      width: '75%',
-      maxWidth: '1000px',
-      height: '439px'
-    });
-  }
-
-  goToReportUser(): void {
-    this.router.navigateByUrl('report', {state: {visitedFrom: 'Account', problem: 'user'}});
   }
 
 

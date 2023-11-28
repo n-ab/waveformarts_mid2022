@@ -32,7 +32,6 @@ import { WindowComponent } from './components/window/window.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { BookComponent } from './components/book/book.component';
 import { RentalsComponent } from './components/rentals/rentals.component';
-import { HighlightsComponent } from './components/highlights/highlights.component';
 import { HttpClientModule } from '@angular/common/http';
 import { WindowService } from './services/window.service';
 import { AdminComponent } from './components/admin/admin.component';
@@ -41,19 +40,14 @@ import { UserFilesComponent } from './components/user-files/user-files.component
 import { StoreComponent } from './components/store/store.component';
 import { UserPasswordresetComponent } from './components/user-passwordreset/user-passwordreset.component';
 import { UserEmailresetComponent } from './components/user-emailreset/user-emailreset.component';
-import { UserPlanComponent } from './components/user-plan/user-plan.component';
-import { UserOrdersComponent } from './components/user-orders/user-orders.component';
-import { UserMessagesComponent } from './components/user-messages/user-messages.component';
-import { UserQuestionComponent } from './components/user-question/user-question.component';
-import { FaqAccountComponent } from './components/faq-account/faq-account.component';
-import { ReportComponent } from './components/report/report.component';
 import { UserUploadfileComponent } from './components/user-uploadfile/user-uploadfile.component';
-import { SuggestComponent } from './components/suggest/suggest.component';
-import { UserCommunicationsComponent } from './components/user-communications/user-communications.component';
 import { StartProjectComponent } from './components/start-project/start-project.component';
 import { JoinprojectComponent } from './components/joinproject/joinproject.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
 import { ContactPostComponent } from './components/contact-post/contact-post.component';
+import { ProjectListComponent } from './components/project-list/project-list.component';
+import { ProjectFilesComponent } from './components/project-files/project-files.component';
+import { ProjectSettingsComponent } from './components/project-settings/project-settings.component';
 
 @NgModule({
   declarations: [
@@ -70,27 +64,21 @@ import { ContactPostComponent } from './components/contact-post/contact-post.com
     ContactComponent,
     BookComponent,
     RentalsComponent,
-    HighlightsComponent,
     AdminComponent,
     AdminClientComponent,
     UserFilesComponent,
     StoreComponent,
     UserPasswordresetComponent,
     UserEmailresetComponent,
-    UserPlanComponent,
-    UserOrdersComponent,
-    UserMessagesComponent,
-    UserQuestionComponent,
-    FaqAccountComponent,
-    ReportComponent,
     UserUploadfileComponent,
-    SuggestComponent,
-    UserCommunicationsComponent,
     StartProjectComponent,
     JoinprojectComponent,
     UserInfoComponent,
     PrettyJsonPipe,
-    ContactPostComponent
+    ContactPostComponent,
+    ProjectListComponent,
+    ProjectFilesComponent,
+    ProjectSettingsComponent
   ],
   imports: [
     BrowserModule,

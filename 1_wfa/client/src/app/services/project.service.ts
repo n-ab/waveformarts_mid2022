@@ -13,8 +13,12 @@ export class ProjectService {
   constructor(private http: HttpClient, private router: Router) { }
 
   startProject(data: FormData) {
-    return this.http.post('/api/project/startProjectWithNoFiles', data).toPromise()
-      .then(project => project)
+    console.log('2 2 2 2 ');
+    // return this.http.post('/api/project/startProjectWithNoFiles', data).toPromise()
+    //   .then(project => project)
+    //   .catch(err => err);
+    return this.http.post('/api/project/startProject', data).toPromise()
+      .then(data => data)
       .catch(err => err);
   }
 
@@ -23,7 +27,13 @@ export class ProjectService {
     headers.append('projectIds', projectIds);
     return this.http.get('/api/project/fetchProjects', {headers: headers}).toPromise()
       .then(projects => projects)
-      .catch(err => err)
+      .catch(err => err);
+  }
+
+  fetchProjectsByUserId() {
+    return this.http.get('/api/project/fetchProjectsByUserId').toPromise()
+      .then(projects => projects)
+      .catch(err => err);
   }
 
   getProjectData(id: any) {
@@ -46,10 +56,10 @@ export class ProjectService {
   }
 
   repopulateTeamMembers(projectId: string) {
-    console.log('repopulate --- projectId: ', projectId);
+    // console.log('repopulate --- projectId: ', projectId);
     return this.http.get(`/api/project/repopulateTeamMembers/${projectId}`).toPromise()
       .then(teamMemberArray => {
-        console.log('teammemberArray = ', teamMemberArray);
+        // console.log('teammemberArray = ', teamMemberArray);
         return teamMemberArray;
       })
       .catch(err => err);
@@ -66,7 +76,6 @@ export class ProjectService {
 
   removeFromTeam(userId: string, projectId: string) {
     const data = {userId, projectId};
-    console.log('data: ', data);
     return this.http.post('/api/project/removeFromTeam', data).toPromise()
       .then(teamMemberArray => teamMemberArray)
       .catch(err => err);

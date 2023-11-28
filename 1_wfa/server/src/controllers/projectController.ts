@@ -5,22 +5,42 @@ import { PairUsernumberEmailModel } from '../models/pairUsernumberEmail';
 import * as nodemailer from 'nodemailer';
 import * as bcrypt from 'bcryptjs';
 
+export async function startProject(projectData: any, userId: string) {
+    console.log('starting project with data: ', projectData.title);
+    const project = await ProjectModel.create({
+        title: projectData.title,
+        projectLeadName: projectData.projectLeadName,
+        projectLeadEmail: projectData.projectLeadEmail,
+        emailList: projectData.emailList,
+        description: projectData.description,
+        number: Math.floor(Math.random() * 8999999 + 1000000),
+        users: [userId]
+    }).catch();
+    const user = await UserModel.findById(userId)
+        .then(user => {
+            user?.projects.push(project._id);
+            user?.save();
+        })
+        .catch(err => console.log(err))
+    return project.title;
+}
+
 // NEW PROJECT PATH WITH NO KNOWN USER
 export async function createNewProject(data: any, filePaths: string[], userId: any) {
-    console.log('createNewProject()');
+    // console.log('5 5 5 5');
     if (userId !== '') {
         const user = await UserModel.findById(userId).then(user => user).catch(err => err);
         if (user?.projects.indexOf(data.title)) {
-            console.log('111 user?.projects.indexOf(data.title) ', user?.projects.indexOf(data.title));
+            // console.log('111 user?.projects.indexOf(data.title) ', user?.projects.indexOf(data.title));
         } else {
-            console.log('222 user?.projects.indexOf(data.title) ', user?.projects.indexOf(data.title));
+            // console.log('222 user?.projects.indexOf(data.title) ', user?.projects.indexOf(data.title));
         }
         const project = await ProjectModel.create({ 
             title: data.title, 
             projectLeadName: data.projectLeadName,
             projectLeadEmail: data.projectLeadEmail,
             description: data.description, 
-            number: Math.floor(Math.random() * 899999 + 100000) ,
+            number: Math.floor(Math.random() * 8999999 + 1000000) ,
             emailList: data.emailList, 
             filePaths: filePaths
         });
@@ -36,7 +56,8 @@ export async function createNewProject(data: any, filePaths: string[], userId: a
             description: data.description, 
             number: Math.floor(Math.random() * 899999 + 100000) ,
             emailList: data.emailList, 
-            filePaths: filePaths
+            filePaths: filePaths,
+            plan: '',
         });
         return {projectId: project._id};
     }
@@ -60,9 +81,23 @@ export async function fetchProjects(userId: string) {
     return projects.filter((project) => project !== null);
 }
 
+export async function fetchProjectsByUserId(userId: string) {
+    const user = await UserModel.findById(userId);
+    const projectIds = user?.projects;
+}
+
 export async function fetchSingleProjectData(id: string) {
-    const project = await ProjectModel.findById(id).then(project => project).catch(err => {console.log('error fetching single project: ', err); return err;});
-    return project;
+    if (id) {
+        const project = await ProjectModel.findById(id)
+            .then(project => project)
+            .catch(err => {
+                console.log('error fetching single project: ', err); 
+                return err;
+            });
+        return project;
+    } else {
+        return false;
+    }
 }
 
 export async function createProject(data: any, userId: string) {
@@ -156,15 +191,16 @@ export async function repopulateDiscussions(projectId: string) {
 }
 
 export async function removeFromTeam(userId: string, projectId: string) {
+    console.log('removeFromTeam()...');
     try  {
         // --- project ------
-        console.log('trying...');
         const user = await UserModel.findById(userId)
             .then(async user => {
+                console.log('attempting to remove user: ', user!.email);
                 const userProjects = user?.projects;
-                const userProjectsIndex = userProjects?.indexOf(projectId);
-                console.log('userprojects index: ', userProjectsIndex);
-                if (userProjectsIndex) {
+                const userProjectsIndex: number = userProjects!.indexOf(projectId);
+                // console.log('userprojects index: ', userProjectsIndex);
+                if (userProjectsIndex !== -1) {
                     userProjects?.splice(userProjectsIndex, 1);
                 }
                 await user?.save();
@@ -172,14 +208,18 @@ export async function removeFromTeam(userId: string, projectId: string) {
             });
         const project = await ProjectModel.findById(projectId)
             .then(async project => {
+                console.log('removing userId from project: ', project!.title);
                 const projectUsers = project?.users;
-                const projectUsersIndex = projectUsers?.indexOf(userId);
-                if (projectUsersIndex) projectUsers?.splice(projectUsersIndex, 1);
+                const projectUsersIndex: number = projectUsers!.indexOf(userId);
+                if (projectUsersIndex !== -1) {
+                    projectUsers?.splice(projectUsersIndex, 1);
+                }
+                if (projectUsersIndex) projectUsers!.splice(projectUsersIndex, 1);
                 await project?.save();
-                return project;
+                return project?.users;
             });
-        console.log('user.projects: ', user?.projects);
-        console.log('project.users: ', project?.users);
+        // console.log('user.projects: ', user?.projects);
+        // console.log('project.users: ', project?.users);
         return project;
     } 
     catch (err) {
