@@ -78,13 +78,10 @@ export async function fetchProjects(userId: string) {
             return null;
         }
     }))
-    return projects.filter((project) => project !== null);
+    const filteredProjects = await projects.filter((project) => project !== null);
+    return filteredProjects;
 }
 
-export async function fetchProjectsByUserId(userId: string) {
-    const user = await UserModel.findById(userId);
-    const projectIds = user?.projects;
-}
 
 export async function fetchSingleProjectData(id: string) {
     if (id) {

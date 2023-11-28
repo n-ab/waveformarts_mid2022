@@ -70,7 +70,9 @@ export class AccountComponent implements OnInit {
     }).afterClosed().subscribe(projectData => {
       console.log('project data: ', projectData);
       this.projectService.startProject(projectData);
-      this.fetchProjectsByUserId();
+      setTimeout(() => {
+        this.fetchProjectsByUserId();
+      }, 100);
     });
   }
 
@@ -103,7 +105,12 @@ export class AccountComponent implements OnInit {
   }
 
   fetchProjectsByUserId() {
-    return this.projectService.fetchProjectsByUserId();
+    return this.projectService.fetchProjectsByUserId()
+      .then(projects => {
+        console.log('fetchProjectsByUserId() - projects returned: ', projects);
+        this.filteredProjects = projects;
+      })
+      .catch(err => console.log('error fetching projects: err', err));
   }
   
   fetchProjects(projectIds: string[]) {

@@ -63,7 +63,8 @@ app.get('/fetchProjects', async (req: any, res) => {
 });
 
 app.get('/fetchProjectsByUserId', async (req: any, res) => {
-    const projects = await projectController.fetchProjectsByUserId(req.user._id);
+    const projects = await projectController.fetchProjects(req.user._id);
+    projects.forEach(project => {console.log('project', project.title)});
     return res.status(200).json(projects);
 });
 
