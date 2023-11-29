@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { User } from '../../models';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+// YOU NEED AN INDEX SETTER FOR THE TEAM MEMBERS ARRAY 
+
 export interface TrimmedUserObject {
   id: string,
   email: string,

@@ -48,6 +48,7 @@ const schema = new mongoose.Schema({
     downloadDestinationPath: String,
     clientNumber: Number,
     nameAbbreviation: String,
+    removalMessage: String,
     readMessages: [String],
     starredSounds: [String],
     plan: { type: String, default: 'standard'},
@@ -57,7 +58,6 @@ const schema = new mongoose.Schema({
     downloads: [{ type: mongoose.Schema.Types.ObjectId, ref: 'File' }],
     questions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Question' }],
     suggestions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Suggestion' }],
-    removalMessage: String,
     discussions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Discussion' }],
     messagesSent: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Message' }],
 }, { timestamps: true });

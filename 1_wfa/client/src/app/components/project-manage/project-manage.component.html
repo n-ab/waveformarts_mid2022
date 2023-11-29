@@ -44,7 +44,7 @@
         <form [formGroup]="addUserForm" class="project-form" *ngIf="showUserForm">
             <mat-form-field class="user-mat-form-field"><input matInput type="text" name="email" formControlName="email" placeholder="Add by email"></mat-form-field>
             <div class="add-user-or">or</div>
-            <mat-form-field class="user-mat-form-field"><input matInput type="text" name="wfaUserId" formControlName="wfaUserId" placeholder="Add by their user ID"></mat-form-field>
+            <mat-form-field class="user-mat-form-field"><input matInput type="text" name="wfaUserId" formControlName="wfaUserId" placeholder="Add by their Waveform Arts ID"></mat-form-field>
         </form>
         <br>
         <button *ngIf="showUserForm" mat-raised-button type="button" class="submit-button" (click)="addToTeam()">submit</button>

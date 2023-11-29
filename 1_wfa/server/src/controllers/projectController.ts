@@ -207,7 +207,7 @@ export async function removeFromTeam(userId: string, projectId: string) {
                 const projectUsers = project?.users;
                 const projectUsersIndex: number = projectUsers!.indexOf(userId);
                 if (projectUsersIndex !== -1) {
-                    projectUsers?.splice(projectUsersIndex, 1);
+                    projectUsers?.splice(projectUsersIndex, 0);
                 }
                 if (projectUsersIndex) projectUsers!.splice(projectUsersIndex, 1);
                 await project?.save();
