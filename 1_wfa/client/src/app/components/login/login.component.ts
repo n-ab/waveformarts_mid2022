@@ -129,6 +129,15 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.router.navigateByUrl('contact');
   }
 
+  goBack() {
+    this.dialogRef.updateSize('450px', '280px').addPanelClass('mat-dialog-height-transition');
+    this.showMenuOptions = true;
+    this.showLoginOptions = false;
+    this.showLoginWithProjectId = false;
+    this.showLoginWithUsernamePassword = false;
+    this.error = false;
+  }
+
   // ---------------------------------------------
   
   showLogin(): void {

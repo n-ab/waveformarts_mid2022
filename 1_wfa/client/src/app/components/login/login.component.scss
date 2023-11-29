@@ -28,7 +28,7 @@
 }
 
 .dialog-form-input {
-    animation: dialogFormInputEffect .6s ease-in-out;
+    animation: dialogFormInputEffect 1s ease-in-out;
 }
 
 @keyframes dialogFormInputEffect {
@@ -137,18 +137,30 @@ mat-form-field {
     background: linear-gradient(90deg, #00e7ff00, #ff4d4d00);
 }
 
+.back-button {
+    display: inline-block;
+    margin: auto;
+    background: #40404038;
+    width: 25%;
+    font-weight: 100;
+    letter-spacing: 2px;
+    opacity: 0;
+    animation: fadeIn 1s ease 1s forwards;
+}
+
 @keyframes revealError {
     0%   {opacity: 0; letter-spacing: -3px; width: 30%;}
     100% {opacity: 1; letter-spacing: 1px; width: 60%; background: linear-gradient(90deg, #00e7ff00, #ff4d4dd4);}
 }
 
 .submit-button {
+    display: inline-block;
     margin: auto;
     background: #40404038;
     width: 69%;
-    display: block;
     font-weight: 100;
     letter-spacing: 2px;
     opacity: 0;
+    margin-left: 20px;
     animation: fadeIn 1s ease 1s forwards;
 }
