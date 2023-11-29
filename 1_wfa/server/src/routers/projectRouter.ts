@@ -100,7 +100,6 @@ app.post('/addUserToProject', async (req: any, res) => {
 
 app.post('/removeFromTeam', async (req: any, res) => {
     const updatedUserList = await projectController.removeFromTeam(req.body.userId, req.body.projectId);
-    console.log('updatedUserList: ', updatedUserList);
     return res.status(200).json(updatedUserList);
 });
 

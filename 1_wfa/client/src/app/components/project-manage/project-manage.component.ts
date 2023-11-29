@@ -150,8 +150,9 @@ export class ProjectManageComponent implements OnInit {
   }
 
   removeFromTeam(id: string) {
-    console.log('1.');
+    console.log('===');
     console.log('attempting to remove user with id: ', id);
+    console.log('===');
     this.projectService.removeFromTeam(id, history.state.id)
       .then(() => {console.log('6. attempted to remove user with id: ', id); this.repopulateTeamMembers();})
       .catch(err => console.log('error removing user: ', err));

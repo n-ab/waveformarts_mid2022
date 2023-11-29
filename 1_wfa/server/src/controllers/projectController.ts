@@ -188,15 +188,14 @@ export async function repopulateDiscussions(projectId: string) {
 }
 
 export async function removeFromTeam(userId: string, projectId: string) {
-    console.log('removeFromTeam()...');
+    console.log('removing user: ', userId);
+    console.log('from project: ', projectId);
     try  {
         // --- project ------
         const user = await UserModel.findById(userId)
             .then(async user => {
-                console.log('attempting to remove user: ', user!.email);
                 const userProjects = user?.projects;
                 const userProjectsIndex: number = userProjects!.indexOf(projectId);
-                // console.log('userprojects index: ', userProjectsIndex);
                 if (userProjectsIndex !== -1) {
                     userProjects?.splice(userProjectsIndex, 1);
                 }
@@ -205,7 +204,6 @@ export async function removeFromTeam(userId: string, projectId: string) {
             });
         const project = await ProjectModel.findById(projectId)
             .then(async project => {
-                console.log('removing userId from project: ', project!.title);
                 const projectUsers = project?.users;
                 const projectUsersIndex: number = projectUsers!.indexOf(userId);
                 if (projectUsersIndex !== -1) {
@@ -215,12 +213,10 @@ export async function removeFromTeam(userId: string, projectId: string) {
                 await project?.save();
                 return project?.users;
             });
-        // console.log('user.projects: ', user?.projects);
-        // console.log('project.users: ', project?.users);
         return project;
     } 
     catch (err) {
-        console.log('catching...', err);
+        console.log('error removing user from project...', err);
     }
 }
 
