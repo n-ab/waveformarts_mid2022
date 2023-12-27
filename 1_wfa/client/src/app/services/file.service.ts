@@ -27,4 +27,9 @@ export class FileService {
       .catch(err => err);
   }
 
+  refreshFiles(id: string) {
+    return this.http.get(`/api/file/fetchProjectFiles/${id}`).toPromise()
+      .then(files => files)
+      .catch(err => err);
+  }
 }

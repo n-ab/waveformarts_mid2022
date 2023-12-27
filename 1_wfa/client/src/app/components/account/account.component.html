@@ -24,7 +24,7 @@
             <!-- F I L E   U P L O A D  -->
 
             <div class="choice">
-                <div class="choice-title uploads-downloads">Files</div>
+                <div class="choice-title uploads-downloads">Your Files</div>
                 <div class="files account-selection-option" *ngIf="userSounds.length > 1">{{ userSounds | json }}</div>
                 <div class="nothing-to-display account-selection-option" *ngIf="selectedFiles.length <= 0">no files to display</div>
                     <form [formGroup]="fileUploadForm">

@@ -10,7 +10,19 @@ export const app = express();
 type CustomFile = Express.Multer.File & { fieldname?: string, originalname?: string, encoding?: string, mimetype?: string, destination?: string, filename?: string, path?: string, size?: number, }
 
 const storage = multer.diskStorage({ filename: (req: any, file, cb) => { cb(null, file.originalname); } })
+const newStorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, '../../audioFiles/')
+    }});
 const upload = multer({ storage });
+
+app.post('/uploadFile', async (req: any, res) => {
+    // fs.mkdir('./audioFiles/req.')
+});
+
+app.get('/fetchFiles/:id', async (req: any, res) => {
+    projectController.fetchFiles(req.params.id);
+})
 
 app.post('/startProject', async (req: any, res) => {
     if (req.user) {

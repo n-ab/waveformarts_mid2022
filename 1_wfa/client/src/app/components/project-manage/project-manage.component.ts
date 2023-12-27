@@ -5,8 +5,8 @@ import { ProjectObject } from '../../../../../server/src/models/project';
 import { Router } from '@angular/router';
 import { User } from '../../models';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-
-// YOU NEED AN INDEX SETTER FOR THE TEAM MEMBERS ARRAY 
+import { FileService } from 'src/app/services/file.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 export interface TrimmedUserObject {
   id: string,
@@ -28,44 +28,37 @@ export interface TrimmedDiscussionObject {
 export class ProjectManageComponent implements OnInit {
 
   project!: ProjectObject;
-  filePath = '';
-  team: User[] = [];
 
-  showUserForm = false;
-  addUserForm: FormGroup;
+  // display booleans
+  filesSelected = true;
+  deliverablesSelected = false;
+  communicationsSelected = false;
 
-  selectedFiles: File[] = [];
-  showFileForm = false;
+  // file renderers
+  sessionDataFile!: any;
+  movieFile!: any;
+  requestedFiles!: any[];
+  uploadedFiles!: any[];
+  audioFiles: SafeResourceUrl[] = [];
+
+  // stem
+  dialogStem!: any;
+  musicStem!: any;
+  effectsStem!: any;
+  ambienceStem!: any;
+  
+  selectedFiles: any[] = [];
   addFileForm: FormGroup;
 
-  showDiscussionForm = false;
-  addDiscussionForm: FormGroup;
-
-  showMessageEngineerForm = false;
-  messageEngineerForm: FormGroup;
-
-  trimmedTeamMembers: TrimmedUserObject[] = [];
-  trimmedDiscussions: TrimmedDiscussionObject[] = [];
-
+  filePath = '';
   audioPreview = '';
 
   metricHeader = 'ProjectManage'
 
-  constructor(private metricsService: MetricsService, private projectService: ProjectService, private router: Router) {
-    this.addUserForm = new FormGroup({
-      email: new FormControl(''),
-      wfaUserId: new FormControl('')
-    });
+  constructor(private metricsService: MetricsService, private projectService: ProjectService, private router: Router, private fileService: FileService, private sanitizer: DomSanitizer) {
     this.addFileForm = new FormGroup({
       audioFile: new FormControl(null, Validators.required),
     });
-    this.addDiscussionForm = new FormGroup({
-      users: new FormControl('', Validators.required),
-      message: new FormControl(''),
-    });
-    this.messageEngineerForm = new FormGroup({
-      message: new FormControl('')
-    })
   }
 
   ngOnInit(): void {
@@ -76,88 +69,51 @@ export class ProjectManageComponent implements OnInit {
       .then(project => {
         console.log('project returned: ', project.title);
         this.project = project;
-        this.repopulateTeamMembers();
+        this.refreshFiles();
       })
       .catch(err => {
         console.log('ERROR getProjectData(history.state.id):', err);
         return err;
       });
   }
-
-  showAddToTeam() {
-    this.hideAllForms();
-    this.showUserForm = true;
-  }
-
-  showStartDiscussion() {
-    this.hideAllForms();
-    this.showDiscussionForm = true;
-  }
-
-  showMessageEngineer() {
-    this.hideAllForms();
-    this.showMessageEngineerForm = true;
-  }
-
-  hideAllForms() {
-    this.showUserForm = false;
-    this.showFileForm = false;
-    this.showDiscussionForm = false;
-    this.showMessageEngineerForm = false;
+  
+  displaySelection(selection: string) {
+    switch (selection) {
+      case 'files':
+        this.filesSelected = true;
+        this.deliverablesSelected = false;
+        this.communicationsSelected = false;
+        break;
+      case 'deliverables':
+        this.filesSelected = false;
+        this.deliverablesSelected = true;
+        this.communicationsSelected = false;
+        break;
+      case 'communications':
+        this.filesSelected = false;
+        this.deliverablesSelected = false;
+        this.communicationsSelected = true;
+        break;
+    }
   }
 
   soundSelected(event: Event): void {
     if ((event.target as HTMLInputElement).files![0] != null) {
       // tslint:disable-next-line:no-non-null-assertion
       const files = (event.target as HTMLInputElement).files!;
-      this.addFileForm.patchValue({audio: files});
+      this.selectedFiles = [];
       // tslint:disable-next-line:no-non-null-assertion
-      this.addFileForm.get('audioFile')!.updateValueAndValidity();
       Array.prototype.forEach.call(files, file => {
         const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.selectedFiles.push({file, dataUrl: e.target.result});
+        }
         reader.readAsDataURL(file);
         this.selectedFiles.push(file);
       });
-      console.log('this.selectedFiles = ', this.selectedFiles);
-      const formData = new FormData();
-      this.selectedFiles.forEach((file, i) => { formData.append('files', this.selectedFiles[i])})
-      this.projectService.uploadFilesToProject(formData);
+      this.addFileForm.patchValue({audio: files});
+      this.addFileForm.get('audioFile')!.updateValueAndValidity();
     }
-  }
-
-  addToTeam() {
-    this.projectService.addUserToProject(this.addUserForm.getRawValue(), history.state.id)
-      .then(projectUsers => {
-        this.repopulateTeamMembers();
-      })
-      .catch(err => err);
-  }
-
-  repopulateTeamMembers() {
-    this.projectService.repopulateTeamMembers(history.state.id)
-      .then(updatedTeamMemberArray => {
-        this.trimmedTeamMembers = updatedTeamMemberArray;
-        // console.log('trimmedTeamMembers: ', this.trimmedTeamMembers);
-        return updatedTeamMemberArray;
-      })
-      .catch(err => console.log('error repopulating team members: ', err));
-  }
-
-  repopulateDiscussions() {
-    this.projectService.repopulateDiscussions(history.state.id)
-      .then(updatedDiscussionArray => {
-        this.trimmedDiscussions = updatedDiscussionArray;
-        return updatedDiscussionArray;
-      })
-  }
-
-  removeFromTeam(id: string) {
-    console.log('===');
-    console.log('attempting to remove user with id: ', id);
-    console.log('===');
-    this.projectService.removeFromTeam(id, history.state.id)
-      .then(() => {console.log('6. attempted to remove user with id: ', id); this.repopulateTeamMembers();})
-      .catch(err => console.log('error removing user: ', err));
   }
 
   addFileToProject() {
@@ -169,24 +125,33 @@ export class ProjectManageComponent implements OnInit {
     .catch(err => err);
   }
 
-  startADiscussion() {
-    this.projectService.startADiscussion(this.addDiscussionForm.getRawValue(), history.state.id)
-    .then(projectDiscussions => {
-      console.log('projectDiscussions = ', projectDiscussions);
-
-      this.project.discussions = projectDiscussions;
-    })
-    .catch(err => err);
+  onFileChange(event: any, filetype: string): void {
+    const fileList: FileList = event.target.files;
+    this.fileService.prepareDestinationFolder(this.project.title)
+      .then(() => {
+        if (fileList.length > 0) {
+          const file: File = fileList[0];
+          const formData = new FormData();
+          formData.append('companyProject', this.project.title);
+          formData.append('_id', history.state.id);
+          formData.append('files', file);
+          formData.append('title', file.name);
+          this.fileService.uploadFile(formData)
+            .then(() => {
+              this.refreshFiles();
+            })
+        }
+      })
   }
 
-  messageYourEngineer() {
-    this.projectService.messageEngineer(this.messageEngineerForm.getRawValue())
-    .then(projectMessages => {
-      console.log('projectMessages = ', projectMessages);
-      this.project.messages = projectMessages;
-    })
-    .catch(err => err);
+  async refreshFiles() {
+    this.fileService.refreshFiles(history.state.id)
+      .then(files => {
+        console.log('files fetched: ', files);
+      })
+      .catch(err => err);
+    // this.dialogStem = files.dialogStem;
+    // this.musicStem = files.musicStem;
+    // etc etc
   }
-
-
 }

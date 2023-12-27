@@ -4,63 +4,91 @@
             <div class="project-title-container">{{ project.title }}</div>
             <div class="project-lead-name">{{ project.projectLeadName }}</div>
         </div>
-        <div class="settings" *ngIf="project">
-            <div class="setting"> <!-- users, team -->
-                <div class="setting-title">Team Members</div>
-                <div class="member-ng-for-wrapper" *ngIf="trimmedTeamMembers.length > 0">
-                    <div class="members" *ngFor="let member of trimmedTeamMembers">
-                        <div class="member-email" *ngIf="member">{{ member.email }}</div>
-                        <div class="removal-container" *ngIf="member.email !== project.projectLeadEmail">
-                            <div class="removal-button" (click)="removeFromTeam(member.id)">-</div>
+        <br><br>
+        <div class="project-content-container">
+            <div class="settings-column"> <!-- settings column -->
+                <div class="settings-column-item" (click)="displaySelection('files')" style="border-top-left-radius: 8px; border-top-right-radius: 8px;">
+                    <div class="item-title">Files</div>
+                </div>
+                <div class="spacer"></div>
+                <div class="settings-column-item" (click)="displaySelection('deliverables')">
+                    <div class="item-title">Deliverables</div>
+                </div>
+                <div class="spacer"></div>
+                <div class="settings-column-item" (click)="displaySelection('communications')" style="border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;">
+                    <div class="item-title">Communications</div>
+                </div>
+            </div>
+            <div class="settings-selections"> <!-- settings selection -->
+                <div class="settings-selection" *ngIf="filesSelected">
+                    <div class="selection-title">Files</div>
+                    <div class="required-files file-container">
+                        <div class="files-title">Required Files</div>
+                        <div class="file-container-row">
+                            <div class="file-container-column-1">AAF / OMF</div>
+                            <div class="file-container-column-2" *ngIf="sessionDataFile">{{ sessionDataFile }}</div>
+                            <div class="file-container-column-2" *ngIf="!sessionDataFile">not uploaded</div>
+                            <button mat-raised-button class="file-container-column-3" *ngIf="!sessionDataFile">+</button>
+                            <button mat-raised-button class="file-container-column-3" *ngIf="sessionDataFile">remove</button>
                         </div>
-                        <div class="lead-container">
-                            <div class="lead-button" *ngIf="member.email == project.projectLeadEmail" style="font-size: 75%; margin-top: 5px;">lead</div>
+                        <div class="file-container-row">
+                            <div class="file-container-column-1">Movie File</div>
+                            <div class="file-container-column-2" *ngIf="movieFile">{{ movieFile }}</div>
+                            <div class="file-container-column-2" *ngIf="!movieFile">not uploaded</div>
+                            <button mat-raised-button class="file-container-column-3" *ngIf="!movieFile">+</button>
+                            <button mat-raised-button class="file-container-column-3" *ngIf="movieFile">remove</button>
                         </div>
                     </div>
+                    <div class="requested-files file-container">
+                        <div class="files-title">Files Requested by Engineer</div>
+                        <div class="file-container-row" *ngIf="!requestedFiles">none currently requested</div>
+                    </div>
+                    <div class="user-files file-container">
+                        <div class="files-title">Files You Uploaded</div>
+                        <div class="file-container-row" *ngIf="!uploadedFiles">none currently uploaded</div>
+                    </div>
                 </div>
-                <div *ngIf="project.users.length == 0" class="none-message">you are the sole member</div>
-                <div *ngIf="project.discussions.length == 0" class="small-spacer"></div>
-                <button mat-raised-button class="add-to-team add-button" (click)="showAddToTeam()">add to team</button>
-            </div>
-            <div class="setting"> <!-- files -->
-                <div class="setting-title">Project Files</div>
-                <div class="" *ngIf="selectedFiles.length > 0">{{ selectedFiles | json }}</div>
-                <div *ngIf="project.filePaths.length == 0" class="none-message">no files have been added </div>
-                <div *ngIf="project.discussions.length == 0" class="small-spacer"></div>
-                <form class="file-upload-form" [formGroup]="addFileForm" enctype="multipart/form-data">
-                    <input type="file" style="display: none;" name="audioFile" formControlName="audioFile"  #sound (change)="soundSelected($event)" multiple>
-                    <button mat-raised-button type="button" class="add-file add-button" (click)="sound.click()">add file to project</button>
-                </form>
-            </div>
-            <div class="setting"> <!-- communications / discussions -->
-                <div class="setting-title">Communications</div>
-                <div class="communications" *ngFor="let discussion of trimmedDiscussions">{{ discussion | json }}</div>
-                <div *ngIf="project.discussions.length == 0" class="none-message">no discussions have been started</div>
-                <div *ngIf="project.discussions.length == 0" class="small-spacer"></div>
-                <button mat-raised-button class="add-a-discussion add-button" (click)="showStartDiscussion()">start a discussion</button>
-                <button mat-raised-button class="add-a-discussion add-button message-engineer" (click)="showMessageEngineer()">message your engineer</button>
+                <div class="settings-selection" *ngIf="deliverablesSelected">
+                    <div class="selection-title">Deliverables</div>
+                    <div class="stem">
+                        <div class="stem-title">Dialog</div>
+                        <div class="stem-file" *ngIf="dialogStem">HYB-STEM-dialog.wav</div>
+                        <div class="stem-file" *ngIf="!dialogStem">stem not uploaded</div>
+                        <button mat-raised-button *ngIf="dialogStem" class="stem-download">download</button>
+                        <button mat-raised-button *ngIf="!dialogStem" class="stem-upload" (click)="dialog.click()">upload</button>
+                        <input type="file" style="display: none;" #dialog (change)="onFileChange($event, 'dialog')">
+                    </div>
+                    <div class="stem">
+                        <div class="stem-title">Ambience</div>
+                        <div class="stem-file" *ngIf="ambienceStem">HYB-STEM-ambience.wav</div>
+                        <div class="stem-file" *ngIf="!ambienceStem">stem not uploaded</div>
+                        <button mat-raised-button *ngIf="ambienceStem" class="stem-download">download</button>
+                        <button mat-raised-button *ngIf="!ambienceStem" class="stem-upload" (click)="ambience.click()">upload</button>
+                        <input type="file" style="display: none;" #ambience (change)="onFileChange($event, 'ambience')">
+                    </div>
+                    <div class="stem">
+                        <div class="stem-title">Effects</div>
+                        <div class="stem-file" *ngIf="effectsStem">HYB-STEM-effects.wav</div>
+                        <div class="stem-file" *ngIf="!effectsStem">stem not uploaded</div>
+                        <button mat-raised-button *ngIf="effectsStem" class="stem-download">download</button>
+                        <button mat-raised-button *ngIf="!effectsStem" class="stem-upload" (click)="effects.click()">upload</button>
+                        <input type="file" style="display: none;" #effects (change)="onFileChange($event, 'effects')">
+                    </div>
+                    <div class="stem">
+                        <div class="stem-title">Music</div>
+                        <div class="stem-file" *ngIf="musicStem">HYB-STEM-music.wav</div>
+                        <div class="stem-file" *ngIf="!musicStem">stem not uploaded</div>
+                        <button mat-raised-button *ngIf="musicStem" class="stem-download">download</button>
+                        <button mat-raised-button *ngIf="!musicStem" class="stem-upload" (click)="music.click()">upload</button>
+                        <input type="file" style="display: none;" #music (change)="onFileChange($event, 'music')">
+                    </div>
+                </div>
+                <div class="settings-selection" *ngIf="communicationsSelected">
+                    <div class="selection-title">Communications</div>
+                </div>
             </div>
         </div>
-        <form [formGroup]="addUserForm" class="project-form" *ngIf="showUserForm">
-            <mat-form-field class="user-mat-form-field"><input matInput type="text" name="email" formControlName="email" placeholder="Add by email"></mat-form-field>
-            <div class="add-user-or">or</div>
-            <mat-form-field class="user-mat-form-field"><input matInput type="text" name="wfaUserId" formControlName="wfaUserId" placeholder="Add by their Waveform Arts ID"></mat-form-field>
-        </form>
-        <br>
-        <button *ngIf="showUserForm" mat-raised-button type="button" class="submit-button" (click)="addToTeam()">submit</button>
-
-        <form [formGroup]="messageEngineerForm" class="project-form" *ngIf="showMessageEngineerForm">
-            <mat-form-field class="textarea-engineer"><textarea matInput style="height: 5rem;" type="text" name="message" formControlName="message" placeholder="Message (goes directly to engineer)"></textarea></mat-form-field>
-                    <!-- ^ make this ^ -->
-        </form>
-        <br>
-        <button *ngIf="showMessageEngineerForm" mat-raised-button type="button" class="submit-button" (click)="messageYourEngineer()">submit</button>
-        <form [formGroup]="addDiscussionForm" class="project-form" *ngIf="showDiscussionForm">
-            <mat-form-field *ngIf="project.users.length == 0" ><input matInput type="text" name="users" formControlName="users" placeholder="Add Recipients"></mat-form-field>
-            <mat-form-field class="textarea-discussion"><textarea matInput style="height: 5rem;" type="text" name="message" formControlName="message" placeholder="Start A Discussion"></textarea></mat-form-field>
-                     <!-- ^ like that ^ -->
-        </form>
-        <div style="height: 20px;" *ngIf="showDiscussionForm"></div>
-        <button *ngIf="showDiscussionForm" mat-raised-button type="button" class="submit-button" (click)="startADiscussion()">submit</button>
+        <div class="settings" *ngIf="project">
+        </div>
     </div>
 </div>

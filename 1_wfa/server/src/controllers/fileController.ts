@@ -1,34 +1,27 @@
 import { FileModel } from '../models/file';
+import { ProjectModel, ProjectObject } from '../models/project';
 
 // PART OF STEP 2
 
 export async function uploadFile(data: any) {
-    console.log('fileController - uploadFile data: ', data);
-
-    // you need to decide if you want to refer to sound files as 'sounds' or 'files'
-
+    console.log(`finding project with Id ${data._id}`);
     return FileModel.findOneAndUpdate(data, {$set: {newFile: data}}, {new: true, upsert: true})
-        .then(async file => {
-
-            // 1
-            // this shit currently has: 
-            // companyProject
-            // description
-            // email
-
-            // 2
-            // this shit needs: 
-            // filepath
-            // file name
-            // associated project name
-            // uploader (user id must be in project.users)
-            // upload date
-            // length
-            // 
-
-            console.log('file: ', file);
+    .then(async file => {
+            const project = await ProjectModel.findById(data._id).then(project => {
+                const finalFilePath = file.filePath + '/' + data.title
+                console.log('finalFilePath', finalFilePath);
+                project!.filePaths.push(finalFilePath);
+                project?.save();
+            });
+            file.filePath = `../../audioFiles/${data.companyProject}`;
+            file.title = data.title;
             file.save();
-            console.log('file saved. filepath: ', file.filePath);
             return file._id;
         })
+}
+
+export async function fetchProjectFiles(id: string) {
+    const project = await ProjectModel.findById(id).then(project => project).catch(err => console.log('NO PROJECT FOUND: ', err));
+    const files = project?.filePaths;
+    return files;
 }

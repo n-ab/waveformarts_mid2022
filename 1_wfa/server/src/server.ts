@@ -1,10 +1,11 @@
 import express from 'express';
 import session from 'express-session';
+import { config as dotenvConfig } from 'dotenv';
 import { config } from '../config';
-import 'dotenv/config';
 import mongoose from 'mongoose';
 import passport from 'passport';
 import { UserModel } from '../src/models/user';
+import nodemailer from 'nodemailer';
 
 console.log('Welcome to Waveform Arts, running on port ' + config.PORT);
 
@@ -72,3 +73,17 @@ mongoose.connect(config.database)
 
 import { router } from '../src/routers/routers';
 app.use('/api', router);
+
+// --- n o d e m a i l e r ------------------------------------
+
+dotenvConfig();
+
+const mailer = nodemailer.createTransport({
+    host: 'smpt.protonmail.com',
+    port: 587,
+    secure: false,
+    auth: {
+        user: config.email.username,
+        pass: config.email.password
+    }
+})

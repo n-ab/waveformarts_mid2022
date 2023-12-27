@@ -7,14 +7,6 @@
     margin-top: 125px;
 }
 
-.project {
-
-}
-
-form {
-    vertical-align: top;
-}
-
 .project-title {
     color: white;
     animation: fadeIn 1s ease;
@@ -37,80 +29,71 @@ form {
     animation: projectLeadName 1.7s ease .2s forwards;
 }
 
-.add-button {
-    color: white;
-    font-weight: 100;
-    letter-spacing: 2px;
-    border-radius: 9px;
-    user-select: none;
-    margin: auto;
-    display: block;
-    margin-top: 17px;
-    background: rgba(0, 0, 0, 0.541);
-    transition: letter-spacing .3s ease-in-out;
-}
-
 @keyframes projectLeadName {
     0%   { color: grey; letter-spacing: 1px; }
     100% { color: white; letter-spacing: 2px; }
 }
 
-.project-description {
-    margin-left: 10%;
-    color: white;
-    font-size: 110%;
-    font-weight: 100;
-    opacity: 0;
-    animation: fadeIn 1s ease .3s forwards;
+.project-content-container {
+    width: 90%;
+    max-width: 950px;
+    display: block;
+    margin: auto;
 }
 
-.project-lead {
+.settings-column {
+    float: left;
+    border-radius: 8px;
+    border: 1px solid white;
+    width: 40%;
+    max-width: 275px;
+    margin-top: 85px;
+}
+
+.settings-column-item {
+    background-color: rgba(0, 0, 0, 0);
+    transition: background-color 1s ease-in-out;
+    font-size: 130%;
+}
+
+.settings-column-item:hover {
+    background-color: rgba(0, 0, 0, 0.446);
+}
+
+.spacer {
+    display: block;
+    margin: auto;
+    width: 40%;
+    border-top: 1px solid white;
+}
+
+.item-title {
     padding: 1rem;
     color: white;
-    font-weight: 100;
-    border-radius: 8px;
-    background-color: rgba(139, 139, 139, 0.245);
-    width: 200px;
-    height: 100px;
-    margin-left: 12%;
-}
-
-.settings {
-    display: flex;
-    justify-content: space-evenly;
-}
-
-.setting {
-    border-radius: 8px;
-    width: 45%;
-    max-width: 400px;
-    padding: 1rem;
-    opacity: 0;
-    animation: fadeIn 1s ease forwards;
-}
-
-.setting-title {
-    color: white;
-    font-weight: 100;
-    font-size: 150%;
-    padding: 15px;
-    opacity: 0;
-    animation: expandSide 1s ease forwards;
-}
-
-.none-message {
-    color: white;
-    padding: 1rem 10px;
-    font-size: 90%;
-    font-weight: 100;
     letter-spacing: 2px;
-    border-radius: 9px;
-    user-select: none;
-    margin-left: 1rem;;
-    margin-top: 1rem;
-    background: rgba(0, 0, 0, 0.541);
-    transition: letter-spacing .3s ease-in-out;
+    font-weight: 100;
     text-align: center;
+    user-select: none;
+}
+
+// SETTINGS SELECTION
+
+.settings-selections {
+    float: right;
+    width: 58%;
+}
+
+.settings-selection {
+
+}
+
+.selection-title {
+    color: white;
+    font-weight: 100;
+    font-size: 125%;
+    text-align: center;
+    padding-bottom: 2rem;
+    letter-spacing: 2px;
 }
 
 .small-spacer {
@@ -143,11 +126,9 @@ form {
 }
 
 button {
-    display: block;
-    margin: auto;
-    font-weight: 100;
-    letter-spacing: 2px;
-    width: 75%;
+    // font-weight: 100;
+    // letter-spacing: 2px;
+    // width: 75%;
 }
 
 .project-form {
@@ -243,4 +224,66 @@ button {
 .textarea-discussion {
     width: 100%;
     height: 7rem;
+}
+
+.files-title {
+    padding: 1rem;
+    font-size: 150%;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.file-container {
+    border-radius: 6px;
+    background-color: rgba(0, 0, 0, 0.33);
+    color: white;
+    margin-bottom: 2rem;
+    font-weight: 100;
+}
+
+.file-container-row {
+    display: flex;
+    padding: 1rem;
+}
+
+.file-container-column-1 {
+    flex: 1;
+    margin-top: 8px;
+}
+
+.file-container-column-2 {
+    flex: 0 0 35%;
+    margin-top: 8px;
+    text-align: center;
+}
+
+.file-container-column-3 {
+    flex: 0 0 15%;
+}
+
+.stem {
+    border-radius: 6px;
+    background-color: rgba(0, 0, 0, 0.33);
+    color: white;
+    margin-bottom: 2rem;
+    font-weight: 100;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+.stem-title {
+    font-size: 125%;
+    letter-spacing: 2px;
+    margin-top: 6px;
+}
+
+.stem-file {
+    margin-top: 8px;
+}
+
+.stem-download, .stem-upload {
+    letter-spacing: 1px;
+    font-size: 90%;
+    font-weight: 100;
 }

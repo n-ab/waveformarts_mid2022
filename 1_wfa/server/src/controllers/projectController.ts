@@ -6,6 +6,7 @@ import * as nodemailer from 'nodemailer';
 import * as bcrypt from 'bcryptjs';
 
 export async function startProject(projectData: any, userId: string) {
+    if (!projectData) return;
     console.log('starting project with data: ', projectData.title);
     const project = await ProjectModel.create({
         title: projectData.title,
@@ -23,6 +24,11 @@ export async function startProject(projectData: any, userId: string) {
         })
         .catch(err => console.log(err))
     return project.title;
+}
+
+export async function fetchFiles(projectId: string) {
+    const project = await ProjectModel.findById(projectId).then(project => project);
+    // if (project.dialogStem)
 }
 
 // NEW PROJECT PATH WITH NO KNOWN USER

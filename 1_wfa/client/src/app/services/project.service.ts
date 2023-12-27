@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +19,12 @@ export class ProjectService {
     //   .catch(err => err);
     return this.http.post('/api/project/startProject', data).toPromise()
       .then(data => data)
+      .catch(err => err);
+  }
+
+  fetchFiles(projectId: string) {
+    this.http.get(`/api/project/fetchFiles/${projectId}`).toPromise()
+      .then(files => files)
       .catch(err => err);
   }
 
@@ -114,6 +120,15 @@ export class ProjectService {
         return updatedFileList;
       })
       .catch(err => err);
+  }
+
+  uploadFile(file: File, filetype: string): Observable<any> {
+    console.log('uploading file: ', file);
+    console.log('with type: ', filetype);
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+    formData.append('filetype', filetype);
+    return this.http.post('/api/project/uploadFile', formData);
   }
 
 }

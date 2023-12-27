@@ -17,12 +17,13 @@ type CustomFile = Express.Multer.File & { fieldname?: string, originalname?: str
 // leave actual file upload to step 2. 
 
 app.post('/prepareDestinationFolder', (req: any, res) => {
+    console.log('prepareDestinationFolder - req.body', req.body);
     const baseDirectory = `./audioFiles/${req.body.destinationFolder}`;
     fs.mkdir(baseDirectory, { recursive: true },(err) => {
         if (err) return res.status(200).json(err);
         return res.status(200).json(baseDirectory);
     });
-})
+});
 
 // STEP 2
 
@@ -48,9 +49,9 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 app.post('/uploadFile', upload.array('files'), async (req, res) => {
-    console.log('22222 /uploadFile - req.body = ', req.body);
+    console.log('=======================')
+    console.log('uploadFile - req.body = ', req.body);
     const files = req.files as CustomFile[];
-    console.log(`UPLOADING ${files!.length} files.`);
     const uploadPromises = files?.map((file) => {
         const destinationPath = path.join('./audioFiles', req.body.companyProject, file.originalname);
         return new Promise<void>((resolve, reject) => {
@@ -60,7 +61,6 @@ app.post('/uploadFile', upload.array('files'), async (req, res) => {
             })
         })
     });
-    console.log('2 uploadPromises: ', uploadPromises);
     Promise.all(uploadPromises)
         .then(() => {
             fileController.uploadFile(req.body);
@@ -72,3 +72,8 @@ app.post('/uploadFile', upload.array('files'), async (req, res) => {
         })
     // fileController.uploadFile(req.body).then(file => res.status(200).json(file)).catch(err => res.status(500).json(false));
 });
+
+app.get('/fetchProjectFiles/:id', async (req: any, res) => {
+    const files = await fileController.fetchProjectFiles(req.params.id);
+    return res.status(200).json(files);
+})
