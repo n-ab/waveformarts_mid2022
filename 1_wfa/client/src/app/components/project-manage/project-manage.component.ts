@@ -148,6 +148,10 @@ export class ProjectManageComponent implements OnInit {
     this.fileService.refreshFiles(history.state.id)
       .then(files => {
         console.log('files fetched: ', files);
+        this.audioFiles = files.map((file: any) => {
+          console.log('line 152 - file: ', file);
+          this.sanitizer.bypassSecurityTrustResourceUrl(`http://localhost:8000/audioFiles/${file}`);
+        })
       })
       .catch(err => err);
     // this.dialogStem = files.dialogStem;
