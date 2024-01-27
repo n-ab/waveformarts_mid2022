@@ -38,8 +38,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   constructor(private userService: UserService, public dialogRef: MatDialogRef<LoginComponent>, private metricsService: MetricsService, private router: Router, private projectService: ProjectService) {
     this.loginWithUsernamePasswordForm = new FormGroup({
-      username: new FormControl(null),
-      password: new FormControl(null),
+      username: new FormControl('nick@waveform-arts.com'),
+      password: new FormControl('pw'),
     });
     this.loginWithProjectNameForm = new FormGroup({
       projectName: new FormControl(null),

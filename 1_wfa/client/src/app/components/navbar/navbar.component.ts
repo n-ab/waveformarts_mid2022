@@ -53,14 +53,8 @@ export class NavbarComponent implements OnInit {
       autoFocus: true,
       panelClass: 'mat-dialog-height-transition'
      }).afterClosed().toPromise()
-      .then(resultAfterClosed => {
-        console.log('result after closing signIn()', resultAfterClosed);
-        
-      })
-      .catch(err => {
-        console.log('error with signIn()', err);
-        
-      })
+      .then(resultAfterClosed => resultAfterClosed)
+      .catch(err => console.log('error with signIn()', err));
   }
 
   account() {

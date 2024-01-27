@@ -27,6 +27,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatIconModule } from '@angular/material/icon';
 // --- -----------------
 import { WindowComponent } from './components/window/window.component';
 import { ContactComponent } from './components/contact/contact.component';
@@ -48,6 +51,7 @@ import { ContactPostComponent } from './components/contact-post/contact-post.com
 import { ProjectListComponent } from './components/project-list/project-list.component';
 import { ProjectFilesComponent } from './components/project-files/project-files.component';
 import { ProjectSettingsComponent } from './components/project-settings/project-settings.component';
+import { FilenamePipe } from './pipes/filenamePipe';
 
 @NgModule({
   declarations: [
@@ -75,6 +79,7 @@ import { ProjectSettingsComponent } from './components/project-settings/project-
     JoinprojectComponent,
     UserInfoComponent,
     PrettyJsonPipe,
+    FilenamePipe,
     ContactPostComponent,
     ProjectListComponent,
     ProjectFilesComponent,
@@ -91,7 +96,7 @@ import { ProjectSettingsComponent } from './components/project-settings/project-
     BrowserAnimationsModule,
     HttpClientModule,
     // angular material modules
-    MatButtonModule, MatDialogModule, MatDialogModule, MatCheckboxModule, MatInputModule, MatFormFieldModule, MatDatepickerModule, MatPaginatorModule, MatRadioModule, MatExpansionModule, MatProgressSpinnerModule, MatNativeDateModule
+    MatButtonModule, MatDialogModule, MatDialogModule, MatCheckboxModule, MatInputModule, MatFormFieldModule, MatDatepickerModule, MatPaginatorModule, MatRadioModule, MatExpansionModule, MatProgressSpinnerModule, MatNativeDateModule, MatProgressBarModule, MatSliderModule, MatIconModule
   ],
   providers: [MatNativeDateModule, AudioContext, WindowService],
   bootstrap: [AppComponent]

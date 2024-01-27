@@ -26,16 +26,18 @@
                         <div class="files-title">Required Files</div>
                         <div class="file-container-row">
                             <div class="file-container-column-1">AAF / OMF</div>
-                            <div class="file-container-column-2" *ngIf="sessionDataFile">{{ sessionDataFile }}</div>
+                            <div class="file-container-column-2" *ngIf="sessionDataFile">{{ sessionDataFile | filename }}</div>
                             <div class="file-container-column-2" *ngIf="!sessionDataFile">not uploaded</div>
-                            <button mat-raised-button class="file-container-column-3" *ngIf="!sessionDataFile">+</button>
-                            <button mat-raised-button class="file-container-column-3" *ngIf="sessionDataFile">remove</button>
+                            <button mat-raised-button class="file-container-column-3" *ngIf="!sessionDataFile" (click)="aaf.click()">+</button>
+                            <input type="file" style="display: none;" #aaf (change)="onFileChange($event, 'aaf')" >
+                            <button mat-raised-button class="file-container-column-3" *ngIf="sessionDataFile" (click)="removeFile('aaf')">remove</button>
                         </div>
                         <div class="file-container-row">
                             <div class="file-container-column-1">Movie File</div>
-                            <div class="file-container-column-2" *ngIf="movieFile">{{ movieFile }}</div>
+                            <div class="file-container-column-2" *ngIf="movieFile">{{ movieFile | filename }}</div>
                             <div class="file-container-column-2" *ngIf="!movieFile">not uploaded</div>
-                            <button mat-raised-button class="file-container-column-3" *ngIf="!movieFile">+</button>
+                            <button mat-raised-button class="file-container-column-3" *ngIf="!movieFile" (click)="movie.click()">+</button>
+                            <input type="file" style="display: none;" #movie (change)="onFileChange($event, 'movie')">
                             <button mat-raised-button class="file-container-column-3" *ngIf="movieFile">remove</button>
                         </div>
                     </div>
@@ -52,33 +54,37 @@
                     <div class="selection-title">Deliverables</div>
                     <div class="stem">
                         <div class="stem-title">Dialog</div>
-                        <div class="stem-file" *ngIf="dialogStem">HYB-STEM-dialog.wav</div>
+                        <div class="stem-file" *ngIf="dialogStem">{{ dialogStem | filename }}</div>
                         <div class="stem-file" *ngIf="!dialogStem">stem not uploaded</div>
-                        <button mat-raised-button *ngIf="dialogStem" class="stem-download">download</button>
+                        <button mat-raised-button *ngIf="dialogStem" class="stem-download" (click)="download($event)">download</button>
+                        <button mat-raised-button *ngIf="dialogStem" class="listen" (click)="listen(dialogStem)">listen</button>
                         <button mat-raised-button *ngIf="!dialogStem" class="stem-upload" (click)="dialog.click()">upload</button>
                         <input type="file" style="display: none;" #dialog (change)="onFileChange($event, 'dialog')">
                     </div>
                     <div class="stem">
                         <div class="stem-title">Ambience</div>
-                        <div class="stem-file" *ngIf="ambienceStem">HYB-STEM-ambience.wav</div>
+                        <div class="stem-file" *ngIf="ambienceStem">{{ ambienceStem | filename }}</div>
                         <div class="stem-file" *ngIf="!ambienceStem">stem not uploaded</div>
-                        <button mat-raised-button *ngIf="ambienceStem" class="stem-download">download</button>
+                        <button mat-raised-button *ngIf="ambienceStem" class="stem-download" (click)="download($event)">download</button>
+                        <button mat-raised-button *ngIf="ambienceStem" class="listen" (click)="listen(ambienceStem)">listen</button>
                         <button mat-raised-button *ngIf="!ambienceStem" class="stem-upload" (click)="ambience.click()">upload</button>
                         <input type="file" style="display: none;" #ambience (change)="onFileChange($event, 'ambience')">
                     </div>
                     <div class="stem">
                         <div class="stem-title">Effects</div>
-                        <div class="stem-file" *ngIf="effectsStem">HYB-STEM-effects.wav</div>
+                        <div class="stem-file" *ngIf="effectsStem">{{ effectsStem | filename }}</div>
                         <div class="stem-file" *ngIf="!effectsStem">stem not uploaded</div>
-                        <button mat-raised-button *ngIf="effectsStem" class="stem-download">download</button>
+                        <button mat-raised-button *ngIf="effectsStem" class="stem-download" (click)="download($event)">download</button>
+                        <button mat-raised-button *ngIf="effectsStem" class="listen" (click)="listen(effectsStem)">listen</button>
                         <button mat-raised-button *ngIf="!effectsStem" class="stem-upload" (click)="effects.click()">upload</button>
                         <input type="file" style="display: none;" #effects (change)="onFileChange($event, 'effects')">
                     </div>
                     <div class="stem">
                         <div class="stem-title">Music</div>
-                        <div class="stem-file" *ngIf="musicStem">HYB-STEM-music.wav</div>
+                        <div class="stem-file" *ngIf="musicStem">{{ musicStem | filename }}</div>
                         <div class="stem-file" *ngIf="!musicStem">stem not uploaded</div>
-                        <button mat-raised-button *ngIf="musicStem" class="stem-download">download</button>
+                        <button mat-raised-button *ngIf="musicStem" class="stem-download" (click)="download($event)">download</button>
+                        <button mat-raised-button *ngIf="musicStem" class="listen" (click)="listen(musicStem)">listen</button>
                         <button mat-raised-button *ngIf="!musicStem" class="stem-upload" (click)="music.click()">upload</button>
                         <input type="file" style="display: none;" #music (change)="onFileChange($event, 'music')">
                     </div>
@@ -88,7 +94,15 @@
                 </div>
             </div>
         </div>
-        <div class="settings" *ngIf="project">
-        </div>
+        <div class="audio-controls">
+            <button mat-raised-button (click)="audioPlayPause()"><mat-icon>play_arrow</mat-icon></button>
+            <button mat-raised-button (click)="audioStop()"><mat-icon>stop</mat-icon></button>
+            <button mat-raised-button (click)="audioRestart()"><mat-icon>restart</mat-icon></button>
+          </div>
+        <mat-slider class="example-margin" [(ngModel)]="currentTime" max="{{duration}}" style="width: 100%;">
+            <input type="range" matSliderThumb>
+        </mat-slider>
+        <mat-progress-bar style="position: absolute; " [mode]="mode" [value]="progress * 100" ></mat-progress-bar>
+        {{progress}}
     </div>
 </div>

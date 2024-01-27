@@ -95,7 +95,7 @@ export async function fetchSingleProjectData(id: string) {
             .then(project => project)
             .catch(err => {
                 console.log('error fetching single project: ', err); 
-                return err;
+                return Promise.reject(err);
             });
         return project;
     } else {

@@ -6,6 +6,9 @@ import mongoose from 'mongoose';
 import passport from 'passport';
 import { UserModel } from '../src/models/user';
 import nodemailer from 'nodemailer';
+import fs from 'fs';
+import path from 'path';
+import cors from 'cors'
 
 console.log('Welcome to Waveform Arts, running on port ' + config.PORT);
 
@@ -16,10 +19,67 @@ const app = express();
 // app.use(bodyParser.json({limit: '32MB'}));
 // app.use(bodyParser.urlencoded({limit: '32MB', extended: false}));
 // app.use('/audioFiles')
-
+app.use(cors());
 app.use(express.json({limit:'32MB'}));
 app.use(express.urlencoded({limit:'32MB', extended:false}));
-app.use("/audiofiles", express.static(`./audiofiles`));
+app.use("/audioFiles", (req, res, next) => {
+    const filePath = __dirname + '/..' + '/audioFiles' + `${req.url}`;
+    const normalizedFilePath = path.normalize(filePath);
+    // const file = fs.readFile(normalizedFilePath, (err, data) => {
+    //     if (err) console.log('error reading file: ', err);
+    //     if (data) console.log('file data: ', data);
+    // });
+    // const normalizedFilePath2 = normalizedFilePath.split("/").slice(0, -1).join("/");
+    // const directory = fs.readdir(normalizedFilePath2, (err, files) => {
+    //     if (err) console.log('error reading file: ', err);
+    //     if (files) console.log('files: ', files);
+    // });
+    const stat = fs.statSync(normalizedFilePath);
+    console.log('fs.statSync(normalizedFilePath): ', stat);
+    
+    const fileSize = stat.size;
+    const range = req.headers.range;
+    if (range) {        
+        const parts = range.replace(/bytes=/, '').split('-');
+        console.log('parts: ', parts);
+        
+        const start = parseInt(parts[0], 10);
+        const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+    
+        const chunksize = (end - start) + 1;
+        const file = fs.createReadStream(filePath, { start, end });
+        const head = {
+          'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+          'Accept-Ranges': 'bytes',
+          'Content-Length': chunksize,
+          'Content-Type': 'audio/wav',
+        };
+    
+        res.writeHead(206, head);
+        file.pipe(res);
+      } else {
+        console.log('aint no range.');
+        
+        const head = {
+          'Content-Length': fileSize,
+          'Content-Type': 'audio/wav',
+        };
+      res.writeHead(200, head);
+      fs.createReadStream(filePath).pipe(res);
+      }
+}, express.static('../audioFiles'));
+// app.use("/audioFiles", (req, res, next) => {
+//     console.log('normalized filePath: ', normalizedFilePath);
+//     const file = await fs.readFile(normalizedFilePath, (err, data) => {
+//         if (err) console.log('error: ', err);
+//         return file;
+//     });
+//     // fs.readdir(normalizedFilePath, (err, files) => {
+//     //     if (err) { console.log('error: ', err); return err; } 
+//     //     else { console.log('directory contents: ', files); }        
+//     // })
+//     next();
+// }, express.static('../audioFiles'));
 
 app.use((req: any, res: any, next: any) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -72,6 +132,7 @@ mongoose.connect(config.database)
 // --- r o u t i n g ------------------------------------------
 
 import { router } from '../src/routers/routers';
+import { fetchSingleProjectData } from './controllers/projectController';
 app.use('/api', router);
 
 // --- n o d e m a i l e r ------------------------------------

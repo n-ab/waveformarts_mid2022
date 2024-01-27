@@ -68,7 +68,6 @@ export class AccountComponent implements OnInit {
       height: '450px',
       maxWidth: '700px'
     }).afterClosed().subscribe(projectData => {
-      console.log('project data: ', projectData);
       this.projectService.startProject(projectData);
       setTimeout(() => {
         this.fetchProjectsByUserId();
@@ -140,7 +139,9 @@ export class AccountComponent implements OnInit {
   }
 
   goToProject(event: any) {
-    this.router.navigateByUrl('project', {state: {id: event}});
+    console.log('event: ', event);
+    
+    this.router.navigateByUrl(`project/${event}`);
   }
   
   logout() {

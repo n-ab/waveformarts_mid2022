@@ -1,12 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MetricsService } from 'src/app/services/metrics.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { ProjectObject } from '../../../../../server/src/models/project';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../models';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FileService } from 'src/app/services/file.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { saveAs } from 'file-saver';
+import { UserService } from 'src/app/services/user.service';
+import { UserObject } from '../../../../../server/src/models/user';
+import { ProgressBarMode } from '@angular/material/progress-bar';
+import { MatSlider } from '@angular/material/slider';
 
 export interface TrimmedUserObject {
   id: string,
@@ -20,28 +25,52 @@ export interface TrimmedDiscussionObject {
   thereIsRecentMessage: boolean
 }
 
+export interface TrimmedFileObject {
+  filePath: string,
+  data: {
+    type: string,
+    data: any[]
+  }
+}
+
 @Component({
   selector: 'app-project-manage',
   templateUrl: './project-manage.component.html',
   styleUrls: ['./project-manage.component.scss']
 })
-export class ProjectManageComponent implements OnInit {
+export class ProjectManageComponent implements OnInit, AfterViewInit {
 
   project!: ProjectObject;
+  user!: UserObject;
+  
+  // audio handling
+  @ViewChild('progressBar') progressBar!: ElementRef;
+  @ViewChild('slider') slider!: MatSlider;
+  audio!: HTMLAudioElement;
+  duration!: number;
+  currentTime = 0;
+  audioPlaying = false;
+  progress!: number;
+  sliderValue = 0;
+  mode: ProgressBarMode = 'determinate';
 
   // display booleans
-  filesSelected = true;
-  deliverablesSelected = false;
+  filesSelected = false;
+  deliverablesSelected = true;
   communicationsSelected = false;
 
   // file renderers
-  sessionDataFile!: any;
-  movieFile!: any;
+  renderedFiles: any[] = [];
+  audioFiles:    any[] = [];
+
   requestedFiles!: any[];
   uploadedFiles!: any[];
-  audioFiles: SafeResourceUrl[] = [];
+  
+  // aaf/omf, mov
+  sessionDataFile!: any;
+  movieFile!: any;
 
-  // stem
+  // stems
   dialogStem!: any;
   musicStem!: any;
   effectsStem!: any;
@@ -55,26 +84,44 @@ export class ProjectManageComponent implements OnInit {
 
   metricHeader = 'ProjectManage'
 
-  constructor(private metricsService: MetricsService, private projectService: ProjectService, private router: Router, private fileService: FileService, private sanitizer: DomSanitizer) {
+  constructor(private metricsService: MetricsService, private userService: UserService, private projectService: ProjectService, private router: Router, private fileService: FileService, private sanitizer: DomSanitizer, private route: ActivatedRoute) {
     this.addFileForm = new FormGroup({
       audioFile: new FormControl(null, Validators.required),
     });
   }
 
   ngOnInit(): void {
-    if (!history.state.id) { this.router.navigateByUrl('account'); }
-    if (history.state.id == undefined) { this.router.navigateByUrl('account'); }
-    this.metricsService.addPageMetrics(this.metricHeader, history.state.navigatedFrom);
-    this.projectService.getProjectData(history.state.id)
-      .then(project => {
-        console.log('project returned: ', project.title);
-        this.project = project;
-        this.refreshFiles();
+    this.userService.check().then(user => {
+      if (!user) return this.router.navigateByUrl('');
+      return this.user = user;
+    })
+    // if (!history.state.id) { this.router.navigateByUrl('account'); }
+    // if (history.state.id == undefined) { this.router.navigateByUrl('account'); }
+    this.route.params.subscribe(params => {
+      const projectId = params['id']
+      this.metricsService.addPageMetrics(this.metricHeader, history.state.navigatedFrom);
+      this.projectService.getProjectData(projectId)
+        .then(project => {
+          this.project = project;
+          this.refreshFiles();
+        })
+        .catch(err => {
+          console.log('ERROR getProjectData(history.state.id):', err);
+          return err;
+        });
+    })
+  }
+
+  ngAfterViewInit(): void {
+    if (this.slider) {
+      this.slider.valueChange.subscribe(newValue => {
+        console.log('slider moved to new value: ', newValue);
+        if (newValue !== null) {
+          this.currentTime = newValue;
+          this.progress = newValue;
+        }
       })
-      .catch(err => {
-        console.log('ERROR getProjectData(history.state.id):', err);
-        return err;
-      });
+    }
   }
   
   displaySelection(selection: string) {
@@ -125,15 +172,48 @@ export class ProjectManageComponent implements OnInit {
     .catch(err => err);
   }
 
-  onFileChange(event: any, filetype: string): void {
+  // YOU ADDED AN ADDITIONAL FIELD TO project.filePaths
+  // It is now, project.filePaths[{filePath: String, fileType: String}]
+
+  // you need to re-code how files are uploaded. You need to add
+  // a filetype-specific string to each file in its corresponding
+  // button click function, i.e. onFileChange($event, 'fileType')
+  //                                                  ^ aaf, dialogStem, .mov, ambienceStem, etc
+
+  // you have this set up already on line 32 of project-manage.component.html
+
+  removeFile(type: string) {
+    this.fileService.removeFile(this.project._id, type)
+      .then(fileList => {
+        console.log('fileList after REMOVAL: ', fileList);
+        return fileList;
+      })
+      .catch(err => err);
+  }
+
+  onFileChange(event: any, fileType: string): void {
     const fileList: FileList = event.target.files;
-    this.fileService.prepareDestinationFolder(this.project.title)
-      .then(() => {
+    const title = this.project.title;
+    this.fileService.prepareDestinationFolder({title, fileType})
+      .then(directory => {
+        console.log('directory created: ', directory);
         if (fileList.length > 0) {
           const file: File = fileList[0];
+          let projectTitle = this.project.title;
+          let historyStateId = history.state.id;
+          let fileName = file.name;
           const formData = new FormData();
+          let deleteMe = {
+            projectTitle,
+            historyStateId,
+            file,
+            fileName,
+            fileType
+          };
+          console.log('deleteMe: ', deleteMe);
+          formData.append('fileType', fileType);
           formData.append('companyProject', this.project.title);
-          formData.append('_id', history.state.id);
+          formData.append('_id', this.project._id);
           formData.append('files', file);
           formData.append('title', file.name);
           this.fileService.uploadFile(formData)
@@ -145,17 +225,72 @@ export class ProjectManageComponent implements OnInit {
   }
 
   async refreshFiles() {
-    this.fileService.refreshFiles(history.state.id)
+    this.fileService.refreshFiles(this.project._id)
       .then(files => {
-        console.log('files fetched: ', files);
-        this.audioFiles = files.map((file: any) => {
-          console.log('line 152 - file: ', file);
+        const project = this.project.title.toUpperCase();
+        const unsortedAudioFiles = files.map((file: any) => {
+          const regex = '(?:[^/]+/){2}(.+)';
+          const match = file.filePath.match(regex);
+          switch (file.fileType) {
+            case 'dialog':   this.dialogStem = match[1];      this.audioFiles.push({fileName: match[1], file}); break;
+            case 'music':    this.musicStem = match[1];       this.audioFiles.push({fileName: match[1], file}); break;
+            case 'effects':  this.effectsStem = match[1];     this.audioFiles.push({fileName: match[1], file}); break;
+            case 'ambience': this.ambienceStem = match[1];    this.audioFiles.push({fileName: match[1], file}); break;
+            case 'aaf':      this.sessionDataFile = match[1]; this.audioFiles.push({fileName: match[1], file}); break;
+            case 'movie':    this.movieFile = match[1];       this.audioFiles.push({fileName: match[1], file}); break;
+            default: break;
+          }
           this.sanitizer.bypassSecurityTrustResourceUrl(`http://localhost:8000/audioFiles/${file}`);
-        })
+        });
+        console.log(`${project}, ${files.length} files`);
+        this.fetchFullFiles();
       })
       .catch(err => err);
-    // this.dialogStem = files.dialogStem;
-    // this.musicStem = files.musicStem;
-    // etc etc
+  }
+
+  async fetchFullFiles() {
+    this.fileService.renderFullFiles(this.project._id)
+      .then(files => {
+        console.log('files: ', files);
+        
+        // this.blobify(files);
+        this.renderedFiles = files;
+     });
+  }
+
+  async download(event: any) {
+    return;
+  }
+
+  async listen(event: any) {
+    const url = `http://localhost:8000/audioFiles/${this.project.title}/${event}`;
+    const audio = new Audio(url);
+    this.audio = audio;
+    
+    audio.addEventListener('canplay', (event) => {
+      console.log('this.audio = ', this.audio);
+      
+      this.duration = this.audio.duration;
+    });
+    audio.addEventListener('timeupdate', (event) => {
+      this.currentTime = this.audio.currentTime;
+      this.progress = audio.currentTime / audio.duration;
+    });
+    this.audioPlaying = true;
+    this.audio.currentTime = this.currentTime;
+    audio.play();
+    return;
+  }
+
+  audioPlayPause() {
+
+  }
+
+  audioStop() {
+
+  }
+
+  audioRestart() {
+    
   }
 }

@@ -30,7 +30,7 @@ const routes: Routes = [
   { path: 'register',               component: RegisterComponent},
   // U S E R     A C C O U N T     R O U T E S
   { path: 'store',                  component: StoreComponent },
-  { path: 'project',                component: ProjectManageComponent},
+  { path: 'project/:id',                component: ProjectManageComponent},
   { path: 'account/files',          component: UserFilesComponent },
   { path: 'account/passwordreset',  component: UserPasswordresetComponent },
   { path: 'account/emailreset',     component: UserEmailresetComponent },

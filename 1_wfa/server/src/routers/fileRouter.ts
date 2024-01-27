@@ -17,8 +17,7 @@ type CustomFile = Express.Multer.File & { fieldname?: string, originalname?: str
 // leave actual file upload to step 2. 
 
 app.post('/prepareDestinationFolder', (req: any, res) => {
-    console.log('prepareDestinationFolder - req.body', req.body);
-    const baseDirectory = `./audioFiles/${req.body.destinationFolder}`;
+    const baseDirectory = `./audioFiles/${req.body.title}/${req.body.fileType}`;
     fs.mkdir(baseDirectory, { recursive: true },(err) => {
         if (err) return res.status(200).json(err);
         return res.status(200).json(baseDirectory);
@@ -28,11 +27,11 @@ app.post('/prepareDestinationFolder', (req: any, res) => {
 // STEP 2
 
 // 2a
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        // the issue is here dude. for real. look no further. 
-        // look at line 56. file.destination is set here. 
-        // 'file' is literally set here, as well as file.filename below
+        console.log('req.body - ', req.body);
+        console.log('file - ', file);
         const companyProject = req.body.companyProject;
         const destinationFolder = `./audioFiles/${companyProject}`;
         fs.mkdir(destinationFolder, { recursive: true }, (err) => {
@@ -48,12 +47,10 @@ const storage = multer.diskStorage({
 // 2b
 const upload = multer({ storage });
 
-app.post('/uploadFile', upload.array('files'), async (req, res) => {
-    console.log('=======================')
-    console.log('uploadFile - req.body = ', req.body);
+app.post('/uploadFile', upload.array('files'), (req, res) => {
     const files = req.files as CustomFile[];
     const uploadPromises = files?.map((file) => {
-        const destinationPath = path.join('./audioFiles', req.body.companyProject, file.originalname);
+        const destinationPath = path.join('./audioFiles', req.body.companyProject, req.body.fileType, file.originalname);
         return new Promise<void>((resolve, reject) => {
             fs.rename(file.path, destinationPath, (err) => {
                 if (err) { console.error('Failed to move file to project directory', err); reject(err); }
@@ -74,6 +71,19 @@ app.post('/uploadFile', upload.array('files'), async (req, res) => {
 });
 
 app.get('/fetchProjectFiles/:id', async (req: any, res) => {
-    const files = await fileController.fetchProjectFiles(req.params.id);
+    const files = await fileController.fetchProjectFilepaths(req.params.id);
+    return res.status(200).json(files);
+});
+
+app.get('/fetchFullFiles/:id', async (req: any, res) => {
+    const files = await fileController.fetchFullFiles(req.params.id);
+    setTimeout(() => {
+        return res.status(200).json(files);
+    }, 2000);
+    
+})
+
+app.post('/removeFile', async (req: any, res) => {
+    const files = await fileController.removeFile(req.body);
     return res.status(200).json(files);
 })

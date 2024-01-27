@@ -1,5 +1,10 @@
 import * as mongoose from 'mongoose';
 
+export interface FilePath {
+    filePath: string,
+    fileType: string
+}
+
 export interface ProjectObject extends mongoose.Document {
     _id: any, 
     title: string,
@@ -8,7 +13,11 @@ export interface ProjectObject extends mongoose.Document {
     description: string,
     number: number,
     emailList: string[],
-    filePaths: string[],
+    fileType: string,
+    filePaths: [
+        { filePath: string,
+          fileType: string}
+    ],
     hasMusicStem: boolean,
     musicStemFilePath: string,
     hasEffectsStem: boolean,
@@ -17,11 +26,9 @@ export interface ProjectObject extends mongoose.Document {
     dialogStemFilePath: string,
     hasAmbienceStem: boolean,
     ambienceStemFilePath: string
-
     users: string[],
     discussions: string[],
     messages: string[],
-    
 }
 
 const schema = new mongoose.Schema ({
@@ -31,7 +38,11 @@ const schema = new mongoose.Schema ({
     description: String,
     number: Number,
     emailList: [String],
-    filePaths: [String],
+    fileType: String,
+    filePaths: [{
+        filePath: String,
+        fileType: String,
+    }],
     hasMusicStem: Boolean,
     musicStemFilePath: String,
     hasEffectsStem: Boolean,
