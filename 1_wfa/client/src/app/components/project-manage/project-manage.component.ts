@@ -53,6 +53,12 @@ export class ProjectManageComponent implements OnInit, AfterViewInit {
   progress!: number;
   sliderValue = 0;
   mode: ProgressBarMode = 'determinate';
+  volume = 100;
+  playPause = 'play' || 'pause' ;
+  color = 'primary';
+  selectedAudio = '';
+  audioControlPanel!: HTMLElement | null;
+  showControlPanel = false;
 
   // display booleans
   filesSelected = false;
@@ -122,6 +128,7 @@ export class ProjectManageComponent implements OnInit, AfterViewInit {
         }
       })
     }
+    this.audioControlPanel = document.getElementById('audio-controls');
   }
   
   displaySelection(selection: string) {
@@ -263,10 +270,11 @@ export class ProjectManageComponent implements OnInit, AfterViewInit {
   }
 
   async listen(event: any) {
+    this.instantiateAudioPlayer(event);
     const url = `http://localhost:8000/audioFiles/${this.project.title}/${event}`;
     const audio = new Audio(url);
     this.audio = audio;
-    
+    this.selectedAudio = event;
     audio.addEventListener('canplay', (event) => {
       console.log('this.audio = ', this.audio);
       
@@ -278,19 +286,27 @@ export class ProjectManageComponent implements OnInit, AfterViewInit {
     });
     this.audioPlaying = true;
     this.audio.currentTime = this.currentTime;
+    this.audio.volume = this.volume / 100;
     audio.play();
     return;
   }
 
-  audioPlayPause() {
+  instantiateAudioPlayer(event: any) {
+    console.log('this.audioControlPanel = ', this.audioControlPanel);
+    console.log('getelementbyid event = ', document.getElementById(`${event}`));
+    
+    if (this.audioControlPanel) {
+      const parent = document.getElementById(`${event}`)?.insertAdjacentElement('afterend', this.audioControlPanel);
+    }
+  }
 
+  audioPlayPause(selection: string) {
+    if (selection == 'play') { this.playPause = 'play'; return this.audio.play() }
+    else { this.playPause = 'pause'; return this.audio.pause() }
   }
 
   audioStop() {
-
-  }
-
-  audioRestart() {
-    
+    this.audio.pause();
+    this.audio.currentTime = 0;
   }
 }

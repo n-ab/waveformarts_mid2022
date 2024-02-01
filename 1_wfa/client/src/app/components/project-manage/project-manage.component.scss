@@ -43,11 +43,15 @@
 
 .settings-column {
     float: left;
-    border-radius: 8px;
+    width: 36%;
+}
+
+.settings-wrapper {
     border: 1px solid white;
-    width: 40%;
-    max-width: 275px;
+    border-radius: 8px;
     margin-top: 85px;
+    margin-bottom: 25px;
+    display: block;
 }
 
 .settings-column-item {
@@ -288,8 +292,80 @@ button {
     font-weight: 100;
 }
 
-.progress-container {
-    background-image: linear-gradient(90deg, white, black);
+.file-title-container {
+    white-space: nowrap;
+}
+
+.file-title {
+    color: white;
+    letter-spacing: 2px; 
+    font-weight: 100;
+    font-size: 90%;
+    padding: 1rem 1rem 0 1rem;
+    overflow-x: hidden;
+}
+
+
+
+.audio-controls {
+    float: left;
+    display: block;
+    margin-top: 10px;
+    width: 100%;
+    box-shadow: 0px 0px 0px -2px black;
+    border-radius: 8px;
+    margin: auto;
+    background: linear-gradient(#3030302b, #1f1f1f);
+    opacity: 0;
+    height: 0px;
+    animation: audioPlayer 1s ease forwards;
+}
+
+.display-none {
+    display: none;
+}
+
+.play-pause-stop-buttons {
+    animation: fadeIn 1s ease .4s forwards;
+    opacity: 0;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
+}
+
+.audio-control {
+    animation: fadeIn 1s ease forwards;
+    opacity: 0;
+    width: 29%;
+    margin: 5px;
+}
+
+.audio-slider {
+    opacity: 0;
+    animation: fadeIn 1s ease .4s forwards;
+}
+
+.volume-slider {
+    opacity: 0;
+    animation: fadeIn 1s ease .4s forwards;
+}
+
+.mat-slider-vertical {
+    min-height: 78px;
+    margin-top: 5px;
+}
+
+.mat-slider {
+    width: 93% !important;
+    margin-left: 10px;
+}
+
+.audio-control-left {
+    float: left;
+    width: 80%;
+    margin-left: 10px;
+}
+
+.audio-control-right {
+    float: right;
+    width: 49px;
 }

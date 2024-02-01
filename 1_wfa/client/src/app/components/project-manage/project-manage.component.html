@@ -4,21 +4,43 @@
             <div class="project-title-container">{{ project.title }}</div>
             <div class="project-lead-name">{{ project.projectLeadName }}</div>
         </div>
+        
         <br><br>
         <div class="project-content-container">
+
             <div class="settings-column"> <!-- settings column -->
-                <div class="settings-column-item" (click)="displaySelection('files')" style="border-top-left-radius: 8px; border-top-right-radius: 8px;">
-                    <div class="item-title">Files</div>
+                <div class="settings-wrapper">
+                    <div class="settings-column-item" (click)="displaySelection('files')" style="border-top-left-radius: 8px; border-top-right-radius: 8px;">
+                        <div class="item-title">Files</div>
+                    </div>
+                    <div class="spacer"></div>
+                    <div class="settings-column-item" (click)="displaySelection('deliverables')">
+                        <div class="item-title">Deliverables</div>
+                    </div>
+                    <div class="spacer"></div>
+                    <div class="settings-column-item" (click)="displaySelection('communications')" style="border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;">
+                        <div class="item-title">Communications</div>
+                    </div>
                 </div>
-                <div class="spacer"></div>
-                <div class="settings-column-item" (click)="displaySelection('deliverables')">
-                    <div class="item-title">Deliverables</div>
-                </div>
-                <div class="spacer"></div>
-                <div class="settings-column-item" (click)="displaySelection('communications')" style="border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;">
-                    <div class="item-title">Communications</div>
+
+        <!-- ======== audio controller ========= -->
+        <div class="audio-controls" id="audio-controls" *ngIf="audio">
+            <div class="audio-control-left">
+                <div class="file-title-container"><div class="file-title">{{ selectedAudio }}</div></div>
+                <div class="play-pause-stop-buttons">
+                    <button class="audio-control" mat-raised-button (click)="audioPlayPause('play')"><mat-icon>play_arrow</mat-icon></button>
+                    <button class="audio-control" mat-raised-button (click)="audioPlayPause('pause')"><mat-icon>pause</mat-icon></button>
+                    <button class="audio-control" mat-raised-button (click)="audioStop()"><mat-icon>stop</mat-icon></button>
                 </div>
             </div>
+            <div class="audio-control-right">
+                <mat-slider vertical class="volume-slider" [(ngModel)]="volume" max="1" step="0.01"><input type="range" matSliderThumb></mat-slider>
+            </div>
+            <mat-slider class="audio-slider" [color]="color" [(ngModel)]="currentTime" max="{{duration}}" style="width: 100%;" step="0.01"><input type="range" matSliderThumb></mat-slider>
+        </div>
+        <!-- ========  end audio controller ========= -->
+        </div>
+
             <div class="settings-selections"> <!-- settings selection -->
                 <div class="settings-selection" *ngIf="filesSelected">
                     <div class="selection-title">Files</div>
@@ -52,7 +74,7 @@
                 </div>
                 <div class="settings-selection" *ngIf="deliverablesSelected">
                     <div class="selection-title">Deliverables</div>
-                    <div class="stem">
+                    <div class="stem" id="dialog">
                         <div class="stem-title">Dialog</div>
                         <div class="stem-file" *ngIf="dialogStem">{{ dialogStem | filename }}</div>
                         <div class="stem-file" *ngIf="!dialogStem">stem not uploaded</div>
@@ -61,7 +83,7 @@
                         <button mat-raised-button *ngIf="!dialogStem" class="stem-upload" (click)="dialog.click()">upload</button>
                         <input type="file" style="display: none;" #dialog (change)="onFileChange($event, 'dialog')">
                     </div>
-                    <div class="stem">
+                    <div class="stem" id="ambience">
                         <div class="stem-title">Ambience</div>
                         <div class="stem-file" *ngIf="ambienceStem">{{ ambienceStem | filename }}</div>
                         <div class="stem-file" *ngIf="!ambienceStem">stem not uploaded</div>
@@ -70,7 +92,7 @@
                         <button mat-raised-button *ngIf="!ambienceStem" class="stem-upload" (click)="ambience.click()">upload</button>
                         <input type="file" style="display: none;" #ambience (change)="onFileChange($event, 'ambience')">
                     </div>
-                    <div class="stem">
+                    <div class="stem" id="effects">
                         <div class="stem-title">Effects</div>
                         <div class="stem-file" *ngIf="effectsStem">{{ effectsStem | filename }}</div>
                         <div class="stem-file" *ngIf="!effectsStem">stem not uploaded</div>
@@ -79,7 +101,7 @@
                         <button mat-raised-button *ngIf="!effectsStem" class="stem-upload" (click)="effects.click()">upload</button>
                         <input type="file" style="display: none;" #effects (change)="onFileChange($event, 'effects')">
                     </div>
-                    <div class="stem">
+                    <div class="stem" id="music">
                         <div class="stem-title">Music</div>
                         <div class="stem-file" *ngIf="musicStem">{{ musicStem | filename }}</div>
                         <div class="stem-file" *ngIf="!musicStem">stem not uploaded</div>
@@ -89,20 +111,11 @@
                         <input type="file" style="display: none;" #music (change)="onFileChange($event, 'music')">
                     </div>
                 </div>
+
                 <div class="settings-selection" *ngIf="communicationsSelected">
                     <div class="selection-title">Communications</div>
                 </div>
             </div>
         </div>
-        <div class="audio-controls">
-            <button mat-raised-button (click)="audioPlayPause()"><mat-icon>play_arrow</mat-icon></button>
-            <button mat-raised-button (click)="audioStop()"><mat-icon>stop</mat-icon></button>
-            <button mat-raised-button (click)="audioRestart()"><mat-icon>restart</mat-icon></button>
-          </div>
-        <mat-slider class="example-margin" [(ngModel)]="currentTime" max="{{duration}}" style="width: 100%;">
-            <input type="range" matSliderThumb>
-        </mat-slider>
-        <mat-progress-bar style="position: absolute; " [mode]="mode" [value]="progress * 100" ></mat-progress-bar>
-        {{progress}}
     </div>
 </div>
