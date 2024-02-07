@@ -292,20 +292,7 @@ button {
     font-weight: 100;
 }
 
-.file-title-container {
-    white-space: nowrap;
-}
-
-.file-title {
-    color: white;
-    letter-spacing: 2px; 
-    font-weight: 100;
-    font-size: 90%;
-    padding: 1rem 1rem 0 1rem;
-    overflow-x: hidden;
-}
-
-
+// A U D I O    C O N T R O L S 
 
 .audio-controls {
     float: left;
@@ -315,14 +302,70 @@ button {
     box-shadow: 0px 0px 0px -2px black;
     border-radius: 8px;
     margin: auto;
-    background: linear-gradient(#3030302b, #1f1f1f);
+    background: linear-gradient(#1f1f1f, #00000087);
     opacity: 0;
     height: 0px;
     animation: audioPlayer 1s ease forwards;
 }
 
-.display-none {
-    display: none;
+.audio-controls-2 {
+    display: block;
+    margin-top: 10px;
+    width: 100%;
+    box-shadow: 0px 0px 0px -2px black;
+    border-radius: 8px;
+    margin: auto;
+    background: linear-gradient(#1f1f1f, #00000087);
+    opacity: 0;
+    animation: audioPlayer .4s ease forwards;
+}
+
+.audio-control-left {
+    width: 245px;
+    display: inline-block;
+    // border: 1px solid green;
+}
+
+.audio-control-right {
+    // border: 1px solid yellow;
+    width: 49px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.file-title-container {
+    white-space: nowrap;
+    overflow-x: hidden;
+    position: relative;
+    width: 218px; 
+    height: 33px; 
+    margin-left: 20px;
+}
+
+.file-title {
+    white-space: nowrap;
+    position: absolute;
+    color: white;
+    letter-spacing: 2px;
+    font-weight: 100;
+    font-size: 90%;
+    padding: 1rem 1rem 0 1rem;
+    animation: scrollText 6s linear infinite;
+}
+
+.audio-title-text-container {
+    white-space: nowrap;
+    position: relative;
+    overflow-x: hidden;
+    height: 33px;
+    margin-top: 6px;
+    margin-left: 4px;
+}
+
+.audio-title-text {
+    white-space: nowrap;
+    position: absolute;
+    animation: scrollText 6s linear infinite;
 }
 
 .play-pause-stop-buttons {
@@ -330,6 +373,7 @@ button {
     opacity: 0;
     display: flex;
     justify-content: space-evenly;
+    margin-left: 12px;
 }
 
 .audio-control {
@@ -340,6 +384,7 @@ button {
 }
 
 .audio-slider {
+    width: 98% !important;
     opacity: 0;
     animation: fadeIn 1s ease .4s forwards;
 }
@@ -354,18 +399,6 @@ button {
     margin-top: 5px;
 }
 
-.mat-slider {
-    width: 93% !important;
-    margin-left: 10px;
-}
-
-.audio-control-left {
-    float: left;
-    width: 80%;
-    margin-left: 10px;
-}
-
-.audio-control-right {
-    float: right;
-    width: 49px;
+.mat-slider-wrapper {
+    background: white !important;
 }

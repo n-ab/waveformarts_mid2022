@@ -52,6 +52,7 @@ import { ProjectListComponent } from './components/project-list/project-list.com
 import { ProjectFilesComponent } from './components/project-files/project-files.component';
 import { ProjectSettingsComponent } from './components/project-settings/project-settings.component';
 import { FilenamePipe } from './pipes/filenamePipe';
+import { AudioWorkletComponent } from './components/audio-worklet/audio-worklet.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +84,8 @@ import { FilenamePipe } from './pipes/filenamePipe';
     ContactPostComponent,
     ProjectListComponent,
     ProjectFilesComponent,
-    ProjectSettingsComponent
+    ProjectSettingsComponent,
+    AudioWorkletComponent
   ],
   imports: [
     BrowserModule,

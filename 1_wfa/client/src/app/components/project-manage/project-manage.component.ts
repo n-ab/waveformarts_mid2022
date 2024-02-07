@@ -45,7 +45,8 @@ export class ProjectManageComponent implements OnInit, AfterViewInit {
   
   // audio handling
   @ViewChild('progressBar') progressBar!: ElementRef;
-  @ViewChild('slider') slider!: MatSlider;
+  @ViewChild('timeSlider') timeSlider!: MatSlider;
+  @ViewChild('volumeSlider') volumeSlider!: MatSlider;
   audio!: HTMLAudioElement;
   duration!: number;
   currentTime = 0;
@@ -53,12 +54,17 @@ export class ProjectManageComponent implements OnInit, AfterViewInit {
   progress!: number;
   sliderValue = 0;
   mode: ProgressBarMode = 'determinate';
-  volume = 100;
+  volume = 20;
   playPause = 'play' || 'pause' ;
   color = 'primary';
   selectedAudio = '';
   audioControlPanel!: HTMLElement | null;
   showControlPanel = false;
+  // new maybe unneeded shit related to 'audio handling'
+  audioContext!: AudioContext; 
+  analyser!: AnalyserNode;
+  // javascriptNode!: ScriptProcessorNode; 
+  analyserVolumeLevel = 0;
 
   // display booleans
   filesSelected = false;
@@ -119,13 +125,21 @@ export class ProjectManageComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (this.slider) {
-      this.slider.valueChange.subscribe(newValue => {
-        console.log('slider moved to new value: ', newValue);
+    if (this.timeSlider) {
+      this.timeSlider.valueChange.subscribe(newValue => {
+        console.log('time slider moved to new value: ', newValue);
         if (newValue !== null) {
           this.currentTime = newValue;
           this.progress = newValue;
         }
+      })
+    }
+    if (this.volumeSlider) {
+      this.volumeSlider.valueChange.subscribe(newVolume => {
+        console.log('volume changed to ', newVolume);
+        if (newVolume !== null) {
+          this.volume = newVolume;
+        } 
       })
     }
     this.audioControlPanel = document.getElementById('audio-controls');
@@ -178,16 +192,6 @@ export class ProjectManageComponent implements OnInit, AfterViewInit {
     })
     .catch(err => err);
   }
-
-  // YOU ADDED AN ADDITIONAL FIELD TO project.filePaths
-  // It is now, project.filePaths[{filePath: String, fileType: String}]
-
-  // you need to re-code how files are uploaded. You need to add
-  // a filetype-specific string to each file in its corresponding
-  // button click function, i.e. onFileChange($event, 'fileType')
-  //                                                  ^ aaf, dialogStem, .mov, ambienceStem, etc
-
-  // you have this set up already on line 32 of project-manage.component.html
 
   removeFile(type: string) {
     this.fileService.removeFile(this.project._id, type)
@@ -289,6 +293,34 @@ export class ProjectManageComponent implements OnInit, AfterViewInit {
     this.audio.volume = this.volume / 100;
     audio.play();
     return;
+  }
+
+  updateVolume(newVolume: any ): void {
+    console.log('\\\\\\\\\\\\\\\\\\\\\\\\\\\\');
+    console.log('new volume - ', newVolume);
+    
+    const exponent = 4;
+    const transformedVolume = Math.pow(newVolume, exponent);
+    console.log('transformed volume - ', transformedVolume);
+    this.volume = transformedVolume;
+    this.audio.volume = transformedVolume;
+    const actualVolume = Math.pow(transformedVolume, 1 / exponent);
+    console.log('actual volume - ', actualVolume);
+    this.volume = actualVolume;
+    this.audio.volume = actualVolume;
+    console.log('||||||||||||||');
+  }
+
+  updatePlaybackPosition(newPosition: any ): void {
+    console.log('\\\\\\\\\\\\\\\\\\\\\\\\\\\\');
+    console.log('new volume - ', newPosition);
+    this.currentTime = newPosition;
+    this.audio.currentTime = newPosition;
+    console.log('this.audio.currentTime = ', this.audio.currentTime);
+    console.log('this.currentTime = ', this.currentTime);
+    
+    console.log('||||||||||||||');
+    
   }
 
   instantiateAudioPlayer(event: any) {

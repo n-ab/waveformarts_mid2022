@@ -1,8 +1,8 @@
 <div class="project-wrapper">
     <div class="project" *ngIf="project">
         <div class="project-title">
-            <div class="project-title-container">{{ project.title }}</div>
-            <div class="project-lead-name">{{ project.projectLeadName }}</div>
+            <div class="project-title-container">{{ project.title }} {{ volume }}</div>
+            <div class="project-lead-name">{{ project.projectLeadName }} {{ currentTime }}</div>
         </div>
         
         <br><br>
@@ -24,7 +24,7 @@
                 </div>
 
         <!-- ======== audio controller ========= -->
-        <div class="audio-controls" id="audio-controls" *ngIf="audio">
+        <!-- <div class="audio-controls" id="audio-controls" *ngIf="audio">
             <div class="audio-control-left">
                 <div class="file-title-container"><div class="file-title">{{ selectedAudio }}</div></div>
                 <div class="play-pause-stop-buttons">
@@ -34,9 +34,29 @@
                 </div>
             </div>
             <div class="audio-control-right">
-                <mat-slider vertical class="volume-slider" [(ngModel)]="volume" max="1" step="0.01"><input type="range" matSliderThumb></mat-slider>
+                <mat-slider #volumeSlider vertical class="volume-slider" [(ngModel)]="volume" max="1" step="0.01" (input)="updateVolume($event.value)"><input type="range" matSliderThumb></mat-slider>
             </div>
-            <mat-slider class="audio-slider" [color]="color" [(ngModel)]="currentTime" max="{{duration}}" style="width: 100%;" step="0.01"><input type="range" matSliderThumb></mat-slider>
+            <mat-slider #timeSlider class="audio-slider" [color]="color" [(ngModel)]="currentTime" max="{{duration}}" style="width: 100%;" step="0.01" (input)="updatePlaybackPosition($event.value)"><input type="range" matSliderThumb></mat-slider>
+        </div> -->
+
+        <!-- SECOND ATTEMPT  -->
+        <div class="audio-controls-2" id="audio-controls" *ngIf="audio">
+            <div class="audio-control-row-top" style=" height: 60px; display: flex;">
+                <div class="audio-title-and-controls" style=" height: 50px; flex: 80;">
+                    <div class="audio-title-text-container"><div class="audio-title-text" style=" color: white; font-weight: 100; padding: 5px; letter-spacing: 2px;">{{ selectedAudio }}</div></div>
+                    <div class="audio-controls-ree"   style=" display: flex; justify-content: space-evenly; height: 46px; margin-left: 13px;">
+                        <button class="audio-control" mat-raised-button (click)="audioPlayPause('play')"><mat-icon>play_arrow</mat-icon></button>
+                        <button class="audio-control" mat-raised-button (click)="audioPlayPause('pause')"><mat-icon>pause</mat-icon></button>
+                        <button class="audio-control" mat-raised-button (click)="audioStop()"><mat-icon>stop</mat-icon></button>
+                    </div>
+                </div>
+                <div class="audio-volume-slider" style=" flex: 20; height: 78px; margin-top: 9px;">
+                    <mat-slider showTickMarks discrete #volumeSlider vertical class="volume-slider" style="display: block; margin: auto; height: 95%;" [(ngModel)]="volume" max="1" step="0.01" (input)="updateVolume($event.value)"><input type="range" matSliderThumb></mat-slider>
+                </div>
+            </div>
+            <div class="audio-control-row-bottom" style=" width: 100%;">
+                <mat-slider showTickMarks discrete #timeSlider class="audio-slider-2" style="width: 99%; margin-top: 20px;" [color]="color" [(ngModel)]="currentTime" max="{{duration}}" step="0.01" (input)="updatePlaybackPosition($event.value)"><input type="range" matSliderThumb></mat-slider>
+            </div>
         </div>
         <!-- ========  end audio controller ========= -->
         </div>
