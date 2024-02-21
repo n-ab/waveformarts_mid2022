@@ -25,6 +25,8 @@ app.get('/fetchFiles/:id', async (req: any, res) => {
 })
 
 app.post('/startProject', async (req: any, res) => {
+    console.log('trying to start project from /upload client side: ', req.body);
+    
     if (req.user) {
         const project = await projectController.startProject(req.body.projectData, req.user._id);
         return res.status(200).json(project);

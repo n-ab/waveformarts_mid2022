@@ -1,70 +1,24 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MetricsService } from 'src/app/services/metrics.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { ProjectObject } from '../../../../../server/src/models/project';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from '../../models';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FileService } from 'src/app/services/file.service';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { saveAs } from 'file-saver';
+import { DomSanitizer } from '@angular/platform-browser';
 import { UserService } from 'src/app/services/user.service';
 import { UserObject } from '../../../../../server/src/models/user';
-import { ProgressBarMode } from '@angular/material/progress-bar';
-import { MatSlider } from '@angular/material/slider';
-
-export interface TrimmedUserObject {
-  id: string,
-  email: string,
-  pending: boolean,
-}
-
-export interface TrimmedDiscussionObject {
-  id: string,
-  recentMessagePreview: string,
-  thereIsRecentMessage: boolean
-}
-
-export interface TrimmedFileObject {
-  filePath: string,
-  data: {
-    type: string,
-    data: any[]
-  }
-}
 
 @Component({
   selector: 'app-project-manage',
   templateUrl: './project-manage.component.html',
   styleUrls: ['./project-manage.component.scss']
 })
-export class ProjectManageComponent implements OnInit, AfterViewInit {
+export class ProjectManageComponent implements OnInit {
 
   project!: ProjectObject;
   user!: UserObject;
-  
-  // audio handling
-  @ViewChild('progressBar') progressBar!: ElementRef;
-  @ViewChild('timeSlider') timeSlider!: MatSlider;
-  @ViewChild('volumeSlider') volumeSlider!: MatSlider;
-  audio!: HTMLAudioElement;
-  duration!: number;
-  currentTime = 0;
-  audioPlaying = false;
-  progress!: number;
-  sliderValue = 0;
-  mode: ProgressBarMode = 'determinate';
-  volume = 20;
-  playPause = 'play' || 'pause' ;
-  color = 'primary';
-  selectedAudio = '';
-  audioControlPanel!: HTMLElement | null;
-  showControlPanel = false;
-  // new maybe unneeded shit related to 'audio handling'
-  audioContext!: AudioContext; 
-  analyser!: AnalyserNode;
-  // javascriptNode!: ScriptProcessorNode; 
-  analyserVolumeLevel = 0;
+  audioFilePath!: string;
 
   // display booleans
   filesSelected = false;
@@ -107,8 +61,6 @@ export class ProjectManageComponent implements OnInit, AfterViewInit {
       if (!user) return this.router.navigateByUrl('');
       return this.user = user;
     })
-    // if (!history.state.id) { this.router.navigateByUrl('account'); }
-    // if (history.state.id == undefined) { this.router.navigateByUrl('account'); }
     this.route.params.subscribe(params => {
       const projectId = params['id']
       this.metricsService.addPageMetrics(this.metricHeader, history.state.navigatedFrom);
@@ -122,27 +74,6 @@ export class ProjectManageComponent implements OnInit, AfterViewInit {
           return err;
         });
     })
-  }
-
-  ngAfterViewInit(): void {
-    if (this.timeSlider) {
-      this.timeSlider.valueChange.subscribe(newValue => {
-        console.log('time slider moved to new value: ', newValue);
-        if (newValue !== null) {
-          this.currentTime = newValue;
-          this.progress = newValue;
-        }
-      })
-    }
-    if (this.volumeSlider) {
-      this.volumeSlider.valueChange.subscribe(newVolume => {
-        console.log('volume changed to ', newVolume);
-        if (newVolume !== null) {
-          this.volume = newVolume;
-        } 
-      })
-    }
-    this.audioControlPanel = document.getElementById('audio-controls');
   }
   
   displaySelection(selection: string) {
@@ -210,18 +141,7 @@ export class ProjectManageComponent implements OnInit, AfterViewInit {
         console.log('directory created: ', directory);
         if (fileList.length > 0) {
           const file: File = fileList[0];
-          let projectTitle = this.project.title;
-          let historyStateId = history.state.id;
-          let fileName = file.name;
           const formData = new FormData();
-          let deleteMe = {
-            projectTitle,
-            historyStateId,
-            file,
-            fileName,
-            fileType
-          };
-          console.log('deleteMe: ', deleteMe);
           formData.append('fileType', fileType);
           formData.append('companyProject', this.project.title);
           formData.append('_id', this.project._id);
@@ -251,22 +171,11 @@ export class ProjectManageComponent implements OnInit, AfterViewInit {
             case 'movie':    this.movieFile = match[1];       this.audioFiles.push({fileName: match[1], file}); break;
             default: break;
           }
-          this.sanitizer.bypassSecurityTrustResourceUrl(`http://localhost:8000/audioFiles/${file}`);
+          // this.sanitizer.bypassSecurityTrustResourceUrl(`http://localhost:8000/audioFiles/${file}`);
         });
         console.log(`${project}, ${files.length} files`);
-        this.fetchFullFiles();
       })
       .catch(err => err);
-  }
-
-  async fetchFullFiles() {
-    this.fileService.renderFullFiles(this.project._id)
-      .then(files => {
-        console.log('files: ', files);
-        
-        // this.blobify(files);
-        this.renderedFiles = files;
-     });
   }
 
   async download(event: any) {
@@ -274,71 +183,8 @@ export class ProjectManageComponent implements OnInit, AfterViewInit {
   }
 
   async listen(event: any) {
-    this.instantiateAudioPlayer(event);
+    console.log('project-manage - listen event: ', event);
     const url = `http://localhost:8000/audioFiles/${this.project.title}/${event}`;
-    const audio = new Audio(url);
-    this.audio = audio;
-    this.selectedAudio = event;
-    audio.addEventListener('canplay', (event) => {
-      console.log('this.audio = ', this.audio);
-      
-      this.duration = this.audio.duration;
-    });
-    audio.addEventListener('timeupdate', (event) => {
-      this.currentTime = this.audio.currentTime;
-      this.progress = audio.currentTime / audio.duration;
-    });
-    this.audioPlaying = true;
-    this.audio.currentTime = this.currentTime;
-    this.audio.volume = this.volume / 100;
-    audio.play();
-    return;
-  }
-
-  updateVolume(newVolume: any ): void {
-    console.log('\\\\\\\\\\\\\\\\\\\\\\\\\\\\');
-    console.log('new volume - ', newVolume);
-    
-    const exponent = 4;
-    const transformedVolume = Math.pow(newVolume, exponent);
-    console.log('transformed volume - ', transformedVolume);
-    this.volume = transformedVolume;
-    this.audio.volume = transformedVolume;
-    const actualVolume = Math.pow(transformedVolume, 1 / exponent);
-    console.log('actual volume - ', actualVolume);
-    this.volume = actualVolume;
-    this.audio.volume = actualVolume;
-    console.log('||||||||||||||');
-  }
-
-  updatePlaybackPosition(newPosition: any ): void {
-    console.log('\\\\\\\\\\\\\\\\\\\\\\\\\\\\');
-    console.log('new volume - ', newPosition);
-    this.currentTime = newPosition;
-    this.audio.currentTime = newPosition;
-    console.log('this.audio.currentTime = ', this.audio.currentTime);
-    console.log('this.currentTime = ', this.currentTime);
-    
-    console.log('||||||||||||||');
-    
-  }
-
-  instantiateAudioPlayer(event: any) {
-    console.log('this.audioControlPanel = ', this.audioControlPanel);
-    console.log('getelementbyid event = ', document.getElementById(`${event}`));
-    
-    if (this.audioControlPanel) {
-      const parent = document.getElementById(`${event}`)?.insertAdjacentElement('afterend', this.audioControlPanel);
-    }
-  }
-
-  audioPlayPause(selection: string) {
-    if (selection == 'play') { this.playPause = 'play'; return this.audio.play() }
-    else { this.playPause = 'pause'; return this.audio.pause() }
-  }
-
-  audioStop() {
-    this.audio.pause();
-    this.audio.currentTime = 0;
+    this.audioFilePath = url;
   }
 }

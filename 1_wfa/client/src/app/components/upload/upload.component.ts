@@ -56,7 +56,12 @@ export class UploadComponent implements OnInit, AfterViewInit {
     this.formCheck();
   }
 
-  soundSelected(event: Event): void {
+  soundSelected(event: any): void {
+    const title = this.uploadForm.get('companyProject');
+    const fileTypes = '';
+    const filesList = Array.from(event.target.files);
+    console.log('filesList: ', filesList);
+    
     if ((event.target as HTMLInputElement).files![0] != null) {
       // tslint:disable-next-line:no-non-null-assertion
       const files = (event.target as HTMLInputElement).files!;

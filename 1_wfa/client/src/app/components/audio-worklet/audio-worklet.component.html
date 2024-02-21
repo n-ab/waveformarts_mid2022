@@ -1,1 +1,19 @@
-<p>audio-worklet works!</p>
+<div class="audio-controls-2" id="audio-controls" *ngIf="audio">
+    <div class="audio-control-row-top" >
+        <div class="audio-title-and-controls" >
+            <div style="color: white; letter-spacing: 2px; padding: 10px 0px 0px 10px; font-weight: 100;">{{ category | uppercase }}</div>
+            <div class="audio-title-text-container"><div class="audio-title-text" >{{ fileName }}</div></div>
+            <div class="audio-controls-ree">
+                <button class="audio-control" mat-raised-button (click)="audioPlayPause('play')"><mat-icon>play_arrow</mat-icon></button>
+                <button class="audio-control" mat-raised-button (click)="audioPlayPause('pause')"><mat-icon>pause</mat-icon></button>
+                <button class="audio-control" mat-raised-button (click)="audioStop()"><mat-icon>stop</mat-icon></button>
+            </div>
+        </div>
+        <div class="audio-volume-slider" >
+            <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1" min="0" max="100" discrete #volumeSlider vertical class="volume-slider" [(ngModel)]="volume" max="1" step="0.01" (input)="updateVolume($event.value)"><input type="range" matSliderThumb></mat-slider>
+        </div>
+    </div>
+    <div class="audio-control-row-bottom" >
+        <mat-slider thumbLabel [displayWith]="formatLabel2" tickInterval="1" min="0" max="100" discrete #timeSlider class="audio-slider-2" [color]="color" [(ngModel)]="currentTime" max="{{duration}}" step="0.01" (input)="updatePlaybackPosition($event.value)"><input type="range" matSliderThumb></mat-slider>
+    </div>
+</div>
