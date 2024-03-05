@@ -4,10 +4,8 @@
             <div class="project-title-container">{{ project.title }}</div>
             <div class="project-lead-name">{{ project.projectLeadName }}</div>
         </div>
-        
         <br><br>
         <div class="project-content-container">
-
             <div class="settings-column"> <!-- settings column -->
                 <div class="settings-wrapper">
                     <div class="settings-column-item" (click)="displaySelection('files')" style="border-top-left-radius: 8px; border-top-right-radius: 8px;">
@@ -22,50 +20,8 @@
                         <div class="item-title">Communications</div>
                     </div>
                 </div>
-
-        <!-- ======== audio controller ========= -->
-        <!-- <div class="audio-controls" id="audio-controls" *ngIf="audio">
-            <div class="audio-control-left">
-                <div class="file-title-container"><div class="file-title">{{ selectedAudio }}</div></div>
-                <div class="play-pause-stop-buttons">
-                    <button class="audio-control" mat-raised-button (click)="audioPlayPause('play')"><mat-icon>play_arrow</mat-icon></button>
-                    <button class="audio-control" mat-raised-button (click)="audioPlayPause('pause')"><mat-icon>pause</mat-icon></button>
-                    <button class="audio-control" mat-raised-button (click)="audioStop()"><mat-icon>stop</mat-icon></button>
-                </div>
-            </div>
-            <div class="audio-control-right">
-                <mat-slider #volumeSlider vertical class="volume-slider" [(ngModel)]="volume" max="1" step="0.01" (input)="updateVolume($event.value)"><input type="range" matSliderThumb></mat-slider>
-            </div>
-            <mat-slider #timeSlider class="audio-slider" [color]="color" [(ngModel)]="currentTime" max="{{duration}}" style="width: 100%;" step="0.01" (input)="updatePlaybackPosition($event.value)"><input type="range" matSliderThumb></mat-slider>
-        </div> -->
-
-        <!-- SECOND ATTEMPT  -->
-        <!-- <div class="audio-controls-2" id="audio-controls" *ngIf="audio">
-            <div class="audio-control-row-top" style=" height: 60px; display: flex;">
-                <div class="audio-title-and-controls" style=" height: 50px; flex: 80;">
-                    <div class="audio-title-text-container"><div class="audio-title-text" style=" color: white; font-weight: 100; padding: 5px; letter-spacing: 2px;">{{ selectedAudio }}</div></div>
-                    <div class="audio-controls-ree"   style=" display: flex; justify-content: space-evenly; height: 46px; margin-left: 13px;">
-                        <button class="audio-control" mat-raised-button (click)="audioPlayPause('play')"><mat-icon>play_arrow</mat-icon></button>
-                        <button class="audio-control" mat-raised-button (click)="audioPlayPause('pause')"><mat-icon>pause</mat-icon></button>
-                        <button class="audio-control" mat-raised-button (click)="audioStop()"><mat-icon>stop</mat-icon></button>
-                    </div>
-                </div>
-                <div class="audio-volume-slider" style=" flex: 20; height: 78px; margin-top: 9px;">
-                    <mat-slider showTickMarks discrete #volumeSlider vertical class="volume-slider" style="display: block; margin: auto; height: 95%;" [(ngModel)]="volume" max="1" step="0.01" (input)="updateVolume($event.value)"><input type="range" matSliderThumb></mat-slider>
-                </div>
-            </div>
-            <div class="audio-control-row-bottom" style=" width: 100%;">
-                <mat-slider showTickMarks discrete #timeSlider class="audio-slider-2" style="width: 99%; margin-top: 20px;" [color]="color" [(ngModel)]="currentTime" max="{{duration}}" step="0.01" (input)="updatePlaybackPosition($event.value)"><input type="range" matSliderThumb></mat-slider>
-            </div>
-        </div> -->
-        <!-- ========  end audio controller ========= -->
-
-        <!-- third attempt  -->
-
         <app-audio-worklet *ngIf="audioFilePath" [audioSrc]="audioFilePath"></app-audio-worklet>
-
         </div>
-
             <div class="settings-selections"> <!-- settings selection -->
                 <div class="settings-selection" *ngIf="filesSelected">
                     <div class="selection-title">Files</div>
@@ -136,7 +92,6 @@
                         <input type="file" style="display: none;" #music (change)="onFileChange($event, 'music')">
                     </div>
                 </div>
-
                 <div class="settings-selection" *ngIf="communicationsSelected">
                     <div class="selection-title">Communications</div>
                 </div>
