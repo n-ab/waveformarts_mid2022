@@ -68,6 +68,8 @@ export class AccountComponent implements OnInit {
       height: '450px',
       maxWidth: '700px'
     }).afterClosed().subscribe(projectData => {
+      // data returned from StartProjectComponent
+      // title, projectLeadEmail, description, projectLeadName, emailList
       this.projectService.startProject(projectData);
       setTimeout(() => {
         this.fetchProjectsByUserId();

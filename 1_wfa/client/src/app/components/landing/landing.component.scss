@@ -2,19 +2,24 @@
 
 .wrapper {
     position: absolute;
-    width: 100vw;
+    width: 98vw;
+    color: white;
 }
 
-.header {
+.header-container {
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-weight: 100;
+    font-size: 250%;
+}
+
+.header-2 {
     position: absolute;
     top: 10%;
-    width: 100%;
+    width: 300px;
     text-align: center;
-    font-weight: 100;
-    font-size: 375%;
-    letter-spacing: 20px;
-    color: white;
-    animation: logoTransition 2.3s ease forwards;
+    animation: logoTransition2 4s ease forwards;
 }
 
 .display-none {
@@ -49,7 +54,7 @@
     display: flex;
     justify-content: space-around;
     margin-top: 85px;
-    font-size: 72%;
+    font-size: 65%;
     user-select: none;
 }
 
@@ -65,11 +70,11 @@
     font-weight: 100;
     width: 96%;
     max-width: 1000px;
-    opacity: 0;
     z-index: 11;
     border-radius: 13px;
-    background-image: linear-gradient(0.31turn, #00d0ff, #0088ff);   
-    animation: fadeIn 2s ease 3.8s forwards;
+    background: linear-gradient(0.46turn, #00d0ff, #006dcb67, black);
+    opacity: 0;
+    animation: fadeIn 1s ease 2s forwards;
 }
 
 #first-content-box {
@@ -77,30 +82,25 @@
 }
 
 .content-box {
-    background-image: linear-gradient
-    (rgb(255 165 0 / 0%), 
-    rgb(16 0 255 / 42%));
     box-shadow: 0px 30px 50px -25px #000000;
-    // margin: 17px 10px 40px 10px;
     border-radius: 13px;
     padding: 0px 5px 1px 5px;
+    letter-spacing: 2px;
 }
 
 .content-title {
-    color: #e1fffd;
     text-align: center;
     padding: 2rem 1rem 0rem 1rem;
     font-size: 192%;
 }
 
 .content-text {
-    color: #bffffc;
     padding: 0 10px;
     line-height: 1.6;
     width: 80%;
     margin: auto;
     margin-top: 20px;
-    font-size: 125%;
+    font-size: 155%;
 }
 
 .landing-button-container {
@@ -113,7 +113,6 @@ button {
     border: none;
     border-radius: 5px;
     width: 25%;
-    color: #bffffc;
     font-weight: 100;
     letter-spacing: 1px;
     height: 48px;
@@ -128,7 +127,6 @@ button {
 .click-here {
     color: white;
     font-size: 105%;
-    // border: 1px solid lightgrey;
     padding: 4px 5px;
     background-color: rgba(0, 0, 0, 0.158);
     border-radius: 5px;
@@ -139,9 +137,6 @@ button {
     font-size: 200%;
 }
 
-
-// landing item transition effect
-// i.e. 'sound design' 'composition' 'dialog editing'
 .lfi1 {
     opacity: 0;
     animation: fadeIn 3s ease 2.2s forwards;

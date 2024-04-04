@@ -49,6 +49,12 @@ export class UploadComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.description = document.getElementById('description');
     document.getElementById('upload')?.classList.add('invalid');
+    // document.body.scrollTop = 0;
+    const scrollOptions: ScrollIntoViewOptions = {
+      behavior: 'smooth',
+      block: 'start',
+    }
+    document.documentElement.scrollIntoView(scrollOptions);
   }
 
   onChange(change: any) {
@@ -88,30 +94,37 @@ export class UploadComponent implements OnInit, AfterViewInit {
 
   upload(): void {
     const formData = new FormData();
-    this.selectedFiles.forEach((file, i) => { formData.append('files', this.selectedFiles[i]); });
-    formData.append('companyProject', this.uploadForm.get('companyProject')!.value);
-    formData.append('email', this.uploadForm.get('email')!.value);
-    formData.append('description', this.uploadForm.get('description')!.value);
-    // attempt 2
-    this.projectService.startProject(formData);
-
-
-    // STEP 1
-    // this.fileService.prepareDestinationFolder({destinationFolder: this.uploadForm.get('companyProject')!.value})
-      // .then(() => {
-    // STEP 2
-        // this.fileService.uploadFile(formData);
-      // })
+    // this.selectedFiles.forEach((file, i) => { formData.append('files', this.selectedFiles[i]); });
+    // companyProject, email, description, audioFile
+    // required properties: title = this.project.title, fileType: string
+    // in this case, make fileType = 'projectWavs'
+    const companyProject = this.uploadForm.get('companyProject')!.value;
+    this.fileService.prepareDestinationFolder({title: companyProject, fileType: 'projectWavs'})
+      .then(directory => {
+        console.log('directory created: ', directory);
+        if (this.selectedFiles.length > 0) {
+          for (let i = 0; i < this.selectedFiles.length; i++) {
+            const file: File = this.selectedFiles[i]; 
+            const fileObject = { file: file, name: file.name};
+            formData.append('files[]', JSON.stringify(fileObject));
+          }
+          formData.append('companyProject', this.uploadForm.get('companyProject')!.value);
+          formData.append('email', this.uploadForm.get('email')!.value);
+          formData.append('description', this.uploadForm.get('description')!.value);
+          this.projectService.startProject(formData);
+          this.fileService.uploadFile(formData)
+            .then(() => {
+              this.router.navigateByUrl('')
+            })
+        }
+      })
   }
 
   formCheck(): void {
     if (this.uploadForm.valid) { document.getElementById('upload')?.classList.remove('invalid'); }
     if (!this.uploadForm.valid) { document.getElementById('upload')?.classList.add('invalid'); }
   }
-
-
 }
 
-// copy and paste the following test project description
-
-// Hello, \r\n\r\nWhat we need is basic dialog editing on a 60 to 70 minute long piece. There was a loud hum from one of the mics but our sound guy didn't record ISOs so we have the hum throughout all of our audio. It was a panel between three speakers and a host, all on lav with handheld mics for the speakers. Let us know how much time and cost would be required for you to work on this. \r\n\r\nThanks, \r\n\r\nNick
+// test project description
+// Hello, What we need is basic dialog editing on a 60 to 70 minute long piece. There was a loud hum from one of the mics but our sound guy didn't record ISOs so we have the hum throughout all of our audio. It was a panel between three speakers and a host, all on lav with handheld mics for the speakers. Let us know how much time and cost would be required for you to work on this. Thanks, Nick

@@ -142,6 +142,9 @@ export class ProjectManageComponent implements OnInit {
         if (fileList.length > 0) {
           const file: File = fileList[0];
           const formData = new FormData();
+          // fileType = parent subfolder 
+          // file.name = name of file in parent subfolder
+          // file = the actual file being placed
           formData.append('fileType', fileType);
           formData.append('companyProject', this.project.title);
           formData.append('_id', this.project._id);

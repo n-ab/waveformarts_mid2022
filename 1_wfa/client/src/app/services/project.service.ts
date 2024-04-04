@@ -14,9 +14,6 @@ export class ProjectService {
 
   startProject(data: FormData) {
     console.log('2 2 2 2 ');
-    // return this.http.post('/api/project/startProjectWithNoFiles', data).toPromise()
-    //   .then(project => project)
-    //   .catch(err => err);
     return this.http.post('/api/project/startProject', data).toPromise()
       .then(data => data)
       .catch(err => err);

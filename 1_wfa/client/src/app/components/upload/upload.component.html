@@ -1,67 +1,28 @@
 <div class="upload-wrapper">
-    <div class="upload-title">Get Started With Us </div>
+    <div class="upload-title">Let's Get To Work</div>
     <div class="upload-description">Upload your project files below and provide a brief description of what needs to be done. We'll review the files and give you a time estimate for completion, typically 12 to 24 hours but may take less or more time depending on audio quality and edit goals.</div>
     <form class="upload-form-2" [formGroup]="uploadForm" (ngSubmit)="upload()" enctype="multipart/form-data">
         <div class="metadata-2">
             <div class="box-header">Your Info</div>
-            <div class="metadata-left-right-container">
-                <div class="metadata-left">
-                    <mat-form-field>   <input matInput type="text" name="companyProject" formControlName="companyProject" placeholder="Company Name / Project Name"></mat-form-field>
-                    <mat-form-field *ngIf="!user">   <input matInput type="text" name="email" formControlName="email" placeholder="Contact Email"></mat-form-field>
-                    <div class="user" *ngIf="user">{{ user | json }}</div>
-                    <mat-form-field><textarea matInput type="text" name="description" formControlName="description" placeholder="What needs to be done?" class="description" id="description"></textarea></mat-form-field>
-                </div>
-                <div class="metadata-right">
-                    <div class="files-2">
-                        <div class="file-mini-container" *ngIf="selectedFiles.length == 0">
-                            <input type="file" style="display: none;" name="audioFile" formControlName="audioFile"  #sound (change)="soundSelected($event)" multiple>
-                            <button mat-raised-button type="button" class="upload-button" (click)="sound.click()">click to select files</button>
-                        </div>
-                        <div class="file-list" id="file-list" *ngIf="selectedFiles.length">
-                            <div *ngFor="let file of selectedFiles">
-                                <div class="file">{{ file.name }}</div>
-                            </div>
+                <mat-form-field>   <input matInput type="text" name="companyProject" formControlName="companyProject" placeholder="Company Name / Project Name"></mat-form-field>
+                <mat-form-field *ngIf="!user">   <input matInput type="text" name="email" formControlName="email" placeholder="Contact Email"></mat-form-field>
+                <div class="user" *ngIf="user">{{ user | json }}</div>
+                <mat-form-field><textarea matInput type="text" name="description" formControlName="description" placeholder="What needs to be done?" class="description" id="description"></textarea></mat-form-field>
+                <div>
+                    <div class="file-mini-container" *ngIf="selectedFiles.length == 0">
+                        <input type="file" style="display: none;" name="audioFile" formControlName="audioFile"  #sound (change)="soundSelected($event)" multiple>
+                        <button mat-raised-button type="button" class="upload-button" (click)="sound.click()">click to select files</button>
+                    </div>
+                    <div class="file-list" id="file-list" *ngIf="selectedFiles.length">
+                        <div class="upload-success">Uploading these files</div>
+                        <div class="spacer"></div>
+                        <div *ngFor="let file of selectedFiles">
+                            <div class="file">{{ file.name }}</div>
                         </div>
                     </div>
                 </div>
-            </div>
+                <div class="spacer-2" *ngIf="selectedFiles.length"></div>
+                <button mat-raised-button type="submit" class="submit" *ngIf="selectedFiles.length">submit</button>
         </div>
     </form>
-    <form class="upload-form" [formGroup]="uploadForm" (ngSubmit)="upload()" enctype="multipart/form-data">
-        <div class="metadata">
-            <div class="box-header">Your Info</div>
-            <mat-form-field>   <input matInput type="text" name="companyProject" formControlName="companyProject" placeholder="Company Name / Project Name"></mat-form-field>
-            <mat-form-field *ngIf="!user">   <input matInput type="text" name="email" formControlName="email" placeholder="Contact Email"></mat-form-field>
-            <div class="user" *ngIf="user">{{ user | json }}</div>
-            <mat-form-field><textarea matInput type="text" name="description" formControlName="description" placeholder="What needs to be done?" class="description" id="description"></textarea></mat-form-field>
-        </div>
-        <hr class="hr-mobile">
-        <div class="files">
-            <div class="box-header">Files</div>
-            <div class="file-mini-container" *ngIf="selectedFiles.length == 0">
-                <input type="file" style="display: none;" name="audioFile" formControlName="audioFile"  #sound (change)="soundSelected($event)" multiple>
-                <button mat-raised-button type="button" class="upload-button" (click)="sound.click()">click to select files</button>
-            </div>
-            <div class="file-list" id="file-list" *ngIf="selectedFiles.length">
-                <div *ngFor="let file of selectedFiles">
-                    <div class="file">{{ file.name }}</div>
-                </div>
-            </div>
-        </div>
-        <hr class="hr-mobile">
-        <!-- <button mat-raised-button type="button" class="upload" id="upload" [disabled]="uploadForm.get('title')?.value.length == 0 && uploadForm.get('description')?.value.length == 0 && uploadForm.get('email')?.value.length == 0 && uploadForm.get('audioFile')?.value.length == 0 ">Upload</button> -->
-        <button mat-raised-button type="submit" class="upload" id="upload" [disabled]="uploadForm.invalid"> <span *ngIf="uploadForm.valid" style="font-size: 50%; text-align: center;">Click To<br></span> Upload</button>
-    </form>
-</div>
-
-<!-- 
-    There are 4 chunks.
-    1. upload-title, upload-description
-        - 'Get Started With Us' + description box
-    2. Your Info
-        - company name / project name
-        - contact email
-        - what needs to be done
-    3. file uploader
-    4. upload button
- -->
+    <br><br>

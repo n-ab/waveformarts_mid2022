@@ -47,6 +47,10 @@ const storage = multer.diskStorage({
 // 2b
 const upload = multer({ storage });
 
+app.post('/uploadFileAndStartNewProject', upload.array('files'), (req: any, res) => {
+    return;
+})
+
 app.post('/uploadFile', upload.array('files'), (req, res) => {
     const files = req.files as CustomFile[];
     const uploadPromises = files?.map((file) => {
