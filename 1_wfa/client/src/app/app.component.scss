@@ -1,5 +1,12 @@
 @import './animations.scss';
 
+.montserrat-uniquifier {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 100;
+    font-style: normal;
+  }
+
 @font-face {
     font-family: reee;
     src: url();
